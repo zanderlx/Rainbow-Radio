@@ -5,10 +5,8 @@
 package csulb.cecs327;
 
 import java.awt.event.*;
-import java.io.*;
 import javax.swing.*;
 import com.jgoodies.forms.factories.*;
-import javazoom.jl.player.advanced.*;
 import net.miginfocom.swing.*;
 
 /**
@@ -41,8 +39,7 @@ public class AppUI extends JPanel {
     String[] columnNames = { "Name", "Roll Number", "Department" };
 
     // Music Player Variables
-    InputStream stream;
-    AdvancedPlayer player;
+    MusicPlayer player = new MusicPlayer();
 
     // Constructor
     public AppUI() {
@@ -196,14 +193,22 @@ public class AppUI extends JPanel {
      */
     private void playPauseButtonActionPerformed(ActionEvent e) {
         // TODO add your code here
-    }
+        playPauseButton.addItemListener(ev -> {
+            try {
+                player.play();
+                // TODO: Get threading to work to play and pause different songs
+                //                if (ev.getStateChange() == ItemEvent.SELECTED) {
+                //                    player.play();
+                //                }
+                //                else if (ev.getStateChange() == ItemEvent.DESELECTED) {
+                //                    player.stop();
+                //
+                //                }
+            } catch (Exception exception) {
+                exception.getStackTrace();
+            }
 
-    /**
-     * This method will allow the functionality of going to the previous song
-     * @param e The action performed by the user
-     */
-    private void previousButtonActionPerformed(ActionEvent e) {
-        // TODO add your code here
+        });
     }
 
     /**
@@ -211,7 +216,15 @@ public class AppUI extends JPanel {
      * @param e The action performed by the user
      */
     private void nextButtonActionPerformed(ActionEvent e) {
-        // TODO add your code here
+        player.next();
+    }
+
+    /**
+     * This method will allow the functionality of going to the previous song
+     * @param e The action performed by the user
+     */
+    private void previousButtonActionPerformed(ActionEvent e) {
+        player.previous();
     }
 
     /**
