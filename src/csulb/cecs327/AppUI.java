@@ -2,22 +2,36 @@
  * Created by JFormDesigner on Thu Jan 31 16:14:25 PST 2019
  */
 
-package com.codebind;
+package csulb.cecs327;
 
 import java.awt.event.*;
+import java.io.*;
 import javax.swing.*;
 import com.jgoodies.forms.factories.*;
+import javazoom.jl.player.advanced.*;
 import net.miginfocom.swing.*;
 
 /**
  * @author unknown
  */
-public class MusicPlayer extends JPanel {
+public class AppUI extends JPanel {
 
+    // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
+    // Generated using JFormDesigner Evaluation license - Lexzander Saplan
+    private JLabel playlistTitle;
+    private JScrollPane songInfoPane;
     private JTable songInfoTable;
+    private JScrollPane playlistPane;
+    private JList playlistItems;
+    private JLabel volumeLabel;
+    private JButton previousButton;
+    private JToggleButton playPauseButton;
+    private JButton nextButton;
+    private JButton muteButton;
+    private JSlider volumeSlider;
     private JTextArea textArea1;
-    // JFormDesigner - End of variables declaration  //GEN-END:variables
 
+    // JFormDesigner - End of variables declaration  //GEN-END:variables
     String[][] data = {
             { "Kundan Kumar Jha", "4031", "CSE" },
             { "Anand Jha", "6014", "IT" }
@@ -26,8 +40,12 @@ public class MusicPlayer extends JPanel {
     // Column Names
     String[] columnNames = { "Name", "Roll Number", "Department" };
 
+    // Music Player Variables
+    InputStream stream;
+    AdvancedPlayer player;
+
     // Constructor
-    public MusicPlayer() {
+    public AppUI() {
         initComponents();
     }
 
@@ -36,19 +54,17 @@ public class MusicPlayer extends JPanel {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - Lexzander Saplan
         DefaultComponentFactory compFactory = DefaultComponentFactory.getInstance();
-        // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-        // Generated using JFormDesigner Evaluation license - Lexzander Saplan
-        JLabel playlistTitle = compFactory.createTitle("Playlist");
-        JScrollPane songInfoPane = new JScrollPane();
+        playlistTitle = compFactory.createTitle("Playlist");
+        songInfoPane = new JScrollPane();
         songInfoTable = new JTable();
-        JScrollPane playlistPane = new JScrollPane();
-        JList playlistItems = new JList();
-        JLabel volumeLabel = compFactory.createLabel("Volume");
-        JButton previousButton = new JButton();
-        JToggleButton playPauseButton = new JToggleButton();
-        JButton nextButton = new JButton();
-        JButton muteButton = new JButton();
-        JSlider volumeSlider = new JSlider();
+        playlistPane = new JScrollPane();
+        playlistItems = new JList();
+        volumeLabel = compFactory.createLabel("Volume");
+        previousButton = new JButton();
+        playPauseButton = new JToggleButton();
+        nextButton = new JButton();
+        muteButton = new JButton();
+        volumeSlider = new JSlider();
         textArea1 = new JTextArea();
 
         //======== this ========
@@ -174,17 +190,35 @@ public class MusicPlayer extends JPanel {
         this.songInfoTable = songInfoTable;
     }
 
-    // Play or Pause the song
+    /**
+     * This method will allow the functionality of playing or pausing a song
+     * @param e The action performed by the user
+     */
     private void playPauseButtonActionPerformed(ActionEvent e) {
         // TODO add your code here
     }
 
-    public static void main(String[] args) {
-        MusicPlayer player = new MusicPlayer();
-        JFrame frame = new JFrame("App");
-        frame.setContentPane(player);
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(1024, 720);
+    /**
+     * This method will allow the functionality of going to the previous song
+     * @param e The action performed by the user
+     */
+    private void previousButtonActionPerformed(ActionEvent e) {
+        // TODO add your code here
+    }
+
+    /**
+     * This method will allow the functionality of going to the next song
+     * @param e The action performed by the user
+     */
+    private void nextButtonActionPerformed(ActionEvent e) {
+        // TODO add your code here
+    }
+
+    /**
+     * This method will allow the functionality of muting the volume
+     * @param e The action performed by the user
+     */
+    private void muteButtonActionPerformed(ActionEvent e) {
+        // TODO add your code here
     }
 }
