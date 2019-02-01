@@ -30,14 +30,14 @@ When you have the project up and running on **IntelliJ IDEA**, you might have se
    3. Click **Java**
    4. Locate the **lib** folder that came with the repository clone.
    5. Select the **lib** folder
-   6. **Classes** and** sources** should appear on the screen
+   6. **Classes** and **sources** should appear on the screen
    7. Click **Apply** and **Ok**
 
 If there are any more settings that are confusing, please contact the project owner for more clarification.
 
 ## Running the program
 
-As of right now, we do not have JAR build and thus must test the program by clicking the *RUN* icon in IntelliJ. When you click run, a GUI should pop up that lets you click a selection of buttons.
+As of right now, we do not have JAR builds and thus must test the program by clicking the *RUN* icon in IntelliJ. When you click run, a GUI should pop up that lets you click a selection of buttons.
 
 **NOTE**  
 The project is still incomplete so the program will most likely freeze. To exit the applicaton, click the *STOP* button on IntelliJ.
