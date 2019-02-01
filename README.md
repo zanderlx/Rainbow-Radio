@@ -45,17 +45,17 @@ The project is still incomplete so the program will most likely freeze. To exit 
 ## Release History
 
 * 0.1.1
-    * Coming soon...
+  * Coming soon...
 * 0.1.0
-    * Designed rough draft of GUI
-    * Allowed random song selection
+  * Designed rough draft of GUI
+  * Allowed random song selection
 * 0.0.1
-    * Work in progress
+  * Work in progress
 
 ## Contributors
 Lexzander Saplan – [zanderlx](https://github.com/zanderlx) – lsaplan97@gmail.com  
 Pramod Chamala - [promo230](https://github.com/promo230) – pramodchamala@gmail.com  
-Phuc Nguyen - [itzphuckie](https://github.com/itzphuckie) – TBD  
+Phuc Nguyen - [itzphuckie](https://github.com/itzphuckie) – littlem0nk3y141@yahoo.com  
 Kevin Bui - [KevinThuyBui](https://github.com/KevinThuyBui) – TBD  
 Bryce Moser - [BryceMoser](https://github.com/BryceMoser) – brycemoser@yahoo.com  
 
