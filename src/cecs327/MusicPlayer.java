@@ -1,4 +1,4 @@
-package csulb.cecs327;
+package cecs327;
 
 import javazoom.jl.player.advanced.AdvancedPlayer;
 import java.io.FileInputStream;
