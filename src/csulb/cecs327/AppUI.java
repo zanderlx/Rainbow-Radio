@@ -15,7 +15,7 @@ import net.miginfocom.swing.*;
 public class AppUI extends JPanel {
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    // Generated using JFormDesigner Evaluation license - Lexzander Saplan
+    // Generated using JFormDesigner Evaluation license - PRAMOD REDDY CHAMALA
     private JLabel playlistTitle;
     private JScrollPane songInfoPane;
     private JTable songInfoTable;
@@ -28,7 +28,6 @@ public class AppUI extends JPanel {
     private JButton muteButton;
     private JSlider volumeSlider;
     private JTextArea textArea1;
-
     // JFormDesigner - End of variables declaration  //GEN-END:variables
     String[][] data = {
             { "Kundan Kumar Jha", "4031", "CSE" },
@@ -49,7 +48,7 @@ public class AppUI extends JPanel {
     // Initialize music player components
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-        // Generated using JFormDesigner Evaluation license - Lexzander Saplan
+        // Generated using JFormDesigner Evaluation license - PRAMOD REDDY CHAMALA
         DefaultComponentFactory compFactory = DefaultComponentFactory.getInstance();
         playlistTitle = compFactory.createTitle("Playlist");
         songInfoPane = new JScrollPane();
@@ -71,7 +70,7 @@ public class AppUI extends JPanel {
             new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder(0, 0, 0, 0),
                 "JFormDesigner Evaluation", javax.swing.border.TitledBorder.CENTER,
                 javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Dialog", java.awt.Font.BOLD, 12),
-                java.awt.Color.red), getBorder())); addPropertyChangeListener(e -> {if("border".equals(e.getPropertyName()))throw new RuntimeException();});
+                java.awt.Color.red), getBorder())); addPropertyChangeListener(new java.beans.PropertyChangeListener(){public void propertyChange(java.beans.PropertyChangeEvent e){if("border".equals(e.getPropertyName()))throw new RuntimeException();}});
 
         setLayout(new MigLayout(
             "hidemode 3",
@@ -168,7 +167,7 @@ public class AppUI extends JPanel {
 
         //---- playPauseButton ----
         playPauseButton.setText("Play/Pause");
-        playPauseButton.addActionListener(this::playPauseButtonActionPerformed);
+        playPauseButton.addActionListener(e -> playPauseButtonActionPerformed(e));
         add(playPauseButton, "cell 25 28");
 
         //---- nextButton ----
