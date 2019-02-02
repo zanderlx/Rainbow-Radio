@@ -2,7 +2,7 @@
  * Created by JFormDesigner on Thu Jan 31 16:14:25 PST 2019
  */
 
-package cecs327;
+package csulb.cecs327;
 
 import java.awt.event.*;
 import javax.swing.*;

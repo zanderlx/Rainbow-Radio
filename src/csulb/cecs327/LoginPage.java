@@ -2,7 +2,7 @@
  * Created by JFormDesigner on Fri Feb 01 17:30:38 PST 2019
  */
 
-package cecs327;
+package csulb.cecs327;
 
 import javax.swing.*;
 import net.miginfocom.swing.*;
