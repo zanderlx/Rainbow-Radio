@@ -5,7 +5,7 @@ import javax.swing.*;
 public class Main {
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("App");
+        JFrame frame = new JFrame("LoginPage");
         frame.setContentPane(new LoginPage());
         frame.setSize(1024, 720);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
