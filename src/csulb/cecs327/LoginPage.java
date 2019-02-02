@@ -17,7 +17,7 @@ public class LoginPage extends JPanel {
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-        // Generated using JFormDesigner Evaluation license - PRAMOD REDDY CHAMALA
+        // Generated using JFormDesigner Evaluation license - Lexzander Saplan
         userLabel = new JLabel();
         usernameField = new JFormattedTextField();
         passLabel = new JLabel();
@@ -82,7 +82,7 @@ public class LoginPage extends JPanel {
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    // Generated using JFormDesigner Evaluation license - PRAMOD REDDY CHAMALA
+    // Generated using JFormDesigner Evaluation license - Lexzander Saplan
     private JLabel userLabel;
     private JFormattedTextField usernameField;
     private JLabel passLabel;
