@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="da43f07e-a382-48f5-8ed0-884ca94e88d9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/CECS-327-Music-Player.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CECS-327-Music-Player.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/csulb/cecs327/AppUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/csulb/cecs327/AppUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/csulb/cecs327/LoginPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/csulb/cecs327/LoginPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/csulb/cecs327/LoginPage.jfd" beforeDir="false" afterPath="$PROJECT_DIR$/src/csulb/cecs327/LoginPage.jfd" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -29,7 +28,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/csulb/cecs327/AppUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
+            <state relative-caret-position="122">
               <caret line="14" column="35" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="35" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -40,11 +39,30 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/csulb/cecs327/Main.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="68">
               <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/csulb/cecs327/LoginPage.jfd">
+          <provider selected="true" editor-type-id="JFormDesigner">
+            <state propertiesWidth="278" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/csulb/cecs327/LoginPage.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+              <folding>
+                <marker date="1549071038091" expanded="false" signature="328:2530" ph="// JFormDesigner - Component initialization - DO NOT MODIFY" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -99,6 +117,7 @@
         <option value="$PROJECT_DIR$/src/csulb/cecs327/Main.java" />
         <option value="$PROJECT_DIR$/src/csulb/cecs327/AppUI.java" />
         <option value="$PROJECT_DIR$/src/csulb/cecs327/MusicPlayer.java" />
+        <option value="$PROJECT_DIR$/src/csulb/cecs327/LoginPage.jfd" />
       </list>
     </option>
   </component>
@@ -139,7 +158,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549069541033" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549071376117" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/lib" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
@@ -244,7 +263,14 @@
       <option name="project" value="LOCAL" />
       <updated>1549012090920</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Added LoginPage GUI . In Process.">
+      <created>1549069600089</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1549069600090</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -269,7 +295,7 @@
       <window_info id="Favorites" order="6" sideWeight="0.50240964" side_tool="true" weight="0.24606581" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.328594" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.12006319" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -320,7 +346,8 @@
     <MESSAGE value="Add GUI MainPlayer" />
     <MESSAGE value="Renamed &quot;MusicPlayer&quot; files to &quot;AppUI&quot;" />
     <MESSAGE value="Implemented &quot;Play Song&quot; feature (partially)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented &quot;Play Song&quot; feature (partially)" />
+    <MESSAGE value="Added LoginPage GUI . In Process." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added LoginPage GUI . In Process." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/CECS-327-Music-Player.iml" />
@@ -341,11 +368,6 @@
         <state relative-caret-position="414">
           <caret line="66" selection-start-line="66" selection-end-line="66" />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/csulb/cecs327/AppUI.jfd">
-      <provider selected="true" editor-type-id="JFormDesigner">
-        <state paletteWidth="247" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/CECS327_MusicPlayer.iml">
@@ -369,7 +391,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/csulb/cecs327/AppUI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
+        <state relative-caret-position="122">
           <caret line="14" column="35" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="35" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -379,11 +401,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/csulb/cecs327/AppUI.jfd">
+      <provider selected="true" editor-type-id="JFormDesigner">
+        <state paletteWidth="247" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/csulb/cecs327/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/csulb/cecs327/LoginPage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+          <folding>
+            <marker date="1549071038091" expanded="false" signature="328:2530" ph="// JFormDesigner - Component initialization - DO NOT MODIFY" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/csulb/cecs327/LoginPage.jfd">
+      <provider selected="true" editor-type-id="JFormDesigner">
+        <state propertiesWidth="278" />
       </provider>
     </entry>
   </component>
