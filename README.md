@@ -19,12 +19,12 @@
 
 When you have the project up and running on **IntelliJ IDEA**, you might have several problems right off the bat! Follow the steps to fix any respective problems.
 
-* JDK Environment Error...
+* **JDK Environment Error...**
    1. Navigate to *File > Project Structure > Project Tab*
    2. In the Project SDK, select your desired JDK version
    3. Click Apply and Ok
 
-* Cannot Resolve Import Error...
+* **Cannot Resolve Import Error...**
    1. Navigate to *File > Project Structure > Libraries Tab*
    2. Click the (+) icon on the top-left of the page
    3. Click **Java**
@@ -33,7 +33,7 @@ When you have the project up and running on **IntelliJ IDEA**, you might have se
    6. **Classes** and **sources** should appear on the screen
    7. Click **Apply** and **Ok**
 
-If there are any more settings that are confusing, please contact the project owner for more clarification.
+If there are any more settings that are confusing, please **contact the project owner** for more clarification.
 
 ## Running the program
 
