@@ -5,12 +5,12 @@ import javax.swing.*;
 public class Main {
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("LoginPage");
-        frame.setContentPane(new LoginPage());
-        frame.setSize(1024, 720);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-        frame.pack();
+        JFrame login = new JFrame("LoginPage");
+        login.setContentPane(new LoginPage());
+        login.setSize(1024, 720);
+        login.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        login.setVisible(true);
+        login.pack();
     }
 
 }
