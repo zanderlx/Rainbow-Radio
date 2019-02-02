@@ -1,5 +1,5 @@
 /*
- * Created by JFormDesigner on Fri Feb 01 17:05:23 PST 2019
+ * Created by JFormDesigner on Fri Feb 01 17:30:38 PST 2019
  */
 
 package csulb.cecs327;
@@ -17,7 +17,12 @@ public class LoginPage extends JPanel {
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-        // Generated using JFormDesigner Evaluation license - PRAMOD REDDY CHAMALA
+        // Generated using JFormDesigner Evaluation license - Lexzander Saplan
+        userLabel = new JLabel();
+        usernameField = new JFormattedTextField();
+        passLabel = new JLabel();
+        passwordField = new JPasswordField();
+        button1 = new JButton();
 
         //======== this ========
 
@@ -32,15 +37,56 @@ public class LoginPage extends JPanel {
             "hidemode 3",
             // columns
             "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
             "[fill]",
             // rows
             "[]" +
             "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
             "[]"));
+
+        //---- userLabel ----
+        userLabel.setText("Username");
+        add(userLabel, "cell 8 7");
+        add(usernameField, "cell 9 7");
+
+        //---- passLabel ----
+        passLabel.setText("Password");
+        add(passLabel, "cell 8 8");
+        add(passwordField, "cell 9 8");
+
+        //---- button1 ----
+        button1.setText("Log In");
+        add(button1, "cell 9 9");
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    // Generated using JFormDesigner Evaluation license - PRAMOD REDDY CHAMALA
+    // Generated using JFormDesigner Evaluation license - Lexzander Saplan
+    private JLabel userLabel;
+    private JFormattedTextField usernameField;
+    private JLabel passLabel;
+    private JPasswordField passwordField;
+    private JButton button1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
