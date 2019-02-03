@@ -45,9 +45,12 @@ The project is still incomplete so the program will most likely freeze. To exit 
 ## Release History
 
 * 0.1.1
-  * Coming soon...
+  * Added play music functionality
+  * Added play next music functionality
+  * Added play previous music functionality
+  * Added rough draft of Login Page (not accessible yet)
 * 0.1.0
-  * Designed rough draft of GUI
+  * Designed rough draft of Music Player Page
   * Allowed random song selection
 * 0.0.1
   * Work in progress
