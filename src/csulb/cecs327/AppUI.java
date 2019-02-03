@@ -12,10 +12,10 @@ import net.miginfocom.swing.*;
 /**
  * @author unknown
  */
-public class AppUI extends JPanel {
+public class AppUI extends JPanel implements ActionListener {
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    // Generated using JFormDesigner Evaluation license - PRAMOD REDDY CHAMALA
+    // Generated using JFormDesigner Evaluation license - Lexzander Saplan
     private JLabel playlistTitle;
     private JScrollPane songInfoPane;
     private JTable songInfoTable;
@@ -23,32 +23,35 @@ public class AppUI extends JPanel {
     private JList playlistItems;
     private JLabel volumeLabel;
     private JButton previousButton;
-    private JToggleButton playPauseButton;
+    private JButton playPauseButton;
     private JButton nextButton;
     private JButton muteButton;
     private JSlider volumeSlider;
-    private JTextArea textArea1;
+    private int currentSong = 0;
+    private SongDatabase songDatabase;
+
     // JFormDesigner - End of variables declaration  //GEN-END:variables
     String[][] data = {
-            { "Kundan Kumar Jha", "4031", "CSE" },
-            { "Anand Jha", "6014", "IT" }
+            {"Kundan Kumar Jha", "4031", "CSE"},
+            {"Anand Jha", "6014", "IT"}
     };
 
     // Column Names
-    String[] columnNames = { "Name", "Roll Number", "Department" };
+    String[] columnNames = {"Name", "Roll Number", "Department"};
 
     // Music Player Variables
-    MusicPlayer player = new MusicPlayer();
+    MusicPlayer player;
 
     // Constructor
     public AppUI() {
         initComponents();
     }
 
+
     // Initialize music player components
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-        // Generated using JFormDesigner Evaluation license - PRAMOD REDDY CHAMALA
+        // Generated using JFormDesigner Evaluation license - Lexzander Saplan
         DefaultComponentFactory compFactory = DefaultComponentFactory.getInstance();
         playlistTitle = compFactory.createTitle("Playlist");
         songInfoPane = new JScrollPane();
@@ -57,11 +60,11 @@ public class AppUI extends JPanel {
         playlistItems = new JList();
         volumeLabel = compFactory.createLabel("Volume");
         previousButton = new JButton();
-        playPauseButton = new JToggleButton();
+        playPauseButton = new JButton();
         nextButton = new JButton();
         muteButton = new JButton();
         volumeSlider = new JSlider();
-        textArea1 = new JTextArea();
+        songDatabase = new SongDatabase();
 
         //======== this ========
 
@@ -161,18 +164,20 @@ public class AppUI extends JPanel {
         add(playlistPane, "cell 0 3 8 24,growy");
         add(volumeLabel, "cell 32 27,alignx center,growx 0");
 
-        //---- previousButton ----
-        previousButton.setText("Previous");
-        add(previousButton, "cell 23 28");
-
         //---- playPauseButton ----
-        playPauseButton.setText("Play/Pause");
-        playPauseButton.addActionListener(e -> playPauseButtonActionPerformed(e));
+        playPauseButton.setText("Play");
+        playPauseButtonActionPerformed();
         add(playPauseButton, "cell 25 28");
 
         //---- nextButton ----
         nextButton.setText("Next");
+        nextButtonActionPerformed();
         add(nextButton, "cell 27 28");
+
+        //---- previousButton ----
+        previousButton.setText("Previous");
+        previousButtonActionPerformed();
+        add(previousButton, "cell 23 28");
 
         //---- muteButton ----
         muteButton.setText("Mute");
@@ -188,49 +193,80 @@ public class AppUI extends JPanel {
 
     /**
      * This method will allow the functionality of playing or pausing a song
-     * @param e The action performed by the user
+     *
+     *
      */
-    private void playPauseButtonActionPerformed(ActionEvent e) {
+    private void playPauseButtonActionPerformed() {
         // TODO add your code here
-        playPauseButton.addItemListener(ev -> {
-            try {
+        System.out.println(currentSong);
+        String song = songDatabase.getSongList().get(currentSong);
+        player = new MusicPlayer(song);
+        playPauseButton.addActionListener(ev -> {
+            if (playPauseButton.getText().equals("Play")) {
+                playPauseButton.setText("Pause");
                 player.play();
-                // TODO: Get threading to work to play and pause different songs
-                //                if (ev.getStateChange() == ItemEvent.SELECTED) {
-                //                    player.play();
-                //                }
-                //                else if (ev.getStateChange() == ItemEvent.DESELECTED) {
-                //                    player.stop();
-                //
-                //                }
-            } catch (Exception exception) {
-                exception.getStackTrace();
+            }
+            else {
+                playPauseButton.setText("Play");
+                player.pause();
             }
 
         });
     }
 
+
     /**
      * This method will allow the functionality of going to the next song
-     * @param e The action performed by the user
      */
-    private void nextButtonActionPerformed(ActionEvent e) {
-        player.next();
+    private void nextButtonActionPerformed() {
+        nextButton.addActionListener(ev -> {
+            try {
+                player.stop();
+                currentSong++;
+                currentSong %= songDatabase.getSongList().size();
+                System.out.println(currentSong);
+                String song = songDatabase.getSongList().get(currentSong);
+                player = new MusicPlayer(song);
+                playPauseButton.setText("Pause");
+                player.play();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     /**
      * This method will allow the functionality of going to the previous song
-     * @param e The action performed by the user
      */
-    private void previousButtonActionPerformed(ActionEvent e) {
-        player.previous();
+    private void previousButtonActionPerformed() {
+        previousButton.addActionListener(ev -> {
+            try {
+                player.stop();
+                currentSong--;
+                if (currentSong < 0)
+                    currentSong = songDatabase.getSongList().size() - 1;
+                System.out.println(currentSong);
+                String song = songDatabase.getSongList().get(currentSong);
+                player = new MusicPlayer(song);
+                playPauseButton.setText("Pause");
+                player.play();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     /**
      * This method will allow the functionality of muting the volume
+     *
      * @param e The action performed by the user
      */
     private void muteButtonActionPerformed(ActionEvent e) {
         // TODO add your code here
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
 }

@@ -1,60 +1,116 @@
 package csulb.cecs327;
 
-import javazoom.jl.player.advanced.AdvancedPlayer;
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.Player;
 import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.Random;
 
 public class MusicPlayer {
-
+    private final static int NOTSTARTED = 0;
+    private final static int PLAYING = 1;
+    private final static int PAUSED = 2;
+    private final static int FINISHED = 3;
     private FileInputStream songStream;
-    private  AdvancedPlayer songPlayer;
-    private ArrayList<String> songList = new ArrayList<>();
-    private int currentSong;
+    private  Player songPlayer;
+    private final Object playerLock = new Object();
+    private int playerStatus = NOTSTARTED;
 
-    public MusicPlayer() {
+    public MusicPlayer(String song) {
         try {
-            initializeSongList();
-            currentSong = new Random().nextInt(songList.size());
-            songStream = new FileInputStream(songList.get(currentSong));
-            songPlayer = new AdvancedPlayer(songStream);
+            songStream = new FileInputStream(song);
+            songPlayer = new Player(songStream);
         } catch (Exception e) {
             e.getStackTrace();
         }
     }
 
     public void play() {
-        try {
-            songPlayer.play();
-        } catch (Exception e) {
-            e.getStackTrace();
+        synchronized (playerLock) {
+            switch (playerStatus) {
+                case NOTSTARTED:
+                    start();
+                    break;
+                case PAUSED:
+                    resume();
+                    break;
+                case FINISHED:
+                    start();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
-    public void pause() {
-        // TODO: Implement this function
+    public void start() {
+        final Runnable r = new Runnable() {
+            public void run() {
+                playInternal();
+            }
+        };
+        final Thread t = new Thread(r);
+        t.setPriority(Thread.MAX_PRIORITY);
+        playerStatus = PLAYING;
+        t.start();
+    }
+
+    public boolean pause() {
+        synchronized (playerLock) {
+            if (playerStatus == PLAYING) {
+                playerStatus = PAUSED;
+            }
+            return playerStatus == PAUSED;
+        }
+    }
+
+    public boolean resume() {
+        synchronized (playerLock) {
+            if (playerStatus == PAUSED) {
+                playerStatus = PLAYING;
+                playerLock.notifyAll();
+            }
+            return playerStatus == PLAYING;
+        }
     }
 
     public void stop() {
-        songPlayer.stop();
+        synchronized (playerLock) {
+            playerStatus = FINISHED;
+            playerLock.notifyAll();
+        }
     }
 
-    public void next() {
-        currentSong = (currentSong == songList.size() - 1) ? 0 : currentSong++;
-        play();
+    private void playInternal() {
+        while (playerStatus != FINISHED) {
+            try {
+                if (!songPlayer.play(1)) {
+                    break;
+                }
+            } catch (final JavaLayerException e) {
+                break;
+            }
+            // check if paused or terminated
+            synchronized (playerLock) {
+                while (playerStatus == PAUSED) {
+                    try {
+                        playerLock.wait();
+                    } catch (final InterruptedException e) {
+                        // terminate player
+                        break;
+                    }
+                }
+            }
+        }
+        close();
     }
 
-    public void previous() {
-        currentSong = (currentSong == 0) ? currentSong = songList.size() - 1 : currentSong--;
-        play();
+    public void close() {
+        synchronized (playerLock) {
+            playerStatus = FINISHED;
+        }
+        try {
+            songPlayer.close();
+        } catch (final Exception e) {
+            // ignore, we are terminating anyway
+        }
     }
-
-    public void initializeSongList() {
-        songList.add("music/Alan Walker - Faded (8D AUDIO).mp3");
-        songList.add("music/Bazzi - Mine (8D AUDIO).mp3");
-        songList.add("music/Noisestorm - Crab Rave (8D AUDIO).mp3");
-        songList.add("music/Panic! At The Disco - High Hopes (8D AUDIO).mp3");
-        songList.add("music/Twenty One Pilots - Stressed Out (8D AUDIO).mp3");
-    }
-
 }
