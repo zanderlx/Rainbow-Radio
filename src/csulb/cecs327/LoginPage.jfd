@@ -32,8 +32,16 @@ new FormModel {
 				"value": "cell 9 8"
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "button1"
+				name: "registerButton"
+				"text": "Register"
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "registerButtonMouseClicked", true ) )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 8 9"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "logInButton"
 				"text": "Log In"
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "logInButtonMouseClicked", true ) )
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
 				"value": "cell 9 9"
 			} )
