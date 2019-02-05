@@ -18,6 +18,7 @@ public class MusicPlayer {
         try {
             songStream = new FileInputStream(song);
             songPlayer = new Player(songStream);
+            System.out.println(songPlayer.getPosition());
         } catch (Exception e) {
             e.getStackTrace();
         }
