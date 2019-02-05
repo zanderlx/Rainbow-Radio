@@ -45,10 +45,14 @@ public class AppUI extends JPanel implements ActionListener {
 
     // Music Player Variables
     private MusicPlayer player;
+    
+    //User Object
+    private User user;
 
     // Constructor
-    public AppUI() {
+    public AppUI(User user) {
         initComponents();
+        this.user = user;
     }
 
 
