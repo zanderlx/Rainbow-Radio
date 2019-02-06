@@ -6,9 +6,14 @@ package csulb.cecs327.Controllers.FrontEnd;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Random;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import com.jgoodies.forms.factories.*;
 import csulb.cecs327.Models.*;
@@ -26,9 +31,6 @@ public class AppUI extends JPanel {
     private JTextField searchBox;
     private JLabel playlistTitle;
     private JLabel LibraryTitle;
-    private JRadioButton songFilter;
-    private JRadioButton artistFilter;
-    private JRadioButton genreFilter;
     private JScrollPane songInfoPane;
     private JTable songInfoTable;
     private JScrollPane playlistPane;
@@ -161,6 +163,27 @@ public class AppUI extends JPanel {
         });
     }
 
+    public void sortColumn(int column) {
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(songInfoTable.getModel());
+        sorter.setComparator(column, Comparator.naturalOrder());
+        sorter.setSortsOnUpdates(true);
+        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+        sortKeys.add(new RowSorter.SortKey(column, SortOrder.ASCENDING));
+        sorter.setSortKeys(sortKeys);
+        songInfoTable.setRowSorter(sorter);
+    }
+
+    private void songFilterActionPerformed(ActionEvent e) {
+        sortColumn(0);
+    }
+    private void artistFilterActionPerformed(ActionEvent e) {
+        sortColumn(1);
+    }
+
+    private void genreFilterActionPerformed(ActionEvent e) {
+        sortColumn(2);
+    }
+
     // Initialize music player components
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -170,9 +193,6 @@ public class AppUI extends JPanel {
         searchBox = new JTextField();
         playlistTitle = compFactory.createTitle("Playlist");
         LibraryTitle = new JLabel();
-        songFilter = new JRadioButton();
-        artistFilter = new JRadioButton();
-        genreFilter = new JRadioButton();
         songInfoPane = new JScrollPane();
         songInfoTable = new JTable();
         playlistPane = new JScrollPane();
@@ -351,18 +371,6 @@ public class AppUI extends JPanel {
         LibraryTitle.setFont(new Font("Segoe UI", Font.BOLD, 24));
         add(LibraryTitle, "cell 18 30,align center center,grow 0 0");
 
-        //---- songFilter ----
-        songFilter.setText("Song");
-        add(songFilter, "cell 39 30,aligny center,growy 0");
-
-        //---- artistFilter ----
-        artistFilter.setText("Artist");
-        add(artistFilter, "cell 39 30,aligny center,growy 0");
-
-        //---- genreFilter ----
-        genreFilter.setText("Genre");
-        add(genreFilter, "cell 39 30,aligny center,growy 0");
-
         //======== songInfoPane ========
         {
 
@@ -418,7 +426,6 @@ public class AppUI extends JPanel {
 
         playSongOnDoubleClick();
 
-
         Object[] columns = {"Song Title", "Artist", "Album", "Genre"};
         model = new DefaultTableModel() {
             @Override
@@ -433,6 +440,8 @@ public class AppUI extends JPanel {
         songInfoTable.setShowVerticalLines(false);
         songInfoTable.setRowHeight(30);
         songInfoTable.setModel(model);
+
+        sortColumn(0);
     }
 
     // Initializing the JTable

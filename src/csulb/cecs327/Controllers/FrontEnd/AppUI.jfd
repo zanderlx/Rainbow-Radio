@@ -35,24 +35,6 @@ new FormModel {
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
 				"value": "cell 18 30,align center center,grow 0 0"
 			} )
-			add( new FormComponent( "javax.swing.JRadioButton" ) {
-				name: "songFilter"
-				"text": "Song"
-			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 39 30,aligny center,growy 0"
-			} )
-			add( new FormComponent( "javax.swing.JRadioButton" ) {
-				name: "artistFilter"
-				"text": "Artist"
-			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 39 30,aligny center,growy 0"
-			} )
-			add( new FormComponent( "javax.swing.JRadioButton" ) {
-				name: "genreFilter"
-				"text": "Genre"
-			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 39 30,aligny center,growy 0"
-			} )
 			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 				name: "songInfoPane"
 				add( new FormComponent( "javax.swing.JTable" ) {
@@ -132,6 +114,11 @@ new FormModel {
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 50, 460 )
 			"size": new java.awt.Dimension( 1110, 755 )
+		} )
+		add( new FormNonVisual( "javax.swing.ButtonGroup" ) {
+			name: "libraryFilter"
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 1231 )
 		} )
 	}
 }
