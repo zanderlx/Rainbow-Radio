@@ -32,17 +32,12 @@ public class AppUI extends JPanel {
     private JSlider volumeSlider;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
-    // Music Player Variables
+    // Custom Variables
     private int currentSong = 0;
     private SongDatabase songDatabase = new SongDatabase();
     private String song = songDatabase.getSongList().get(currentSong);
     private MusicPlayer player = new MusicPlayer(song);
-
-
     private DefaultTableModel model;
-
-
-    //User Object
     private User user;
 
     // Constructor
@@ -51,8 +46,12 @@ public class AppUI extends JPanel {
         this.user = user;
     }
 
+    // Methods
+    /**
+     * This button allows the user to play or pause a song
+     * @param e The action performed when clicking the button
+     */
     private void playPauseButtonActionPerformed(ActionEvent e) {
-
         if (playPauseButton.getText().equals("Play")) {
             playPauseButton.setText("Pause");
             player.play();
@@ -60,7 +59,6 @@ public class AppUI extends JPanel {
             playPauseButton.setText("Play");
             player.pause();
         }
-
     }
 
     private void previousButtonActionPerformed(ActionEvent e) {
@@ -107,6 +105,11 @@ public class AppUI extends JPanel {
                     player = new MusicPlayer(song);
                     playPauseButton.setText("Pause");
                     player.play();
+                }
+                else if (e.getClickCount() == 1) {
+                    currentSong = songInfoTable.getSelectedRow();
+                    song = songDatabase.getSongList().get(currentSong);
+
                 }
             }
         });
@@ -182,6 +185,24 @@ public class AppUI extends JPanel {
             "[fill]" +
             "[fill]" +
             "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
             "[fill]",
             // rows
             "[]" +
@@ -212,45 +233,59 @@ public class AppUI extends JPanel {
             "[]" +
             "[]" +
             "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
             "[]"));
-        add(playlistTitle, "cell 1 2 4 1,alignx center,growx 0");
+
+        //---- playlistTitle ----
+        playlistTitle.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+        add(playlistTitle, "cell 3 23 3 2,alignx center,growx 0");
 
         //======== songInfoPane ========
         {
             songInfoPane.setViewportView(songInfoTable);
         }
-        add(songInfoPane, "cell 15 2 21 22");
+        add(songInfoPane, "cell 20 25 36 12");
 
         //======== playlistPane ========
         {
             playlistPane.setViewportView(playlistItems);
         }
-        add(playlistPane, "cell 0 3 8 24,growy");
-        add(volumeLabel, "cell 33 27,alignx center,growx 0");
+        add(playlistPane, "cell 3 25 15 12,growy");
+        add(volumeLabel, "cell 51 37,alignx center,growx 0");
 
         //---- previousButton ----
         previousButton.setText("Previous");
         previousButton.addActionListener(e -> previousButtonActionPerformed(e));
-        add(previousButton, "cell 24 28");
+        add(previousButton, "cell 42 38");
 
         //---- playPauseButton ----
         playPauseButton.setText("Play");
         playPauseButton.addActionListener(e -> playPauseButtonActionPerformed(e));
-        add(playPauseButton, "cell 26 28,width 100:100:100");
+        add(playPauseButton, "cell 44 38,width 100:100:100");
 
         //---- nextButton ----
         nextButton.setText("Next");
         nextButton.addActionListener(e -> nextButtonActionPerformed(e));
-        add(nextButton, "cell 28 28");
+        add(nextButton, "cell 46 38");
 
         //---- muteButton ----
         muteButton.setText("Mute");
         muteButton.addActionListener(e -> muteButtonActionPerformed(e));
-        add(muteButton, "cell 29 28");
-        add(volumeSlider, "cell 30 28 7 1,align center top,grow 0 0");
+        add(muteButton, "cell 47 38");
+        add(volumeSlider, "cell 48 38 7 1,align center top,grow 0 0");
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
 
         playSongOnDoubleClick();
+
 
         Object[] columns = {"No.", "Song Title", "Artist", "Album"};
         model = new DefaultTableModel() {
