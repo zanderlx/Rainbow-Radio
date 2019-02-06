@@ -5,18 +5,20 @@ import javazoom.jl.player.Player;
 import java.io.FileInputStream;
 
 public class MusicPlayer {
-    private final static int NOTSTARTED = 0;
+    // Player statuses
+    private final static int NOT_STARTED = 0;
     private final static int PLAYING = 1;
     private final static int PAUSED = 2;
     private final static int FINISHED = 3;
-    private FileInputStream songStream;
+
+    // Player attributes
     private  Player songPlayer;
     private final Object playerLock = new Object();
-    private int playerStatus = NOTSTARTED;
+    private int playerStatus = NOT_STARTED;
 
     public MusicPlayer(String song) {
         try {
-            songStream = new FileInputStream(song);
+            FileInputStream songStream = new FileInputStream(song);
             songPlayer = new Player(songStream);
             System.out.println(songPlayer.getPosition());
         } catch (Exception e) {
@@ -27,27 +29,16 @@ public class MusicPlayer {
     public void play() {
         synchronized (playerLock) {
             switch (playerStatus) {
-                case NOTSTARTED:
-                    start();
-                    break;
-                case PAUSED:
-                    resume();
-                    break;
-                case FINISHED:
-                    start();
-                    break;
-                default:
-                    break;
+                case NOT_STARTED: start(); break;
+                case PAUSED: resume(); break;
+                case FINISHED: start(); break;
+                default: break;
             }
         }
     }
 
     public void start() {
-        final Runnable r = new Runnable() {
-            public void run() {
-                playInternal();
-            }
-        };
+        final Runnable r = this::playInternal;
         final Thread t = new Thread(r);
         t.setPriority(Thread.MAX_PRIORITY);
         playerStatus = PLAYING;
@@ -56,9 +47,7 @@ public class MusicPlayer {
 
     public boolean pause() {
         synchronized (playerLock) {
-            if (playerStatus == PLAYING) {
-                playerStatus = PAUSED;
-            }
+            if (playerStatus == PLAYING) playerStatus = PAUSED;
             return playerStatus == PAUSED;
         }
     }
@@ -83,9 +72,7 @@ public class MusicPlayer {
     private void playInternal() {
         while (playerStatus != FINISHED) {
             try {
-                if (!songPlayer.play(1)) {
-                    break;
-                }
+                if (!songPlayer.play(1)) break;
             } catch (final JavaLayerException e) {
                 break;
             }
