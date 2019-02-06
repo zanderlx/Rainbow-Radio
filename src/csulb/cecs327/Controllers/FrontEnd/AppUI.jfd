@@ -71,18 +71,18 @@ new FormModel {
 				"value": "cell 6 31 10 26,growy"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "Song"
+				name: "songLabel"
 				"font": new java.awt.Font( "Segoe UI", 0, 24 )
 				"text": "Song"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 7 61"
+				"value": "cell 6 61"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "artist"
+				name: "artistLabel"
 				"text": "Artist"
 				"font": new java.awt.Font( "Segoe UI", 0, 16 )
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 7 62,alignx left,growx 0"
+				"value": "cell 6 62,alignx left,growx 0"
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "shuffleButton"
