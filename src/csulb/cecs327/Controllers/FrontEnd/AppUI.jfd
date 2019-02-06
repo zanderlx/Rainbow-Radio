@@ -1,0 +1,124 @@
+JFDML JFormDesigner: "6.0.6.0.190" Java: "1.8.0_152-release" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class net.miginfocom.swing.MigLayout ) {
+			"$layoutConstraints": "fillx,hidemode 3"
+			"$columnConstraints": "0[fill]0[fill]0[fill]0[fill][fill][fill][48:103,fill]0[fill]0[fill]0[fill]0[fill]0[fill]0[fill]0[0,fill][fill][fill][fill][fill][fill]0[fill]0[fill]0[fill]0[fill]0[fill]0[fill]0[fill]0[fill][fill][fill]0[fill][fill][fill][fill][fill][7,fill]0[fill]0[191,fill]0[fill]0[fill]0[fill]0[fill]0[fill]0[fill]0[fill]0[fill]0[fill]0[fill]0[fill]0[fill]0[fill]0[fill]0[fill]0[fill]0[fill]0[fill]0[14,fill]0[fill]0[fill]0[fill]0[fill]0[fill]0[fill]0[fill]0"
+			"$rowConstraints": "[]0[]0[]0[][][][][][][][][][][][][][][][][][][][][][][][][][][22:n][][][][][][][][][][][][][][][][][][][][][][]0[]0[]0[][][][][][][][]0[][][][][][]0[]0[]0[]0[]"
+		} ) {
+			name: "this"
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "SearchLabel"
+				"text": "Search"
+				"font": new java.awt.Font( "Segoe UI", 0, 14 )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 25 29 10 1"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "searchBox"
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 36 29 4 1"
+			} )
+			add( new FormComponent( "com.jformdesigner.designer.wrapper.JGoodiesFormsTitle" ) {
+				name: "playlistTitle"
+				"textWithMnemonic": "Playlist"
+				"font": new java.awt.Font( "Segoe UI", 1, 24 )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 6 30,alignx center,growx 0"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "LibraryTitle"
+				"text": "Song Library"
+				"font": new java.awt.Font( "Segoe UI", 1, 24 )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 18 30,align center center,grow 0 0"
+			} )
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "songInfoPane"
+				add( new FormComponent( "javax.swing.JTable" ) {
+					name: "songInfoTable"
+					"font": new java.awt.Font( "Segoe UI", 0, 16 )
+				} )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 17 31 25 26"
+			} )
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "playlistPane"
+				add( new FormComponent( "javax.swing.JList" ) {
+					name: "playlistItems"
+				} )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 6 31 10 26,growy"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "songLabel"
+				"font": new java.awt.Font( "Segoe UI", 0, 24 )
+				"text": "Song"
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 6 61"
+			} )
+			add( new FormComponent( "javax.swing.JProgressBar" ) {
+				name: "progressBar1"
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 20 61"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "artistLabel"
+				"text": "Artist"
+				"font": new java.awt.Font( "Segoe UI", 0, 16 )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 6 62,alignx left,growx 0"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "shuffleButton"
+				"text": "Shuffle"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "muteButtonActionPerformed", true ) )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 20 62"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "previousButton"
+				"text": "Previous"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "previousButtonActionPerformed", true ) )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 20 62"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "playPauseButton"
+				"text": "Play"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "playPauseButtonActionPerformed", true ) )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 20 62,width 75:75:75"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "nextButton"
+				"text": "Next"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "nextButtonActionPerformed", true ) )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 20 62"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "muteButton"
+				"text": "Mute"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "muteButtonActionPerformed", true ) )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 20 62"
+			} )
+			add( new FormComponent( "javax.swing.JSlider" ) {
+				name: "volumeSlider"
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 36 62 2 1,aligny center,growy 0"
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 50, 460 )
+			"size": new java.awt.Dimension( 1110, 755 )
+		} )
+		add( new FormNonVisual( "javax.swing.ButtonGroup" ) {
+			name: "libraryFilter"
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 1231 )
+		} )
+	}
+}
