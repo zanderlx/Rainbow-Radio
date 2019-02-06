@@ -1,4 +1,4 @@
-package csulb.cecs327;
+package csulb.cecs327.Services;
 
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;

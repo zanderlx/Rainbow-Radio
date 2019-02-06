@@ -2,7 +2,7 @@
  * Created by JFormDesigner on Thu Jan 31 16:14:25 PST 2019
  */
 
-package csulb.cecs327;
+package csulb.cecs327.Controllers.FrontEnd;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -10,6 +10,9 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import com.jgoodies.forms.factories.*;
+import csulb.cecs327.Models.SongDatabase;
+import csulb.cecs327.Models.User;
+import csulb.cecs327.Services.MusicPlayer;
 import net.miginfocom.swing.*;
 
 /**
