@@ -19,6 +19,7 @@ public class AppUI extends JPanel {
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - PRAMOD REDDY CHAMALA
+    private JButton button4;
     private JLabel playlistTitle2;
     private JScrollPane songInfoPane;
     private JTable songInfoTable;
@@ -27,12 +28,13 @@ public class AppUI extends JPanel {
     private JScrollPane playlistPane;
     private JList playlistItems;
     private JButton button2;
-    private JLabel volumeLabel;
+    private JButton button3;
     private JButton previousButton;
     private JButton playPauseButton;
     private JButton nextButton;
     private JButton muteButton;
-    private JSlider volumeSlider;
+    private JLabel volumeLabel;
+    private JSlider slider1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
     // Music Player Variables
@@ -120,6 +122,7 @@ public class AppUI extends JPanel {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - PRAMOD REDDY CHAMALA
         DefaultComponentFactory compFactory = DefaultComponentFactory.getInstance();
+        button4 = new JButton();
         playlistTitle2 = compFactory.createTitle("RainbowRadio");
         songInfoPane = new JScrollPane();
         songInfoTable = new JTable();
@@ -128,12 +131,13 @@ public class AppUI extends JPanel {
         playlistPane = new JScrollPane();
         playlistItems = new JList();
         button2 = new JButton();
-        volumeLabel = compFactory.createLabel("Volume");
+        button3 = new JButton();
         previousButton = new JButton();
         playPauseButton = new JButton();
         nextButton = new JButton();
         muteButton = new JButton();
-        volumeSlider = new JSlider();
+        volumeLabel = compFactory.createLabel("");
+        slider1 = new JSlider();
 
         //======== this ========
 
@@ -147,6 +151,15 @@ public class AppUI extends JPanel {
         setLayout(new MigLayout(
             "hidemode 3",
             // columns
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
             "[fill]" +
             "[fill]" +
             "[fill]" +
@@ -230,51 +243,65 @@ public class AppUI extends JPanel {
             "[]" +
             "[]" +
             "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
             "[]"));
-        add(playlistTitle2, "cell 34 1 1 2,alignx center,growx 0");
+
+        //---- button4 ----
+        button4.setText("Log Out");
+        add(button4, "cell 46 1");
+        add(playlistTitle2, "cell 35 2 1 2,alignx center,growx 0");
 
         //======== songInfoPane ========
         {
             songInfoPane.setViewportView(songInfoTable);
         }
-        add(songInfoPane, "cell 22 2 26 28");
-        add(playlistTitle, "cell 6 3 5 1,alignx center,growx 0");
+        add(songInfoPane, "cell 22 4 34 28");
+        add(playlistTitle, "cell 6 5 5 1,alignx center,growx 0");
 
         //---- button1 ----
         button1.setText("+");
-        add(button1, "cell 16 4");
+        add(button1, "cell 16 6");
 
         //======== playlistPane ========
         {
             playlistPane.setViewportView(playlistItems);
         }
-        add(playlistPane, "cell 1 4 14 25,growy");
+        add(playlistPane, "cell 1 6 14 25,growy");
 
         //---- button2 ----
         button2.setText("-");
-        add(button2, "cell 16 5");
-        add(volumeLabel, "cell 41 30,alignx center,growx 0");
+        add(button2, "cell 16 7");
+
+        //---- button3 ----
+        button3.setIcon(new ImageIcon("/Users/pramodchamala/IdeaProjects/CECS-327-Music-Player/picture/icon/Shuffle.png"));
+        add(button3, "cell 30 33");
 
         //---- previousButton ----
-        previousButton.setText("Previous");
+        previousButton.setIcon(new ImageIcon("/Users/pramodchamala/IdeaProjects/CECS-327-Music-Player/picture/icon/Button-Back-icon.png"));
         previousButton.addActionListener(e -> previousButtonActionPerformed(e));
-        add(previousButton, "cell 31 31");
+        add(previousButton, "cell 32 33");
 
         //---- playPauseButton ----
-        playPauseButton.setText("Play");
+        playPauseButton.setIcon(new ImageIcon("/Users/pramodchamala/IdeaProjects/CECS-327-Music-Player/picture/icon/Button-Play-icon.png"));
         playPauseButton.addActionListener(e -> playPauseButtonActionPerformed(e));
-        add(playPauseButton, "cell 33 31,width 100:100:100");
+        add(playPauseButton, "cell 34 33,width 100:100:100");
 
         //---- nextButton ----
-        nextButton.setText("Next");
+        nextButton.setIcon(new ImageIcon("/Users/pramodchamala/IdeaProjects/CECS-327-Music-Player/picture/icon/Button-Forward-icon.png"));
         nextButton.addActionListener(e -> nextButtonActionPerformed(e));
-        add(nextButton, "cell 34 31");
+        add(nextButton, "cell 35 33");
 
         //---- muteButton ----
-        muteButton.setText("Mute");
+        muteButton.setIcon(new ImageIcon("/Users/pramodchamala/IdeaProjects/CECS-327-Music-Player/picture/icon/Mute Button.png"));
         muteButton.addActionListener(e -> muteButtonActionPerformed(e));
-        add(muteButton, "cell 37 31");
-        add(volumeSlider, "cell 38 31 7 1,align center top,grow 0 0");
+        add(muteButton, "cell 38 33");
+
+        //---- volumeLabel ----
+        volumeLabel.setIcon(new ImageIcon("/Users/pramodchamala/IdeaProjects/CECS-327-Music-Player/picture/icon/Volume.png"));
+        add(volumeLabel, "cell 42 33,alignx center,growx 0");
+        add(slider1, "cell 45 33");
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
 
         playSongOnDoubleClick();
