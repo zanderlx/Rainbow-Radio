@@ -61,9 +61,9 @@ The project is still incomplete so the program will most likely freeze. To exit 
   * Work in progress
 
 ## Contributors
-Lexzander Saplan – [zanderlx](https://github.com/zanderlx) – lsaplan97@gmail.com
-Pramod Chamala - [promo230](https://github.com/promo230) – pramodchamala@gmail.com
-Phuc Nguyen - [itzphuckie](https://github.com/itzphuckie) – littlem0nk3y141@yahoo.com
-Kevin Bui - [KevinThuyBui](https://github.com/KevinThuyBui) – kevinthuybui@gmail.com
+Lexzander Saplan – [zanderlx](https://github.com/zanderlx) – lsaplan97@gmail.com  
+Pramod Chamala - [promo230](https://github.com/promo230) – pramodchamala@gmail.com  
+Phuc Nguyen - [itzphuckie](https://github.com/itzphuckie) – littlem0nk3y141@yahoo.com  
+Kevin Bui - [KevinThuyBui](https://github.com/KevinThuyBui) – kevinthuybui@gmail.com  
 Bryce Moser - [BryceMoser](https://github.com/BryceMoser) – brycemoser@yahoo.com  
 
