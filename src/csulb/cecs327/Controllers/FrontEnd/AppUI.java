@@ -33,8 +33,8 @@ public class AppUI extends JPanel {
     private JTable songInfoTable;
     private JScrollPane playlistPane;
     private JList playlistItems;
-    private JLabel Song;
-    private JLabel artist;
+    private JLabel songLabel;
+    private JLabel artistLabel;
     private JButton shuffleButton;
     private JButton previousButton;
     private JButton playPauseButton;
@@ -50,6 +50,8 @@ public class AppUI extends JPanel {
     private MusicPlayer player = new MusicPlayer(song);
     private DefaultTableModel model;
     private User user;
+    private SongSerializer songSerializer = new SongSerializer();
+    private RootObject[] musicJson = songSerializer.getRootObjects();
 
     // Constructor
     public AppUI(User user) {
@@ -67,9 +69,15 @@ public class AppUI extends JPanel {
     private void playPauseButtonActionPerformed(ActionEvent e) {
         if (playPauseButton.getText().equals("Play")) {
             playPauseButton.setText("Pause");
+            int row = songInfoTable.getSelectedRow();
+            songLabel.setText((String)songInfoTable.getValueAt(row, 0));
+            artistLabel.setText((String)songInfoTable.getValueAt(row, 1));
             player.play();
         } else {
             playPauseButton.setText("Play");
+            int row = songInfoTable.getSelectedRow();
+            songLabel.setText((String)songInfoTable.getValueAt(row, 0));
+            artistLabel.setText((String)songInfoTable.getValueAt(row, 1));
             player.pause();
         }
     }
@@ -83,6 +91,9 @@ public class AppUI extends JPanel {
             song = songDatabase.getSongList().get(currentSong);
             player = new MusicPlayer(song);
             playPauseButton.setText("Pause");
+            int row = songInfoTable.getSelectedRow();
+            songLabel.setText((String)songInfoTable.getValueAt(row, 0));
+            artistLabel.setText((String)songInfoTable.getValueAt(row, 1));
             player.play();
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -97,6 +108,9 @@ public class AppUI extends JPanel {
             song = songDatabase.getSongList().get(currentSong);
             player = new MusicPlayer(song);
             playPauseButton.setText("Pause");
+            int row = songInfoTable.getSelectedRow();
+            songLabel.setText((String)songInfoTable.getValueAt(row, 0));
+            artistLabel.setText((String)songInfoTable.getValueAt(row, 1));
             player.play();
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -118,15 +132,20 @@ public class AppUI extends JPanel {
                         song = songDatabase.getSongList().get(currentSong);
                         player = new MusicPlayer(song);
                         playPauseButton.setText("Pause");
+                        int row = songInfoTable.getSelectedRow();
+                        songLabel.setText((String)songInfoTable.getValueAt(row, 0));
+                        artistLabel.setText((String)songInfoTable.getValueAt(row, 1));
                         player.play();
                     }
                 } catch (Exception exception) {
                     song = songDatabase.getSongList().get(new Random().nextInt(5));
                     player = new MusicPlayer(song);
                     playPauseButton.setText("Pause");
+                    int row = songInfoTable.getSelectedRow();
+                    songLabel.setText((String)songInfoTable.getValueAt(row, 0));
+                    artistLabel.setText((String)songInfoTable.getValueAt(row, 1));
                     player.play();
                 }
-
             }
         });
     }
@@ -147,8 +166,8 @@ public class AppUI extends JPanel {
         songInfoTable = new JTable();
         playlistPane = new JScrollPane();
         playlistItems = new JList();
-        Song = new JLabel();
-        artist = new JLabel();
+        songLabel = new JLabel();
+        artistLabel = new JLabel();
         shuffleButton = new JButton();
         previousButton = new JButton();
         playPauseButton = new JButton();
@@ -347,15 +366,15 @@ public class AppUI extends JPanel {
         }
         add(playlistPane, "cell 6 31 10 26,growy");
 
-        //---- Song ----
-        Song.setFont(new Font("Segoe UI", Font.PLAIN, 24));
-        Song.setText("Song");
-        add(Song, "cell 7 61");
+        //---- songLabel ----
+        songLabel.setFont(new Font("Segoe UI", Font.PLAIN, 24));
+        songLabel.setText("Song");
+        add(songLabel, "cell 6 61");
 
-        //---- artist ----
-        artist.setText("Artist");
-        artist.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-        add(artist, "cell 7 62,alignx left,growx 0");
+        //---- artistLabel ----
+        artistLabel.setText("Artist");
+        artistLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        add(artistLabel, "cell 6 62,alignx left,growx 0");
 
         //---- shuffleButton ----
         shuffleButton.setText("Shuffle");
@@ -387,7 +406,7 @@ public class AppUI extends JPanel {
         playSongOnDoubleClick();
 
 
-        Object[] columns = {"Song Title", "Artist", "Album"};
+        Object[] columns = {"Song Title", "Artist", "Album", "Genre"};
         model = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -409,19 +428,18 @@ public class AppUI extends JPanel {
     }
 
     public void addDefaultTableRows() {
-        model.addRow(new Object[]{"Faded", "Alan Walker", "Different World"});
-        model.addRow(new Object[]{"Mine", "Bazzi", "Cosmic"});
-        model.addRow(new Object[]{"Crab Rave", "Noisestorm", "Monstercat"});
-        model.addRow(new Object[]{"High Hopes", "Panic! At The Disco", "Pray for the Wicked"});
-        model.addRow(new Object[]{"Stressed Out", "Twenty One Pilots", "Blurryface"});
-        SongSerializer songSerializer = new SongSerializer();
-        RootObject[] musicJson = songSerializer.getRootObjects();
+        model.addRow(new Object[]{"Faded", "Alan Walker", "Different World", "edm"});
+        model.addRow(new Object[]{"Mine", "Bazzi", "Cosmic", "hip hop"});
+        model.addRow(new Object[]{"Crab Rave", "Noisestorm", "Monstercat", "techno"});
+        model.addRow(new Object[]{"High Hopes", "Panic! At The Disco", "Pray for the Wicked", "rock"});
+        model.addRow(new Object[]{"Stressed Out", "Twenty One Pilots", "Blurryface", "alternative rock"});
 
-        for (int i = 0; i < musicJson.length; i++) {
+        for (RootObject rootObject : musicJson) {
             model.addRow(new Object[]{
-                    musicJson[i].getSong().getTitle(),
-                    musicJson[i].getArtist().getName(),
-                    musicJson[i].getRelease().getName()
+                    rootObject.getSong().getTitle(),
+                    rootObject.getArtist().getName(),
+                    rootObject.getRelease().getName(),
+                    rootObject.getArtist().getTerms()
             });
         }
     }
