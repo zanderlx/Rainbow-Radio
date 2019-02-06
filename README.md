@@ -44,6 +44,7 @@ The project is still incomplete so the program will most likely freeze. To exit 
 
 ## Release History
 * 0.1.3
+  * Added filtering per category available
   * Added a bunch of songs
 * 0.1.2
   * Added registration page
