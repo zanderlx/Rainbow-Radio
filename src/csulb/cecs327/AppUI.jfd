@@ -48,9 +48,8 @@ new FormModel {
 				name: "playPauseButton"
 				"text": "Play"
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "playPauseButtonActionPerformed", true ) )
-				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "playPauseButtonActionPerformed", true ) )
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 26 28,width 120:120:120"
+				"value": "cell 26 28,width 100:100:100"
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "nextButton"
@@ -62,6 +61,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "muteButton"
 				"text": "Mute"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "muteButtonActionPerformed", true ) )
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
 				"value": "cell 29 28"
 			} )
@@ -73,11 +73,6 @@ new FormModel {
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 30, 50 )
 			"size": new java.awt.Dimension( 670, 475 )
-		} )
-		add( new FormComponent( "javax.swing.JTextArea" ) {
-			name: "textArea1"
-		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 135, 625 )
 		} )
 	}
 }
