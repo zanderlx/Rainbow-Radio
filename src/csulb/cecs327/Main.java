@@ -8,13 +8,14 @@ import javax.swing.*;
 public class Main {
 
     public static void main(String[] args) {
-        JFrame login = new JFrame("LoginPage");
+        JFrame login = new JFrame("Login Page");
         // Dummy user
         User user = new User("admin", "password", "email");
         login.setContentPane(new AppUI(user));
         login.setSize(1024, 720);
         login.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         login.setVisible(true);
+        login.setResizable(false);
         login.pack();
     }
 
