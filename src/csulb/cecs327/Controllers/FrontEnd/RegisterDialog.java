@@ -2,7 +2,7 @@
  * Created by JFormDesigner on Mon Feb 04 19:50:01 PST 2019
  */
 
-package csulb.cecs327;
+package csulb.cecs327.Controllers.FrontEnd;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -13,6 +13,8 @@ import javax.swing.*;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
+import csulb.cecs327.Models.User;
+import csulb.cecs327.Services.UserSerializer;
 import net.miginfocom.swing.*;
 
 

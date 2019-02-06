@@ -1,4 +1,4 @@
-package csulb.cecs327;
+package csulb.cecs327.Services;
 
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
@@ -15,12 +15,12 @@ public class MusicPlayer {
     private  Player songPlayer;
     private final Object playerLock = new Object();
     private int playerStatus = NOT_STARTED;
+    private FileInputStream songStream;
 
     public MusicPlayer(String song) {
         try {
-            FileInputStream songStream = new FileInputStream(song);
+            songStream = new FileInputStream(song);
             songPlayer = new Player(songStream);
-            System.out.println(songPlayer.getPosition());
         } catch (Exception e) {
             e.getStackTrace();
         }
@@ -100,5 +100,15 @@ public class MusicPlayer {
         } catch (final Exception e) {
             // ignore, we are terminating anyway
         }
+    }
+
+    public void setSong(String song) {
+        try {
+            songStream = new FileInputStream(song);
+            songPlayer = new Player(songStream);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }
