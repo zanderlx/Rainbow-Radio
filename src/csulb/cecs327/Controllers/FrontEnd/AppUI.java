@@ -22,12 +22,20 @@ public class AppUI extends JPanel {
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - Lexzander Saplan
+    private JLabel SearchLabel;
+    private JTextField searchBox;
     private JLabel playlistTitle;
+    private JLabel LibraryTitle;
+    private JRadioButton songFilter;
+    private JRadioButton artistFilter;
+    private JRadioButton genreFilter;
     private JScrollPane songInfoPane;
     private JTable songInfoTable;
     private JScrollPane playlistPane;
     private JList playlistItems;
-    private JLabel volumeLabel;
+    private JLabel Song;
+    private JLabel artist;
+    private JButton shuffleButton;
     private JButton previousButton;
     private JButton playPauseButton;
     private JButton nextButton;
@@ -128,12 +136,20 @@ public class AppUI extends JPanel {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - Lexzander Saplan
         DefaultComponentFactory compFactory = DefaultComponentFactory.getInstance();
+        SearchLabel = new JLabel();
+        searchBox = new JTextField();
         playlistTitle = compFactory.createTitle("Playlist");
+        LibraryTitle = new JLabel();
+        songFilter = new JRadioButton();
+        artistFilter = new JRadioButton();
+        genreFilter = new JRadioButton();
         songInfoPane = new JScrollPane();
         songInfoTable = new JTable();
         playlistPane = new JScrollPane();
         playlistItems = new JList();
-        volumeLabel = compFactory.createLabel("Volume");
+        Song = new JLabel();
+        artist = new JLabel();
+        shuffleButton = new JButton();
         previousButton = new JButton();
         playPauseButton = new JButton();
         nextButton = new JButton();
@@ -144,163 +160,234 @@ public class AppUI extends JPanel {
 
         // JFormDesigner evaluation mark
         setBorder(new javax.swing.border.CompoundBorder(
-                new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder(0, 0, 0, 0),
-                        "JFormDesigner Evaluation", javax.swing.border.TitledBorder.CENTER,
-                        javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Dialog", java.awt.Font.BOLD, 12),
-                        java.awt.Color.red), getBorder()));
-        addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent e) {
-                if ("border".equals(e.getPropertyName())) throw new RuntimeException();
-            }
-        });
+            new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder(0, 0, 0, 0),
+                "JFormDesigner Evaluation", javax.swing.border.TitledBorder.CENTER,
+                javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Dialog", java.awt.Font.BOLD, 12),
+                java.awt.Color.red), getBorder())); addPropertyChangeListener(new java.beans.PropertyChangeListener(){public void propertyChange(java.beans.PropertyChangeEvent e){if("border".equals(e.getPropertyName()))throw new RuntimeException();}});
 
         setLayout(new MigLayout(
-                "hidemode 3",
-                // columns
-                "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]",
-                // rows
-                "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]"));
+            "fillx,hidemode 3",
+            // columns
+            "0[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[48:103,fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[0,fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]0" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[9,fill]" +
+            "[fill]0" +
+            "[191,fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[14,fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0",
+            // rows
+            "[]0" +
+            "[]0" +
+            "[]0" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]0" +
+            "[]0" +
+            "[]0" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]0" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]0" +
+            "[]0" +
+            "[]0" +
+            "[]0" +
+            "[]"));
+
+        //---- SearchLabel ----
+        SearchLabel.setText("Search");
+        SearchLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        add(SearchLabel, "cell 25 29 11 1,align center center,grow 0 0");
+        add(searchBox, "cell 36 29 4 1");
 
         //---- playlistTitle ----
-        playlistTitle.setFont(new Font("Segoe UI", Font.PLAIN, 20));
-        add(playlistTitle, "cell 3 23 3 2,alignx center,growx 0");
+        playlistTitle.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        add(playlistTitle, "cell 6 30,alignx center,growx 0");
+
+        //---- LibraryTitle ----
+        LibraryTitle.setText("Song Library");
+        LibraryTitle.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        add(LibraryTitle, "cell 18 30,align center center,grow 0 0");
+
+        //---- songFilter ----
+        songFilter.setText("Song");
+        add(songFilter, "cell 39 30,aligny center,growy 0");
+
+        //---- artistFilter ----
+        artistFilter.setText("Artist");
+        add(artistFilter, "cell 39 30,aligny center,growy 0");
+
+        //---- genreFilter ----
+        genreFilter.setText("Genre");
+        add(genreFilter, "cell 39 30,aligny center,growy 0");
 
         //======== songInfoPane ========
         {
+
+            //---- songInfoTable ----
+            songInfoTable.setFont(new Font("Segoe UI", Font.PLAIN, 16));
             songInfoPane.setViewportView(songInfoTable);
         }
-        add(songInfoPane, "cell 20 25 36 12");
+        add(songInfoPane, "cell 17 31 25 26");
 
         //======== playlistPane ========
         {
             playlistPane.setViewportView(playlistItems);
         }
-        add(playlistPane, "cell 3 25 15 12,growy");
-        add(volumeLabel, "cell 51 37,alignx center,growx 0");
+        add(playlistPane, "cell 6 31 10 26,growy");
+
+        //---- Song ----
+        Song.setFont(new Font("Segoe UI", Font.PLAIN, 24));
+        Song.setText("Song");
+        add(Song, "cell 7 61");
+
+        //---- artist ----
+        artist.setText("Artist");
+        artist.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        add(artist, "cell 7 62,alignx left,growx 0");
+
+        //---- shuffleButton ----
+        shuffleButton.setText("Shuffle");
+        shuffleButton.addActionListener(e -> muteButtonActionPerformed(e));
+        add(shuffleButton, "cell 20 62");
 
         //---- previousButton ----
         previousButton.setText("Previous");
         previousButton.addActionListener(e -> previousButtonActionPerformed(e));
-        add(previousButton, "cell 42 38");
+        add(previousButton, "cell 20 62");
 
         //---- playPauseButton ----
         playPauseButton.setText("Play");
         playPauseButton.addActionListener(e -> playPauseButtonActionPerformed(e));
-        add(playPauseButton, "cell 44 38,width 100:100:100");
+        add(playPauseButton, "cell 20 62");
 
         //---- nextButton ----
         nextButton.setText("Next");
         nextButton.addActionListener(e -> nextButtonActionPerformed(e));
-        add(nextButton, "cell 46 38");
+        add(nextButton, "cell 20 62");
 
         //---- muteButton ----
         muteButton.setText("Mute");
         muteButton.addActionListener(e -> muteButtonActionPerformed(e));
-        add(muteButton, "cell 47 38");
-        add(volumeSlider, "cell 48 38 7 1,align center top,grow 0 0");
+        add(muteButton, "cell 20 62");
+        add(volumeSlider, "cell 36 62 2 1,aligny center,growy 0");
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
 
         playSongOnDoubleClick();
 
 
-        Object[] columns = {"No.", "Song Title", "Artist", "Album"};
+        Object[] columns = {"Song Title", "Artist", "Album"};
         model = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -309,7 +396,10 @@ public class AppUI extends JPanel {
         };
         model.setColumnIdentifiers(columns);
         songInfoTable.getTableHeader().setReorderingAllowed(false);
+        songInfoTable.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
         addDefaultTableRows();
+        songInfoTable.setShowVerticalLines(false);
+        songInfoTable.setRowHeight(30);
         songInfoTable.setModel(model);
     }
 
@@ -319,17 +409,16 @@ public class AppUI extends JPanel {
     }
 
     public void addDefaultTableRows() {
-        model.addRow(new Object[]{"1", "Faded", "Alan Walker", "Different World"});
-        model.addRow(new Object[]{"2", "Mine", "Bazzi", "Cosmic"});
-        model.addRow(new Object[]{"3", "Crab Rave", "Noisestorm", "Monstercat"});
-        model.addRow(new Object[]{"4", "High Hopes", "Panic! At The Disco", "Pray for the Wicked"});
-        model.addRow(new Object[]{"5", "Stressed Out", "Twenty One Pilots", "Blurryface"});
+        model.addRow(new Object[]{"Faded", "Alan Walker", "Different World"});
+        model.addRow(new Object[]{"Mine", "Bazzi", "Cosmic"});
+        model.addRow(new Object[]{"Crab Rave", "Noisestorm", "Monstercat"});
+        model.addRow(new Object[]{"High Hopes", "Panic! At The Disco", "Pray for the Wicked"});
+        model.addRow(new Object[]{"Stressed Out", "Twenty One Pilots", "Blurryface"});
         SongSerializer songSerializer = new SongSerializer();
         RootObject[] musicJson = songSerializer.getRootObjects();
 
         for (int i = 0; i < musicJson.length; i++) {
             model.addRow(new Object[]{
-                    i + 1,
                     musicJson[i].getSong().getTitle(),
                     musicJson[i].getArtist().getName(),
                     musicJson[i].getRelease().getName()
