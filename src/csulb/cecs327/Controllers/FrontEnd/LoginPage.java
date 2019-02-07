@@ -27,7 +27,7 @@ import net.miginfocom.swing.*;
  */
 public class LoginPage extends JPanel {
     public LoginPage() {
-        //player.play();
+        player.play();
         initComponents();
     }
 
@@ -176,7 +176,7 @@ public class LoginPage extends JPanel {
         add(logInButton, "cell 9 9");
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
 
-        Image homePic = new ImageIcon("picture/music02.gif").getImage().getScaledInstance(250, 200, Image.SCALE_DEFAULT);
+        Image homePic = new ImageIcon("C:\\Users\\Phuc Nguyen\\Documents\\GitHub\\CECS-327-Music-Player\\src\\csulb\\cecs327\\Resources\\picture\\music02.gif").getImage().getScaledInstance(250, 200, Image.SCALE_DEFAULT);
         pic.setIcon(new ImageIcon(homePic));
     }
 
