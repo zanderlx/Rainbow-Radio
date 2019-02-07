@@ -9,10 +9,13 @@ new FormModel {
 			"$rowConstraints": "0[]0[][][][][][][][][][][][][][][][][][][22:n][][][][][][][][][][][][][][][][][][][][][][]0[]0[]0[][][][][][][][]0[][][][][][]0[]0[]0[]0[]"
 		} ) {
 			name: "this"
+			"foreground": new java.awt.Color( 0, 0, 255, 255 )
+			"background": sfield java.awt.Color darkGray
 			add( new FormComponent( "com.jformdesigner.designer.wrapper.JGoodiesFormsTitle" ) {
 				name: "playlistTitle"
 				"textWithMnemonic": "Playlist"
 				"font": new java.awt.Font( "Segoe UI", 1, 24 )
+				"foreground": new java.awt.Color( 255, 255, 255, 255 )
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
 				"value": "cell 6 20,alignx center,growx 0"
 			} )
@@ -20,6 +23,7 @@ new FormModel {
 				name: "LibraryTitle"
 				"text": "Song Library"
 				"font": new java.awt.Font( "Segoe UI", 1, 24 )
+				"foreground": new java.awt.Color( 255, 255, 255, 255 )
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
 				"value": "cell 18 20,align center center,grow 0 0"
 			} )
@@ -27,11 +31,14 @@ new FormModel {
 				name: "SearchLabel"
 				"text": "Search"
 				"font": new java.awt.Font( "Segoe UI", 1, 18 )
+				"foreground": new java.awt.Color( 255, 255, 255, 255 )
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
 				"value": "cell 25 20 10 1,align center bottom,grow 0 0"
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "searchBox"
+				"font": new java.awt.Font( "Segoe UI", 0, 16 )
+				"foreground": new java.awt.Color( 255, 255, 255, 255 )
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
 				"value": "cell 36 20 4 1"
 			} )
@@ -40,6 +47,7 @@ new FormModel {
 				add( new FormComponent( "javax.swing.JTable" ) {
 					name: "songInfoTable"
 					"font": new java.awt.Font( "Segoe UI", 0, 16 )
+					"foreground": sfield java.awt.Color darkGray
 				} )
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
 				"value": "cell 17 21 25 26"
@@ -74,6 +82,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "shuffleButton"
 				"text": "Shuffle"
+				"foreground": sfield java.awt.Color black
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "muteButtonActionPerformed", true ) )
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
 				"value": "cell 20 52"
@@ -81,6 +90,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "previousButton"
 				"text": "Previous"
+				"foreground": sfield java.awt.Color black
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "previousButtonActionPerformed", true ) )
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
 				"value": "cell 20 52"

@@ -172,18 +172,6 @@ public class AppUI extends JPanel {
         songInfoTable.setRowSorter(sorter);
     }
 
-    private void songFilterActionPerformed(ActionEvent e) {
-        sortColumn(0);
-    }
-
-    private void artistFilterActionPerformed(ActionEvent e) {
-        sortColumn(1);
-    }
-
-    private void genreFilterActionPerformed(ActionEvent e) {
-        sortColumn(2);
-    }
-
     // Initialize music player components
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -208,6 +196,8 @@ public class AppUI extends JPanel {
         volumeSlider = new JSlider();
 
         //======== this ========
+        setForeground(Color.blue);
+        setBackground(Color.darkGray);
 
         // JFormDesigner evaluation mark
         setBorder(new javax.swing.border.CompoundBorder(
@@ -348,17 +338,24 @@ public class AppUI extends JPanel {
 
         //---- playlistTitle ----
         playlistTitle.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        playlistTitle.setForeground(Color.white);
         add(playlistTitle, "cell 6 20,alignx center,growx 0");
 
         //---- LibraryTitle ----
         LibraryTitle.setText("Song Library");
         LibraryTitle.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        LibraryTitle.setForeground(Color.white);
         add(LibraryTitle, "cell 18 20,align center center,grow 0 0");
 
         //---- SearchLabel ----
         SearchLabel.setText("Search");
         SearchLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        SearchLabel.setForeground(Color.white);
         add(SearchLabel, "cell 25 20 10 1,align center bottom,grow 0 0");
+
+        //---- searchBox ----
+        searchBox.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        searchBox.setForeground(Color.white);
         add(searchBox, "cell 36 20 4 1");
 
         //======== songInfoPane ========
@@ -366,6 +363,7 @@ public class AppUI extends JPanel {
 
             //---- songInfoTable ----
             songInfoTable.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+            songInfoTable.setForeground(Color.darkGray);
             songInfoPane.setViewportView(songInfoTable);
         }
         add(songInfoPane, "cell 17 21 25 26");
@@ -389,11 +387,13 @@ public class AppUI extends JPanel {
 
         //---- shuffleButton ----
         shuffleButton.setText("Shuffle");
+        shuffleButton.setForeground(Color.black);
         shuffleButton.addActionListener(e -> muteButtonActionPerformed(e));
         add(shuffleButton, "cell 20 52");
 
         //---- previousButton ----
         previousButton.setText("Previous");
+        previousButton.setForeground(Color.black);
         previousButton.addActionListener(e -> previousButtonActionPerformed(e));
         add(previousButton, "cell 20 52");
 
@@ -433,6 +433,8 @@ public class AppUI extends JPanel {
 
         sortColumn(0);
         tableSearch = new TableSearch(songInfoTable, songInfoPane, searchBox);
+        searchBox.setBorder(BorderFactory.createMatteBorder(0, 0,2, 0, Color.decode("#1DB954")));
+        searchBox.setBackground(null);
 
     }
 
