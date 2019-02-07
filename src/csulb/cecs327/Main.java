@@ -1,6 +1,7 @@
 package csulb.cecs327;
 
 import csulb.cecs327.Controllers.FrontEnd.AppUI;
+import csulb.cecs327.Controllers.FrontEnd.LoginPage;
 import csulb.cecs327.Models.User;
 
 import javax.swing.*;
@@ -12,7 +13,7 @@ public class Main {
         JFrame login = new JFrame("Rainbow Radio");
         // Dummy user
         User user = new User("admin", "password", "email");
-        login.setContentPane(new AppUI(user));
+        login.setContentPane(new LoginPage());
         login.setSize(1024, 720);
         login.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         login.setResizable(false);
