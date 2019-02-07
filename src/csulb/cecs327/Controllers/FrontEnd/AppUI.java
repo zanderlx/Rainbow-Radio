@@ -6,9 +6,12 @@ package csulb.cecs327.Controllers.FrontEnd;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Random;
+import java.util.*;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import com.jgoodies.forms.factories.*;
 import csulb.cecs327.Models.*;
@@ -22,18 +25,16 @@ public class AppUI extends JPanel {
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - Lexzander Saplan
-    private JLabel SearchLabel;
-    private JTextField searchBox;
     private JLabel playlistTitle;
     private JLabel LibraryTitle;
-    private JRadioButton songFilter;
-    private JRadioButton artistFilter;
-    private JRadioButton genreFilter;
+    private JLabel SearchLabel;
+    private JTextField searchBox;
     private JScrollPane songInfoPane;
     private JTable songInfoTable;
     private JScrollPane playlistPane;
     private JList playlistItems;
     private JLabel songLabel;
+    private JProgressBar progressBar1;
     private JLabel artistLabel;
     private JButton shuffleButton;
     private JButton previousButton;
@@ -45,6 +46,7 @@ public class AppUI extends JPanel {
 
     // Custom Variables
     private int currentSong = 0;
+    private int fakeCurrent = 0;
     private SongDatabase songDatabase = new SongDatabase();
     private String song = songDatabase.getSongList().get(currentSong);
     private MusicPlayer player = new MusicPlayer(song);
@@ -52,6 +54,7 @@ public class AppUI extends JPanel {
     private User user;
     private SongSerializer songSerializer = new SongSerializer();
     private RootObject[] musicJson = songSerializer.getRootObjects();
+    private TableSearch tableSearch;
 
     // Constructor
     public AppUI(User user) {
@@ -90,11 +93,14 @@ public class AppUI extends JPanel {
                 currentSong = songDatabase.getSongList().size() - 1;
             song = songDatabase.getSongList().get(currentSong);
             player = new MusicPlayer(song);
-            playPauseButton.setText("Pause");
-            int row = songInfoTable.getSelectedRow();
+            player.play();
+            int row = --fakeCurrent;
+            if (row < 0)
+                row = songInfoTable.getRowCount() - 1;
+            fakeCurrent = row;
             songLabel.setText((String)songInfoTable.getValueAt(row, 0));
             artistLabel.setText((String)songInfoTable.getValueAt(row, 1));
-            player.play();
+            playPauseButton.setText("Pause");
         } catch (Exception exception) {
             exception.printStackTrace();
         }
@@ -107,8 +113,10 @@ public class AppUI extends JPanel {
             currentSong %= songDatabase.getSongList().size();
             song = songDatabase.getSongList().get(currentSong);
             player = new MusicPlayer(song);
+            int row = ++fakeCurrent;
+            fakeCurrent = row;
+            row %= songInfoTable.getRowCount();
             playPauseButton.setText("Pause");
-            int row = songInfoTable.getSelectedRow();
             songLabel.setText((String)songInfoTable.getValueAt(row, 0));
             artistLabel.setText((String)songInfoTable.getValueAt(row, 1));
             player.play();
@@ -128,6 +136,8 @@ public class AppUI extends JPanel {
                 try {
                     if (e.getClickCount() == 2) {
                         currentSong = songInfoTable.getSelectedRow();
+                        System.out.println(currentSong);
+                        System.out.println(musicJson.length);
                         player.stop();
                         song = songDatabase.getSongList().get(currentSong);
                         player = new MusicPlayer(song);
@@ -135,6 +145,7 @@ public class AppUI extends JPanel {
                         int row = songInfoTable.getSelectedRow();
                         songLabel.setText((String)songInfoTable.getValueAt(row, 0));
                         artistLabel.setText((String)songInfoTable.getValueAt(row, 1));
+                        fakeCurrent = row;
                         player.play();
                     }
                 } catch (Exception exception) {
@@ -144,10 +155,21 @@ public class AppUI extends JPanel {
                     int row = songInfoTable.getSelectedRow();
                     songLabel.setText((String)songInfoTable.getValueAt(row, 0));
                     artistLabel.setText((String)songInfoTable.getValueAt(row, 1));
+                    fakeCurrent = row;
                     player.play();
                 }
             }
         });
+    }
+
+    public void sortColumn(int column) {
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(songInfoTable.getModel());
+        sorter.setComparator(column, Comparator.naturalOrder());
+        sorter.setSortsOnUpdates(true);
+        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+        sortKeys.add(new RowSorter.SortKey(column, SortOrder.ASCENDING));
+        sorter.setSortKeys(sortKeys);
+        songInfoTable.setRowSorter(sorter);
     }
 
     // Initialize music player components
@@ -155,18 +177,16 @@ public class AppUI extends JPanel {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - Lexzander Saplan
         DefaultComponentFactory compFactory = DefaultComponentFactory.getInstance();
-        SearchLabel = new JLabel();
-        searchBox = new JTextField();
         playlistTitle = compFactory.createTitle("Playlist");
         LibraryTitle = new JLabel();
-        songFilter = new JRadioButton();
-        artistFilter = new JRadioButton();
-        genreFilter = new JRadioButton();
+        SearchLabel = new JLabel();
+        searchBox = new JTextField();
         songInfoPane = new JScrollPane();
         songInfoTable = new JTable();
         playlistPane = new JScrollPane();
         playlistItems = new JList();
         songLabel = new JLabel();
+        progressBar1 = new JProgressBar();
         artistLabel = new JLabel();
         shuffleButton = new JButton();
         previousButton = new JButton();
@@ -176,6 +196,8 @@ public class AppUI extends JPanel {
         volumeSlider = new JSlider();
 
         //======== this ========
+        setForeground(Color.blue);
+        setBackground(Color.darkGray);
 
         // JFormDesigner evaluation mark
         setBorder(new javax.swing.border.CompoundBorder(
@@ -221,7 +243,7 @@ public class AppUI extends JPanel {
             "[fill]" +
             "[fill]" +
             "[fill]" +
-            "[9,fill]" +
+            "[7,fill]0" +
             "[fill]0" +
             "[191,fill]0" +
             "[fill]0" +
@@ -251,9 +273,7 @@ public class AppUI extends JPanel {
             "[fill]0" +
             "[fill]0",
             // rows
-            "[]0" +
-            "[]0" +
-            "[]0" +
+            "0[]0" +
             "[]" +
             "[]" +
             "[]" +
@@ -272,15 +292,7 @@ public class AppUI extends JPanel {
             "[]" +
             "[]" +
             "[]" +
-            "[]" +
-            "[]" +
-            "[]" +
-            "[]" +
-            "[]" +
-            "[]" +
-            "[]" +
-            "[]" +
-            "[]" +
+            "[22:n]" +
             "[]" +
             "[]" +
             "[]" +
@@ -324,87 +336,85 @@ public class AppUI extends JPanel {
             "[]0" +
             "[]"));
 
-        //---- SearchLabel ----
-        SearchLabel.setText("Search");
-        SearchLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-        add(SearchLabel, "cell 25 29 11 1,align center center,grow 0 0");
-        add(searchBox, "cell 36 29 4 1");
-
         //---- playlistTitle ----
         playlistTitle.setFont(new Font("Segoe UI", Font.BOLD, 24));
-        add(playlistTitle, "cell 6 30,alignx center,growx 0");
+        playlistTitle.setForeground(Color.white);
+        add(playlistTitle, "cell 6 20,alignx center,growx 0");
 
         //---- LibraryTitle ----
         LibraryTitle.setText("Song Library");
         LibraryTitle.setFont(new Font("Segoe UI", Font.BOLD, 24));
-        add(LibraryTitle, "cell 18 30,align center center,grow 0 0");
+        LibraryTitle.setForeground(Color.white);
+        add(LibraryTitle, "cell 18 20,align center center,grow 0 0");
 
-        //---- songFilter ----
-        songFilter.setText("Song");
-        add(songFilter, "cell 39 30,aligny center,growy 0");
+        //---- SearchLabel ----
+        SearchLabel.setText("Search");
+        SearchLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        SearchLabel.setForeground(Color.white);
+        add(SearchLabel, "cell 25 20 10 1,align center bottom,grow 0 0");
 
-        //---- artistFilter ----
-        artistFilter.setText("Artist");
-        add(artistFilter, "cell 39 30,aligny center,growy 0");
-
-        //---- genreFilter ----
-        genreFilter.setText("Genre");
-        add(genreFilter, "cell 39 30,aligny center,growy 0");
+        //---- searchBox ----
+        searchBox.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        searchBox.setForeground(Color.white);
+        add(searchBox, "cell 36 20 4 1");
 
         //======== songInfoPane ========
         {
 
             //---- songInfoTable ----
             songInfoTable.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+            songInfoTable.setForeground(Color.darkGray);
             songInfoPane.setViewportView(songInfoTable);
         }
-        add(songInfoPane, "cell 17 31 25 26");
+        add(songInfoPane, "cell 17 21 25 26");
 
         //======== playlistPane ========
         {
             playlistPane.setViewportView(playlistItems);
         }
-        add(playlistPane, "cell 6 31 10 26,growy");
+        add(playlistPane, "cell 6 21 10 26,growy");
 
         //---- songLabel ----
         songLabel.setFont(new Font("Segoe UI", Font.PLAIN, 24));
         songLabel.setText("Song");
-        add(songLabel, "cell 6 61");
+        add(songLabel, "cell 6 51");
+        add(progressBar1, "cell 20 51");
 
         //---- artistLabel ----
         artistLabel.setText("Artist");
         artistLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-        add(artistLabel, "cell 6 62,alignx left,growx 0");
+        add(artistLabel, "cell 6 52,alignx left,growx 0");
 
         //---- shuffleButton ----
         shuffleButton.setText("Shuffle");
+        shuffleButton.setForeground(Color.black);
         shuffleButton.addActionListener(e -> muteButtonActionPerformed(e));
-        add(shuffleButton, "cell 20 62");
+        add(shuffleButton, "cell 20 52");
 
         //---- previousButton ----
         previousButton.setText("Previous");
+        previousButton.setForeground(Color.black);
         previousButton.addActionListener(e -> previousButtonActionPerformed(e));
-        add(previousButton, "cell 20 62");
+        add(previousButton, "cell 20 52");
 
         //---- playPauseButton ----
         playPauseButton.setText("Play");
         playPauseButton.addActionListener(e -> playPauseButtonActionPerformed(e));
-        add(playPauseButton, "cell 20 62");
+        add(playPauseButton, "cell 20 52,width 75:75:75");
 
         //---- nextButton ----
         nextButton.setText("Next");
         nextButton.addActionListener(e -> nextButtonActionPerformed(e));
-        add(nextButton, "cell 20 62");
+        add(nextButton, "cell 20 52");
 
         //---- muteButton ----
         muteButton.setText("Mute");
         muteButton.addActionListener(e -> muteButtonActionPerformed(e));
-        add(muteButton, "cell 20 62");
-        add(volumeSlider, "cell 36 62 2 1,aligny center,growy 0");
+        add(muteButton, "cell 20 52");
+        add(volumeSlider, "cell 36 52 2 1,aligny center,growy 0");
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
 
         playSongOnDoubleClick();
-
 
         Object[] columns = {"Song Title", "Artist", "Album", "Genre"};
         model = new DefaultTableModel() {
@@ -420,6 +430,12 @@ public class AppUI extends JPanel {
         songInfoTable.setShowVerticalLines(false);
         songInfoTable.setRowHeight(30);
         songInfoTable.setModel(model);
+
+        sortColumn(0);
+        tableSearch = new TableSearch(songInfoTable, songInfoPane, searchBox);
+        searchBox.setBorder(BorderFactory.createMatteBorder(0, 0,2, 0, Color.decode("#1DB954")));
+        searchBox.setBackground(null);
+
     }
 
     // Initializing the JTable

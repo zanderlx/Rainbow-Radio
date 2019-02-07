@@ -43,7 +43,12 @@ As of right now, we do not have JAR builds and thus must test the program by cli
 The project is still incomplete so the program will most likely freeze. To exit the applicaton, click the *STOP* button on IntelliJ.
 
 ## Release History
-
+* 0.1.3
+  * Added filtering per category available
+  * Added a bunch of songs
+* 0.1.2
+  * Added registration page
+  * Added login capability
 * 0.1.1
   * Added play music functionality
   * Added play next music functionality
@@ -59,6 +64,6 @@ The project is still incomplete so the program will most likely freeze. To exit 
 Lexzander Saplan – [zanderlx](https://github.com/zanderlx) – lsaplan97@gmail.com  
 Pramod Chamala - [promo230](https://github.com/promo230) – pramodchamala@gmail.com  
 Phuc Nguyen - [itzphuckie](https://github.com/itzphuckie) – littlem0nk3y141@yahoo.com  
-Kevin Bui - [KevinThuyBui](https://github.com/KevinThuyBui) – TBD  
+Kevin Bui - [KevinThuyBui](https://github.com/KevinThuyBui) – kevinthuybui@gmail.com  
 Bryce Moser - [BryceMoser](https://github.com/BryceMoser) – brycemoser@yahoo.com  
 
