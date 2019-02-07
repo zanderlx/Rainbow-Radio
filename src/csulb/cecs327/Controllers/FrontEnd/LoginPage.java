@@ -16,7 +16,9 @@ import javax.swing.*;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
+import csulb.cecs327.Models.SongDatabase;
 import csulb.cecs327.Models.User;
+import csulb.cecs327.Services.MusicPlayer;
 import csulb.cecs327.Services.UserSerializer;
 import net.miginfocom.swing.*;
 
@@ -28,14 +30,14 @@ public class LoginPage extends JPanel {
         //player.play();
         initComponents();
     }
-    /**
+
     // Adding music
     // Music Player Variables
     private int currentSong = 0;
     private SongDatabase songDatabase = new SongDatabase();
     private String song = songDatabase.getSongList().get(currentSong);
     private MusicPlayer player = new MusicPlayer(song);
-  */
+
     private void logInButtonMouseClicked(MouseEvent e) {
         String userName = usernameField.getText();
         char[] password = passwordField.getPassword();
