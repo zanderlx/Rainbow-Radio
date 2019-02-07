@@ -10,6 +10,19 @@ new FormModel {
 		} ) {
 			name: "this"
 			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label1"
+				"text": "welcome to rainbow radio"
+				"font": new java.awt.Font( "Stencil", 1, 16 )
+				"foreground": new java.awt.Color( 0, 51, 204, 255 )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 8 2 2 1"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "pic"
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 8 3 2 4"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "userLabel"
 				"text": "Username"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
