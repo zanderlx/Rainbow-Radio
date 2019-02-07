@@ -25,10 +25,17 @@ import net.miginfocom.swing.*;
  */
 public class LoginPage extends JPanel {
     public LoginPage() {
+        //player.play();
         initComponents();
     }
-
-  
+    /**
+    // Adding music
+    // Music Player Variables
+    private int currentSong = 0;
+    private SongDatabase songDatabase = new SongDatabase();
+    private String song = songDatabase.getSongList().get(currentSong);
+    private MusicPlayer player = new MusicPlayer(song);
+  */
     private void logInButtonMouseClicked(MouseEvent e) {
         String userName = usernameField.getText();
         char[] password = passwordField.getPassword();
@@ -78,7 +85,9 @@ public class LoginPage extends JPanel {
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-        // Generated using JFormDesigner Evaluation license - Lexzander Saplan
+        // Generated using JFormDesigner Evaluation license - PRAMOD REDDY CHAMALA
+        label1 = new JLabel();
+        pic = new JLabel();
         userLabel = new JLabel();
         usernameField = new JFormattedTextField();
         passLabel = new JLabel();
@@ -127,6 +136,13 @@ public class LoginPage extends JPanel {
             "[]" +
             "[]"));
 
+        //---- label1 ----
+        label1.setText("welcome to rainbow radio");
+        label1.setFont(new Font("Stencil", Font.BOLD, 16));
+        label1.setForeground(new Color(0, 51, 204));
+        add(label1, "cell 8 2 2 1");
+        add(pic, "cell 8 3 2 4");
+
         //---- userLabel ----
         userLabel.setText("Username");
         add(userLabel, "cell 8 7");
@@ -157,10 +173,15 @@ public class LoginPage extends JPanel {
         });
         add(logInButton, "cell 9 9");
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
+
+        Image homePic = new ImageIcon("picture/music02.gif").getImage().getScaledInstance(250, 200, Image.SCALE_DEFAULT);
+        pic.setIcon(new ImageIcon(homePic));
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    // Generated using JFormDesigner Evaluation license - Lexzander Saplan
+    // Generated using JFormDesigner Evaluation license - PRAMOD REDDY CHAMALA
+    private JLabel label1;
+    private JLabel pic;
     private JLabel userLabel;
     private JFormattedTextField usernameField;
     private JLabel passLabel;
