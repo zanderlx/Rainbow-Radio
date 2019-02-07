@@ -349,7 +349,7 @@ public class AppUI extends JPanel {
 
         //---- button3 ----
         button3.setText("Log Out");
-        button3.setIcon(new ImageIcon("/Users/pramodchamala/IdeaProjects/CECS-327-Music-Player/picture/icon/Logout-icon.png"));
+        button3.setIcon(new ImageIcon(getClass().getResource("/csulb/cecs327/Resources/icon/Logout-icon.png")));
         add(button3, "cell 39 16");
 
         //---- playlistTitle ----
@@ -358,11 +358,11 @@ public class AppUI extends JPanel {
         add(playlistTitle, "cell 6 20,alignx center,growx 0");
 
         //---- button1 ----
-        button1.setIcon(new ImageIcon("/Users/pramodchamala/IdeaProjects/CECS-327-Music-Player/picture/icon/Plus Icon.png"));
+        button1.setIcon(new ImageIcon(getClass().getResource("/csulb/cecs327/Resources/icon/Plus Icon.png")));
         add(button1, "cell 11 20");
 
         //---- button2 ----
-        button2.setIcon(new ImageIcon("/Users/pramodchamala/IdeaProjects/CECS-327-Music-Player/picture/icon/minus icon.png"));
+        button2.setIcon(new ImageIcon(getClass().getResource("/csulb/cecs327/Resources/icon/minus icon.png")));
         add(button2, "cell 14 20");
 
         //---- LibraryTitle ----
@@ -411,33 +411,33 @@ public class AppUI extends JPanel {
 
         //---- shuffleButton ----
         shuffleButton.setForeground(Color.black);
-        shuffleButton.setIcon(new ImageIcon("/Users/pramodchamala/IdeaProjects/CECS-327-Music-Player/picture/icon/Shuffle.png"));
+        shuffleButton.setIcon(new ImageIcon(getClass().getResource("/csulb/cecs327/Resources/icon/Shuffle.png")));
         shuffleButton.addActionListener(e -> muteButtonActionPerformed(e));
         add(shuffleButton, "cell 21 52");
 
         //---- previousButton ----
         previousButton.setForeground(Color.black);
-        previousButton.setIcon(new ImageIcon("/Users/pramodchamala/IdeaProjects/CECS-327-Music-Player/picture/icon/Button-Back-icon.png"));
+        previousButton.setIcon(new ImageIcon(getClass().getResource("/csulb/cecs327/Resources/icon/Button-Back-icon.png")));
         previousButton.addActionListener(e -> previousButtonActionPerformed(e));
         add(previousButton, "cell 21 52");
 
         //---- playPauseButton ----
-        playPauseButton.setIcon(new ImageIcon("/Users/pramodchamala/IdeaProjects/CECS-327-Music-Player/picture/icon/Button-Play-icon.png"));
+        playPauseButton.setIcon(new ImageIcon(getClass().getResource("/csulb/cecs327/Resources/icon/Button-Play-icon.png")));
         playPauseButton.addActionListener(e -> playPauseButtonActionPerformed(e));
         add(playPauseButton, "cell 21 52,width 75:75:75");
 
         //---- nextButton ----
-        nextButton.setIcon(new ImageIcon("/Users/pramodchamala/IdeaProjects/CECS-327-Music-Player/picture/icon/Button-Forward-icon.png"));
+        nextButton.setIcon(new ImageIcon(getClass().getResource("/csulb/cecs327/Resources/icon/Button-Forward-icon.png")));
         nextButton.addActionListener(e -> nextButtonActionPerformed(e));
         add(nextButton, "cell 21 52");
 
         //---- muteButton ----
-        muteButton.setIcon(new ImageIcon("/Users/pramodchamala/IdeaProjects/CECS-327-Music-Player/picture/icon/Mute Button.png"));
+        muteButton.setIcon(new ImageIcon(getClass().getResource("/csulb/cecs327/Resources/icon/Mute Button.png")));
         muteButton.addActionListener(e -> muteButtonActionPerformed(e));
         add(muteButton, "cell 21 52");
 
         //---- label1 ----
-        label1.setIcon(new ImageIcon("/Users/pramodchamala/IdeaProjects/CECS-327-Music-Player/picture/icon/Volume.png"));
+        label1.setIcon(new ImageIcon(getClass().getResource("/csulb/cecs327/Resources/icon/Volume.png")));
         add(label1, "cell 36 52");
         add(volumeSlider, "cell 39 52 2 1,aligny center,growy 0");
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
