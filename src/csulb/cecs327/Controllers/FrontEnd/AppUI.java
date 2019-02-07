@@ -24,8 +24,11 @@ import net.miginfocom.swing.*;
 public class AppUI extends JPanel {
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    // Generated using JFormDesigner Evaluation license - Lexzander Saplan
+    // Generated using JFormDesigner Evaluation license - PRAMOD REDDY CHAMALA
+    private JButton button3;
     private JLabel playlistTitle;
+    private JButton button1;
+    private JButton button2;
     private JLabel LibraryTitle;
     private JLabel SearchLabel;
     private JTextField searchBox;
@@ -41,6 +44,7 @@ public class AppUI extends JPanel {
     private JButton playPauseButton;
     private JButton nextButton;
     private JButton muteButton;
+    private JLabel label1;
     private JSlider volumeSlider;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
@@ -175,9 +179,12 @@ public class AppUI extends JPanel {
     // Initialize music player components
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-        // Generated using JFormDesigner Evaluation license - Lexzander Saplan
+        // Generated using JFormDesigner Evaluation license - PRAMOD REDDY CHAMALA
         DefaultComponentFactory compFactory = DefaultComponentFactory.getInstance();
+        button3 = new JButton();
         playlistTitle = compFactory.createTitle("Playlist");
+        button1 = new JButton();
+        button2 = new JButton();
         LibraryTitle = new JLabel();
         SearchLabel = new JLabel();
         searchBox = new JTextField();
@@ -193,6 +200,7 @@ public class AppUI extends JPanel {
         playPauseButton = new JButton();
         nextButton = new JButton();
         muteButton = new JButton();
+        label1 = new JLabel();
         volumeSlider = new JSlider();
 
         //======== this ========
@@ -227,6 +235,7 @@ public class AppUI extends JPanel {
             "[fill]" +
             "[fill]" +
             "[fill]" +
+            "[fill]" +
             "[fill]0" +
             "[fill]0" +
             "[fill]0" +
@@ -238,6 +247,8 @@ public class AppUI extends JPanel {
             "[fill]" +
             "[fill]" +
             "[fill]0" +
+            "[fill]" +
+            "[fill]" +
             "[fill]" +
             "[fill]" +
             "[fill]" +
@@ -336,27 +347,40 @@ public class AppUI extends JPanel {
             "[]0" +
             "[]"));
 
+        //---- button3 ----
+        button3.setText("Log Out");
+        button3.setIcon(new ImageIcon(getClass().getResource("/csulb/cecs327/Resources/icon/Logout-icon.png")));
+        add(button3, "cell 39 16");
+
         //---- playlistTitle ----
         playlistTitle.setFont(new Font("Segoe UI", Font.BOLD, 24));
         playlistTitle.setForeground(Color.white);
         add(playlistTitle, "cell 6 20,alignx center,growx 0");
 
+        //---- button1 ----
+        button1.setIcon(new ImageIcon(getClass().getResource("/csulb/cecs327/Resources/icon/Plus Icon.png")));
+        add(button1, "cell 11 20");
+
+        //---- button2 ----
+        button2.setIcon(new ImageIcon(getClass().getResource("/csulb/cecs327/Resources/icon/minus icon.png")));
+        add(button2, "cell 14 20");
+
         //---- LibraryTitle ----
         LibraryTitle.setText("Song Library");
         LibraryTitle.setFont(new Font("Segoe UI", Font.BOLD, 24));
         LibraryTitle.setForeground(Color.white);
-        add(LibraryTitle, "cell 18 20,align center center,grow 0 0");
+        add(LibraryTitle, "cell 19 20,align center center,grow 0 0");
 
         //---- SearchLabel ----
         SearchLabel.setText("Search");
         SearchLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
         SearchLabel.setForeground(Color.white);
-        add(SearchLabel, "cell 25 20 10 1,align center bottom,grow 0 0");
+        add(SearchLabel, "cell 26 20 12 1,align center bottom,grow 0 0");
 
         //---- searchBox ----
         searchBox.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         searchBox.setForeground(Color.white);
-        add(searchBox, "cell 36 20 4 1");
+        add(searchBox, "cell 39 20 4 1");
 
         //======== songInfoPane ========
         {
@@ -366,19 +390,19 @@ public class AppUI extends JPanel {
             songInfoTable.setForeground(Color.darkGray);
             songInfoPane.setViewportView(songInfoTable);
         }
-        add(songInfoPane, "cell 17 21 25 26");
+        add(songInfoPane, "cell 18 21 27 26");
 
         //======== playlistPane ========
         {
             playlistPane.setViewportView(playlistItems);
         }
-        add(playlistPane, "cell 6 21 10 26,growy");
+        add(playlistPane, "cell 6 21 11 26,growy");
 
         //---- songLabel ----
         songLabel.setFont(new Font("Segoe UI", Font.PLAIN, 24));
         songLabel.setText("Song");
         add(songLabel, "cell 6 51");
-        add(progressBar1, "cell 20 51");
+        add(progressBar1, "cell 21 51");
 
         //---- artistLabel ----
         artistLabel.setText("Artist");
@@ -386,32 +410,36 @@ public class AppUI extends JPanel {
         add(artistLabel, "cell 6 52,alignx left,growx 0");
 
         //---- shuffleButton ----
-        shuffleButton.setText("Shuffle");
         shuffleButton.setForeground(Color.black);
+        shuffleButton.setIcon(new ImageIcon(getClass().getResource("/csulb/cecs327/Resources/icon/Shuffle.png")));
         shuffleButton.addActionListener(e -> muteButtonActionPerformed(e));
-        add(shuffleButton, "cell 20 52");
+        add(shuffleButton, "cell 21 52");
 
         //---- previousButton ----
-        previousButton.setText("Previous");
         previousButton.setForeground(Color.black);
+        previousButton.setIcon(new ImageIcon(getClass().getResource("/csulb/cecs327/Resources/icon/Button-Back-icon.png")));
         previousButton.addActionListener(e -> previousButtonActionPerformed(e));
-        add(previousButton, "cell 20 52");
+        add(previousButton, "cell 21 52");
 
         //---- playPauseButton ----
-        playPauseButton.setText("Play");
+        playPauseButton.setIcon(new ImageIcon(getClass().getResource("/csulb/cecs327/Resources/icon/Button-Play-icon.png")));
         playPauseButton.addActionListener(e -> playPauseButtonActionPerformed(e));
-        add(playPauseButton, "cell 20 52,width 75:75:75");
+        add(playPauseButton, "cell 21 52,width 75:75:75");
 
         //---- nextButton ----
-        nextButton.setText("Next");
+        nextButton.setIcon(new ImageIcon(getClass().getResource("/csulb/cecs327/Resources/icon/Button-Forward-icon.png")));
         nextButton.addActionListener(e -> nextButtonActionPerformed(e));
-        add(nextButton, "cell 20 52");
+        add(nextButton, "cell 21 52");
 
         //---- muteButton ----
-        muteButton.setText("Mute");
+        muteButton.setIcon(new ImageIcon(getClass().getResource("/csulb/cecs327/Resources/icon/Mute Button.png")));
         muteButton.addActionListener(e -> muteButtonActionPerformed(e));
-        add(muteButton, "cell 20 52");
-        add(volumeSlider, "cell 36 52 2 1,aligny center,growy 0");
+        add(muteButton, "cell 21 52");
+
+        //---- label1 ----
+        label1.setIcon(new ImageIcon(getClass().getResource("/csulb/cecs327/Resources/icon/Volume.png")));
+        add(label1, "cell 36 52");
+        add(volumeSlider, "cell 39 52 2 1,aligny center,growy 0");
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
 
         playSongOnDoubleClick();
