@@ -26,7 +26,7 @@ import net.miginfocom.swing.*;
 public class AppUI extends JPanel {
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    // Generated using JFormDesigner Evaluation license - Lexzander Saplan
+    // Generated using JFormDesigner Evaluation license - PRAMOD REDDY CHAMALA
     private JButton logoutButton;
     private JLabel playlistTitle;
     private JButton addPlaylist;
@@ -207,10 +207,38 @@ public class AppUI extends JPanel {
         player.stop();
     }
 
+    private void shuffleButtonMouseClicked(MouseEvent e) {
+        System.out.println("Pressed shuffle");
+        Random rand = new Random();
+        try {
+            player.stop();
+           // currentSong++;
+            currentSong = rand.nextInt(201);
+            currentSong %= songDatabase.getSongList().size();
+            song = songDatabase.getSongList().get(currentSong);
+            player = new MusicPlayer(song);
+            timer.cancel();
+            currentSongLength = 0;
+            updateProgressBar();
+            player.play();
+            int row = ++fakeCurrent;
+            fakeCurrent = row;
+            row %= songInfoTable.getRowCount();
+            songLabel.setText((String)songInfoTable.getValueAt(row, 0));
+            artistLabel.setText((String)songInfoTable.getValueAt(row, 1));
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    private void muteButtonMouseClicked(MouseEvent e) {
+        // TODO add your code here
+    }
+
     // Initialize music player components
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-        // Generated using JFormDesigner Evaluation license - Lexzander Saplan
+        // Generated using JFormDesigner Evaluation license - PRAMOD REDDY CHAMALA
         DefaultComponentFactory compFactory = DefaultComponentFactory.getInstance();
         logoutButton = new JButton();
         playlistTitle = compFactory.createTitle("Playlist");
@@ -452,6 +480,12 @@ public class AppUI extends JPanel {
         shuffleButton.setForeground(Color.black);
         shuffleButton.setIcon(new ImageIcon(getClass().getResource("/csulb/cecs327/Resources/icon/Shuffle.png")));
         shuffleButton.addActionListener(e -> muteButtonActionPerformed(e));
+        shuffleButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                shuffleButtonMouseClicked(e);
+            }
+        });
         add(shuffleButton, "cell 22 52,width 32:32:32");
 
         //---- previousButton ----
@@ -473,6 +507,12 @@ public class AppUI extends JPanel {
         //---- muteButton ----
         muteButton.setIcon(new ImageIcon(getClass().getResource("/csulb/cecs327/Resources/icon/Mute Button.png")));
         muteButton.addActionListener(e -> muteButtonActionPerformed(e));
+        muteButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                muteButtonMouseClicked(e);
+            }
+        });
         add(muteButton, "cell 22 52,width 32:32:32");
 
         //---- label1 ----
