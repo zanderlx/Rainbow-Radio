@@ -204,6 +204,7 @@ public class AppUI extends JPanel {
         JFrame root = (JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, this);
         root.setContentPane(new LoginPage());
         root.pack();
+        player.stop();
     }
 
     private void shuffleButtonMouseClicked(MouseEvent e) {
