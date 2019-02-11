@@ -2,6 +2,15 @@ package csulb.cecs327.Services;
 
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
+import org.jaudiotagger.audio.AudioFile;
+import org.jaudiotagger.audio.AudioFileIO;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
+import javax.swing.*;
+import java.io.File;
 import java.io.FileInputStream;
 
 public class MusicPlayer {
@@ -16,11 +25,15 @@ public class MusicPlayer {
     private final Object playerLock = new Object();
     private int playerStatus = NOT_STARTED;
     private FileInputStream songStream;
+    private AudioFile audioFile;
+    private int songLength;
 
     public MusicPlayer(String song) {
         try {
             songStream = new FileInputStream(song);
             songPlayer = new Player(songStream);
+            audioFile = AudioFileIO.read(new File(song));
+            songLength = audioFile.getAudioHeader().getTrackLength();
         } catch (Exception e) {
             e.getStackTrace();
         }
@@ -102,13 +115,8 @@ public class MusicPlayer {
         }
     }
 
-    public void setSong(String song) {
-        try {
-            songStream = new FileInputStream(song);
-            songPlayer = new Player(songStream);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+    public int getSongLength() {
+        return songLength;
     }
+
 }
