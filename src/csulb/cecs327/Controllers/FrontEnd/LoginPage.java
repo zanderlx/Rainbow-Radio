@@ -16,7 +16,9 @@ import javax.swing.*;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
+import csulb.cecs327.Models.SongDatabase;
 import csulb.cecs327.Models.User;
+import csulb.cecs327.Services.MusicPlayer;
 import csulb.cecs327.Services.UserSerializer;
 import net.miginfocom.swing.*;
 
@@ -25,17 +27,13 @@ import net.miginfocom.swing.*;
  */
 public class LoginPage extends JPanel {
     public LoginPage() {
-        //player.play();
+        player.play();
         initComponents();
     }
-    /**
+
     // Adding music
-    // Music Player Variables
-    private int currentSong = 0;
-    private SongDatabase songDatabase = new SongDatabase();
-    private String song = songDatabase.getSongList().get(currentSong);
-    private MusicPlayer player = new MusicPlayer(song);
-  */
+    private MusicPlayer player = new MusicPlayer("src/csulb/cecs327/Resources/music/Rainbow Road - Mario Kart Wii.mp3");
+
     private void logInButtonMouseClicked(MouseEvent e) {
         String userName = usernameField.getText();
         char[] password = passwordField.getPassword();
@@ -58,6 +56,7 @@ public class LoginPage extends JPanel {
                             JFrame root = (JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, this);
                             root.setContentPane(new AppUI(j));
                             root.pack();
+                            player.stop();
                              found = true;
                         }
                         else
@@ -174,7 +173,7 @@ public class LoginPage extends JPanel {
         add(logInButton, "cell 9 9");
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
 
-        Image homePic = new ImageIcon("picture/music02.gif").getImage().getScaledInstance(250, 200, Image.SCALE_DEFAULT);
+        Image homePic = new ImageIcon("src/csulb/cecs327/Resources/picture/music02.gif").getImage().getScaledInstance(250, 200, Image.SCALE_DEFAULT);
         pic.setIcon(new ImageIcon(homePic));
     }
 
