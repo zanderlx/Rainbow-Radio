@@ -1,4 +1,4 @@
-JFDML JFormDesigner: "6.0.6.0.190" Java: "1.8.0_152-release" encoding: "UTF-8"
+JFDML JFormDesigner: "6.0.6.1.193" Java: "1.8.0_152-release" encoding: "UTF-8"
 
 new FormModel {
 	contentType: "form/swing"
@@ -108,6 +108,7 @@ new FormModel {
 				"foreground": sfield java.awt.Color black
 				"icon": new com.jformdesigner.model.SwingIcon( 0, "/csulb/cecs327/Resources/icon/Shuffle.png" )
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "muteButtonActionPerformed", true ) )
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "shuffleButtonMouseClicked", true ) )
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
 				"value": "cell 22 52,width 32:32:32"
 			} )
@@ -137,6 +138,7 @@ new FormModel {
 				name: "muteButton"
 				"icon": new com.jformdesigner.model.SwingIcon( 0, "/csulb/cecs327/Resources/icon/Mute Button.png" )
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "muteButtonActionPerformed", true ) )
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "muteButtonMouseClicked", true ) )
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
 				"value": "cell 22 52,width 32:32:32"
 			} )
