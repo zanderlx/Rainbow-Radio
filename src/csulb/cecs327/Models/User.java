@@ -15,7 +15,10 @@ public class User {
         this.userName = userName;
         this.password = password;
         this.email = email;
-        this.playLists = Objects.requireNonNullElseGet(playLists, ArrayList::new);
+        if(playLists == null)
+            this.playLists = new ArrayList<>();
+        else
+            this.playLists = playLists;
     }
     
     public ArrayList<Playlist> getPlayLists() {
