@@ -16,7 +16,7 @@ new FormModel {
 				"text": "Log Out"
 				"icon": new com.jformdesigner.model.SwingIcon( 0, "/csulb/cecs327/Resources/icon/Logout-icon.png" )
 				"foreground": new java.awt.Color( 255, 255, 255, 255 )
-				"font": new java.awt.Font( "Segoe UI", 1, 20 )
+				"font": new java.awt.Font( "Segoe UI", 1, 13 )
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "logoutButtonActionPerformed", true ) )
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
 				"value": "cell 41 16,width 100:100:100"
@@ -137,26 +137,6 @@ new FormModel {
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "nextButtonActionPerformed", true ) )
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
 				"value": "cell 22 52,width 32:32:32"
-			} )
-			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "muteButton"
-				"icon": new com.jformdesigner.model.SwingIcon( 0, "/csulb/cecs327/Resources/icon/Mute Button.png" )
-				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "muteButtonActionPerformed", true ) )
-				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "muteButtonMouseClicked", true ) )
-			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 22 52,width 32:32:32"
-			} )
-			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label1"
-				"icon": new com.jformdesigner.model.SwingIcon( 0, "/csulb/cecs327/Resources/icon/Volume.png" )
-			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 40 52"
-			} )
-			add( new FormComponent( "javax.swing.JSlider" ) {
-				name: "volumeSlider"
-				addEvent( new FormEvent( "javax.swing.event.ChangeListener", "stateChanged", "volumeSliderStateChanged", true ) )
-			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 40 52,aligny center,growy 0"
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 545 )
