@@ -14,7 +14,7 @@ public class Main {
         JFrame login = new JFrame("Rainbow Radio");
         // Dummy user
         User user = new User("admin", "password", "email", new ArrayList<>());
-        login.setContentPane(new AppUI(user));
+        login.setContentPane(new LoginPage());
         login.setSize(1024, 720);
         login.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         login.setResizable(false);
