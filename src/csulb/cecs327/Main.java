@@ -11,8 +11,6 @@ public class Main {
 
     public static void main(String[] args) {
         JFrame login = new JFrame("Rainbow Radio");
-        // Dummy user
-        User user = new User("admin", "password", "email");
         login.setContentPane(new LoginPage());
         login.setSize(1024, 720);
         login.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
