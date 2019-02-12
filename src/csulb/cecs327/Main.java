@@ -6,12 +6,15 @@ import csulb.cecs327.Models.User;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Main {
 
     public static void main(String[] args) {
         JFrame login = new JFrame("Rainbow Radio");
-        login.setContentPane(new LoginPage());
+        // Dummy user
+        User user = new User("admin", "password", "email", new ArrayList<>());
+        login.setContentPane(new AppUI(user));
         login.setSize(1024, 720);
         login.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         login.setResizable(false);

@@ -60,7 +60,7 @@ public class LoginPage extends JPanel {
                     {
                         if (Arrays.equals(password, j.getPassword().toCharArray())){
                             JFrame root = (JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, this);
-                            root.setContentPane(new AppUI(j, i));
+                            root.setContentPane(new AppUI(j));
                             root.pack();
                             player.stop();
                             found = true;
