@@ -26,7 +26,7 @@ import net.miginfocom.swing.*;
 public class AppUI extends JPanel {
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    // Generated using JFormDesigner Evaluation license - PRAMOD REDDY CHAMALA
+    // Generated using JFormDesigner Evaluation license - Lexzander Saplan
     private JButton logoutButton;
     private JLabel playlistTitle;
     private JButton addPlaylist;
@@ -65,6 +65,10 @@ public class AppUI extends JPanel {
     private boolean isPlaying = false;
     private int currentSongLength = 0;
     private Timer timer = new Timer();
+    private DefaultListModel<Playlist> defaultListModel = new DefaultListModel<>();
+    private int currentPlaylistNumber = 1;
+    
+    private JMenu addToPlaylistMenu;
 
     // Constructor
     public AppUI(User user) {
@@ -148,12 +152,38 @@ public class AppUI extends JPanel {
         // TODO add your code here
     }
 
-    private void playSongOnDoubleClick() {
+    private void addSongInfoTableMouseListener() {
         songInfoTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                if (SwingUtilities.isRightMouseButton(e)){
+                    ArrayList<String> playlistItemNames = new ArrayList<>();
+    
+                    addToPlaylistMenu = new JMenu("Add to selected playlist.");
+                    for (int i = 0; i < defaultListModel.getSize(); i++){
+                        JMenuItem menuItem = new JMenuItem(defaultListModel.getElementAt(i).getNameOfPlaylist());
+                        menuItem.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                JMenuItem menuItem = (JMenuItem) e.getSource();
+                                JPopupMenu menu = (JPopupMenu) menuItem.getParent();
+                                int index = menu.getComponentZOrder((JMenuItem)e.getSource());
+                                Playlist playlist = defaultListModel.elementAt(index);
+                                playlist.addSong((String) songInfoTable
+                                        .getValueAt(songInfoTable.getSelectedRow(), 0));
+                                defaultListModel.setElementAt(playlist, index);
+                                
+                            }
+                        });
+                        addToPlaylistMenu.add(menuItem);
+                    }
+                   
+                    JPopupMenu jPopupMenu = new JPopupMenu();
+                    jPopupMenu.add(addToPlaylistMenu);
+                    jPopupMenu.show(songInfoTable, e.getX(), e.getY());
+                }
                 try {
-                    if (e.getClickCount() == 2) {
+                    if (SwingUtilities.isLeftMouseButton(e) && e.getClickCount() == 2) {
                         currentSong = songInfoTable.getSelectedRow();
                         player.stop();
                         song = songDatabase.getSongList().get(currentSong);
@@ -235,10 +265,51 @@ public class AppUI extends JPanel {
         // TODO add your code here
     }
 
+    private void addPlaylistMouseClicked(MouseEvent e) {
+        if (SwingUtilities.isLeftMouseButton(e)){
+            Playlist playlist = new Playlist();
+            playlist.setNameOfPlaylist("newPlaylist" + currentPlaylistNumber++);
+            defaultListModel.addElement(playlist);
+            
+        }
+    }
+
+    private void removePlaylistMouseClicked(MouseEvent e) {
+        if (SwingUtilities.isLeftMouseButton(e)){
+            defaultListModel.removeElementAt(playlistItems.getSelectedIndex());
+        }
+    }
+
+    private void playlistItemsMouseClicked(MouseEvent e) {
+        if(SwingUtilities.isRightMouseButton(e)){
+            int index = playlistItems.getSelectedIndex();
+            Playlist playlist = defaultListModel.elementAt(index);
+            JPopupMenu menu = new JPopupMenu();
+            for (String currentSong : playlist.getListOfSongs()){
+                JMenuItem menuItem = new JMenuItem(currentSong);
+                menuItem.addActionListener(e1 -> {
+                    //TODO: Play Song
+                });
+                menu.add(menuItem);
+            }
+    
+            menu.show(playlistItems, e.getX(), e.getY());
+            
+        }
+        else if (SwingUtilities.isLeftMouseButton(e) && e.getClickCount() == 2){
+            //TODO: Play first song in playlist.
+        }
+    }
+
+    private void playlistItemsMouseReleased(MouseEvent e) {
+        if(SwingUtilities.isRightMouseButton(e))
+            playlistItems.setSelectedIndex(playlistItems.locationToIndex(e.getPoint()));
+    }
+
     // Initialize music player components
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-        // Generated using JFormDesigner Evaluation license - PRAMOD REDDY CHAMALA
+        // Generated using JFormDesigner Evaluation license - Lexzander Saplan
         DefaultComponentFactory compFactory = DefaultComponentFactory.getInstance();
         logoutButton = new JButton();
         playlistTitle = compFactory.createTitle("Playlist");
@@ -424,10 +495,22 @@ public class AppUI extends JPanel {
 
         //---- addPlaylist ----
         addPlaylist.setIcon(new ImageIcon(getClass().getResource("/csulb/cecs327/Resources/icon/Plus Icon.png")));
+        addPlaylist.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                addPlaylistMouseClicked(e);
+            }
+        });
         add(addPlaylist, "cell 16 20,width 32:32:32");
 
         //---- removePlaylist ----
         removePlaylist.setIcon(new ImageIcon(getClass().getResource("/csulb/cecs327/Resources/icon/minus icon.png")));
+        removePlaylist.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                removePlaylistMouseClicked(e);
+            }
+        });
         add(removePlaylist, "cell 16 20,width 32:32:32");
 
         //---- LibraryTitle ----
@@ -459,6 +542,18 @@ public class AppUI extends JPanel {
 
         //======== playlistPane ========
         {
+
+            //---- playlistItems ----
+            playlistItems.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    playlistItemsMouseClicked(e);
+                }
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    playlistItemsMouseReleased(e);
+                }
+            });
             playlistPane.setViewportView(playlistItems);
         }
         add(playlistPane, "cell 6 21 12 26,growy");
@@ -524,8 +619,8 @@ public class AppUI extends JPanel {
         add(volumeSlider, "cell 40 52,aligny center,growy 0");
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
 
-        playSongOnDoubleClick();
-
+        addSongInfoTableMouseListener();
+        playlistItems.setModel(defaultListModel);
         Object[] columns = {"Song Title", "Artist", "Album", "Genre"};
         model = new DefaultTableModel() {
             @Override

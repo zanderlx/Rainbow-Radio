@@ -1,5 +1,6 @@
 package csulb.cecs327.Models;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class User {
@@ -7,12 +8,14 @@ public class User {
     private String password;
     private String email;
     private HashMap<Integer, Integer> songHistory;
+    private ArrayList<Integer> playList;
     
     public User(String userName, String password, String email) {
         this.userName = userName;
         this.password = password;
         this.email = email;
         songHistory = new HashMap<>();
+        
     }
     
     public String getUserName() {
