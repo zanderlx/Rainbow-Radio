@@ -93,13 +93,13 @@ public class RegisterDialog extends JDialog {
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-        // Generated using JFormDesigner Evaluation license - Kevin
+        // Generated using JFormDesigner Evaluation license - PRAMOD REDDY CHAMALA
         dialogPane = new JPanel();
         contentPanel = new JPanel();
         label1 = new JLabel();
         userNameTextField = new JTextField();
         label2 = new JLabel();
-        passwordTextField = new JTextField();
+        passwordTextField = new JPasswordField();
         label3 = new JLabel();
         emailTextField = new JTextField();
         buttonBar = new JPanel();
@@ -138,17 +138,17 @@ public class RegisterDialog extends JDialog {
                     "[]"));
 
                 //---- label1 ----
-                label1.setText("Username");
+                label1.setText("Username:");
                 contentPanel.add(label1, "cell 1 1");
                 contentPanel.add(userNameTextField, "cell 2 1,wmin 125");
 
                 //---- label2 ----
-                label2.setText("Password");
+                label2.setText("Password:");
                 contentPanel.add(label2, "cell 1 2");
                 contentPanel.add(passwordTextField, "cell 2 2");
 
                 //---- label3 ----
-                label3.setText("Email");
+                label3.setText("Email:");
                 contentPanel.add(label3, "cell 1 3");
                 contentPanel.add(emailTextField, "cell 2 3");
             }
@@ -193,13 +193,13 @@ public class RegisterDialog extends JDialog {
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    // Generated using JFormDesigner Evaluation license - Kevin
+    // Generated using JFormDesigner Evaluation license - PRAMOD REDDY CHAMALA
     private JPanel dialogPane;
     private JPanel contentPanel;
     private JLabel label1;
     private JTextField userNameTextField;
     private JLabel label2;
-    private JTextField passwordTextField;
+    private JPasswordField passwordTextField;
     private JLabel label3;
     private JTextField emailTextField;
     private JPanel buttonBar;
