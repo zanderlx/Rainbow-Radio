@@ -136,8 +136,8 @@ public class LoginPage extends JPanel {
             "[]"));
 
         //---- label1 ----
-        label1.setText("welcome to rainbow radio");
-        label1.setFont(new Font("Stencil", Font.BOLD, 16));
+        label1.setText("Welcome to RadioHead!");
+        label1.setFont(new Font("Geeza Pro", Font.BOLD, 16));
         label1.setForeground(new Color(0, 51, 204));
         add(label1, "cell 8 2 2 1");
         add(pic, "cell 8 3 2 4");
