@@ -30,7 +30,7 @@ import net.miginfocom.swing.*;
 public class AppUI extends JPanel {
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    // Generated using JFormDesigner Evaluation license - Lexzander Saplan
+    // Generated using JFormDesigner Evaluation license - Kevin
     private JButton logoutButton;
     private JLabel playlistTitle;
     private JButton addPlaylist;
@@ -49,9 +49,6 @@ public class AppUI extends JPanel {
     private JButton previousButton;
     private JButton playPauseButton;
     private JButton nextButton;
-    private JButton muteButton;
-    private JLabel label1;
-    private JSlider volumeSlider;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
     // Custom Variables
@@ -231,7 +228,7 @@ public class AppUI extends JPanel {
     }
     
     private void volumeSliderStateChanged(ChangeEvent e) {
-        System.out.println(volumeSlider.getValue());
+//        System.out.println(volumeSlider.getValue());
     }
     
     private void logoutButtonActionPerformed(ActionEvent e) {
@@ -348,7 +345,7 @@ public class AppUI extends JPanel {
     // Initialize music player components
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-        // Generated using JFormDesigner Evaluation license - Lexzander Saplan
+        // Generated using JFormDesigner Evaluation license - Kevin
         DefaultComponentFactory compFactory = DefaultComponentFactory.getInstance();
         logoutButton = new JButton();
         playlistTitle = compFactory.createTitle("Playlist");
@@ -368,162 +365,159 @@ public class AppUI extends JPanel {
         previousButton = new JButton();
         playPauseButton = new JButton();
         nextButton = new JButton();
-        muteButton = new JButton();
-        label1 = new JLabel();
-        volumeSlider = new JSlider();
-        
+
         //======== this ========
         setForeground(Color.blue);
         setBackground(Color.darkGray);
-        
+
         // JFormDesigner evaluation mark
         setBorder(new javax.swing.border.CompoundBorder(
-                new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder(0, 0, 0, 0),
-                        "JFormDesigner Evaluation", javax.swing.border.TitledBorder.CENTER,
-                        javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Dialog", java.awt.Font.BOLD, 12),
-                        java.awt.Color.red), getBorder())); addPropertyChangeListener(new java.beans.PropertyChangeListener(){public void propertyChange(java.beans.PropertyChangeEvent e){if("border".equals(e.getPropertyName()))throw new RuntimeException();}});
-        
+            new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder(0, 0, 0, 0),
+                "JFormDesigner Evaluation", javax.swing.border.TitledBorder.CENTER,
+                javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Dialog", java.awt.Font.BOLD, 12),
+                java.awt.Color.red), getBorder())); addPropertyChangeListener(new java.beans.PropertyChangeListener(){public void propertyChange(java.beans.PropertyChangeEvent e){if("border".equals(e.getPropertyName()))throw new RuntimeException();}});
+
         setLayout(new MigLayout(
-                "fillx,hidemode 3",
-                // columns
-                "0[fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[48:103,fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[0,fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]0" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[7,fill]0" +
-                        "[fill]0" +
-                        "[191,fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[14,fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]0" +
-                        "[fill]0",
-                // rows
-                "0[]0" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[22:n]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]0" +
-                        "[]0" +
-                        "[]0" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]0" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]0" +
-                        "[]0" +
-                        "[]0" +
-                        "[]0" +
-                        "[]"));
-        
+            "fillx,hidemode 3",
+            // columns
+            "0[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[48:103,fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[0,fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]0" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[7,fill]0" +
+            "[fill]0" +
+            "[191,fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[14,fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0" +
+            "[fill]0",
+            // rows
+            "0[]0" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[22:n]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]0" +
+            "[]0" +
+            "[]0" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]0" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]0" +
+            "[]0" +
+            "[]0" +
+            "[]0" +
+            "[]"));
+
         //---- logoutButton ----
         logoutButton.setText("Log Out");
         logoutButton.setIcon(new ImageIcon(getClass().getResource("/csulb/cecs327/Resources/icon/Logout-icon.png")));
         logoutButton.setForeground(Color.white);
-        logoutButton.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        logoutButton.setFont(new Font("Segoe UI", Font.BOLD, 13));
         logoutButton.addActionListener(e -> logoutButtonActionPerformed(e));
         add(logoutButton, "cell 41 16,width 100:100:100");
 
@@ -637,25 +631,6 @@ public class AppUI extends JPanel {
         nextButton.setIcon(new ImageIcon(getClass().getResource("/csulb/cecs327/Resources/icon/Button-Forward-icon.png")));
         nextButton.addActionListener(e -> nextButtonActionPerformed(e));
         add(nextButton, "cell 22 52,width 32:32:32");
-        
-        //---- muteButton ----
-        muteButton.setIcon(new ImageIcon(getClass().getResource("/csulb/cecs327/Resources/icon/Mute Button.png")));
-        muteButton.addActionListener(e -> muteButtonActionPerformed(e));
-        muteButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                muteButtonMouseClicked(e);
-            }
-        });
-        add(muteButton, "cell 22 52,width 32:32:32");
-        
-        //---- label1 ----
-        label1.setIcon(new ImageIcon(getClass().getResource("/csulb/cecs327/Resources/icon/Volume.png")));
-        add(label1, "cell 40 52");
-        
-        //---- volumeSlider ----
-        volumeSlider.addChangeListener(e -> volumeSliderStateChanged(e));
-        add(volumeSlider, "cell 40 52,aligny center,growy 0");
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
 
         addSongInfoTableMouseListener();
@@ -711,8 +686,8 @@ public class AppUI extends JPanel {
         logoutButton.setBorder(null);
         logoutButton.setFocusPainted(false);
         
-        volumeSlider.setBackground(null);
-        volumeSlider.setBorder(null);
+//        volumeSlider.setBackground(null);
+//        volumeSlider.setBorder(null);
         
         songProgress.setMinimum(0);
         songProgress.setMaximum(100);
