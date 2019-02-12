@@ -717,6 +717,7 @@ public class AppUI extends JPanel {
             }
         }, delay, period);
     }
+    
 
     public void addDefaultTableRows() {
         model.addRow(new Object[]{"Faded", "Alan Walker", "Different World", "edm"});
