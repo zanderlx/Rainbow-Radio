@@ -697,6 +697,10 @@ public class AppUI extends JPanel {
         songProgress.setMinimum(0);
         songProgress.setMaximum(100);
         songProgress.setForeground(Color.decode("#1DB954"));
+
+        shuffleButton.setBackground(null);
+        shuffleButton.setBorder(null);
+        shuffleButton.setFocusPainted(false);
     }
 
     // Initializing the JTable

@@ -43,6 +43,16 @@ As of right now, we do not have JAR builds and thus must test the program by cli
 The project is still incomplete so the program will most likely freeze. To exit the applicaton, click the *STOP* button on IntelliJ.
 
 ## Release History
+* 1.0.0
+  * Version 1 released
+* 0.1.5
+  * Added playlist functionality
+  * Added playlist renaming feature
+* 0.1.4
+  * Added song progress bar
+  * Added live-search feature
+  * Added shuffle functionality
+  * Added logout capability
 * 0.1.3
   * Added filtering per category available
   * Added a bunch of songs
