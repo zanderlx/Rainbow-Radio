@@ -35,12 +35,15 @@ public class RegisterDialog extends JDialog {
         super(owner);
         initComponents();
     }
-
+    
     private void okButtonMouseClicked(MouseEvent e) {
         String userName = userNameTextField.getText();
         String password = passwordTextField.getText();
         String email = emailTextField.getText();
-        Gson gson= new GsonBuilder().registerTypeAdapter(User.class, new UserSerializer()).create();;
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        //gsonBuilder.registerTypeAdapter(User.class, new UserDeserializer());
+        gsonBuilder.registerTypeAdapter(User.class, new UserSerializer());
+        Gson gson = gsonBuilder.create();
         if (userName.equals("")) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Verify that the username is entered.");
         } else if (password.equals("")) {
@@ -52,9 +55,10 @@ public class RegisterDialog extends JDialog {
                 boolean duplicateUserName = false;
                 List<User> users = gson.fromJson(reader, new TypeToken<List<User>>() {}.getType());
                 for (User j : users){
-                    if (j.getUserName() == userName)
+                    if (j.getUserName() == userName) {
                         duplicateUserName = true;
                         break;
+                    }
                 }
                 if (duplicateUserName)
                     JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Username taken. Please " +
@@ -62,14 +66,13 @@ public class RegisterDialog extends JDialog {
                 else{
                     writeToUsersJson(userName, password, email, gson, users);
                 }
-            } catch (FileNotFoundException e1) {
+            } catch (FileNotFoundException | NullPointerException e1) {
                 writeToUsersJson(userName, password, email, gson, null);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
-
-           
-            
+    
+    
         }
     }
     
@@ -77,7 +80,7 @@ public class RegisterDialog extends JDialog {
         if (list == null)
             list = new ArrayList<>();
         try(Writer writer = new FileWriter("Users.json")){
-            User newUser = new User(userName, password, email);
+            User newUser = new User(userName, password, email, new ArrayList<>());
             list.add(newUser);
             gson.toJson(list, writer);
             dispose();
@@ -90,7 +93,7 @@ public class RegisterDialog extends JDialog {
     private void cancelButtonMouseClicked(MouseEvent e) {
         dispose();
     }
-
+    
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - Kevin
@@ -105,65 +108,65 @@ public class RegisterDialog extends JDialog {
         buttonBar = new JPanel();
         okButton = new JButton();
         cancelButton = new JButton();
-
+        
         //======== this ========
         Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
-
+        
         //======== dialogPane ========
         {
-
+            
             // JFormDesigner evaluation mark
             dialogPane.setBorder(new javax.swing.border.CompoundBorder(
-                new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder(0, 0, 0, 0),
-                    "JFormDesigner Evaluation", javax.swing.border.TitledBorder.CENTER,
-                    javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Dialog", java.awt.Font.BOLD, 12),
-                    java.awt.Color.red), dialogPane.getBorder())); dialogPane.addPropertyChangeListener(new java.beans.PropertyChangeListener(){public void propertyChange(java.beans.PropertyChangeEvent e){if("border".equals(e.getPropertyName()))throw new RuntimeException();}});
-
+                    new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder(0, 0, 0, 0),
+                            "JFormDesigner Evaluation", javax.swing.border.TitledBorder.CENTER,
+                            javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Dialog", java.awt.Font.BOLD, 12),
+                            java.awt.Color.red), dialogPane.getBorder())); dialogPane.addPropertyChangeListener(new java.beans.PropertyChangeListener(){public void propertyChange(java.beans.PropertyChangeEvent e){if("border".equals(e.getPropertyName()))throw new RuntimeException();}});
+            
             dialogPane.setLayout(new BorderLayout());
-
+            
             //======== contentPanel ========
             {
                 contentPanel.setLayout(new MigLayout(
-                    "insets dialog,hidemode 3",
-                    // columns
-                    "[fill]" +
-                    "[fill]" +
-                    "[fill]" +
-                    "[fill]",
-                    // rows
-                    "[]" +
-                    "[]" +
-                    "[]" +
-                    "[]"));
-
+                        "insets dialog,hidemode 3",
+                        // columns
+                        "[fill]" +
+                                "[fill]" +
+                                "[fill]" +
+                                "[fill]",
+                        // rows
+                        "[]" +
+                                "[]" +
+                                "[]" +
+                                "[]"));
+                
                 //---- label1 ----
                 label1.setText("Username");
                 contentPanel.add(label1, "cell 1 1");
                 contentPanel.add(userNameTextField, "cell 2 1,wmin 125");
-
+                
                 //---- label2 ----
                 label2.setText("Password");
                 contentPanel.add(label2, "cell 1 2");
                 contentPanel.add(passwordTextField, "cell 2 2");
-
+                
                 //---- label3 ----
                 label3.setText("Email");
                 contentPanel.add(label3, "cell 1 3");
                 contentPanel.add(emailTextField, "cell 2 3");
             }
             dialogPane.add(contentPanel, BorderLayout.NORTH);
-
+            
             //======== buttonBar ========
             {
                 buttonBar.setLayout(new MigLayout(
-                    "insets dialog,alignx right",
-                    // columns
-                    "[button,fill]" +
-                    "[button,fill]",
-                    // rows
-                    null));
-
+                        "insets dialog,alignx right",
+                        // columns
+                        "[button,fill]" +
+                                "[button,fill]",
+                        // rows
+                        null));
+                
                 //---- okButton ----
                 okButton.setText("OK");
                 okButton.addMouseListener(new MouseAdapter() {
@@ -173,7 +176,7 @@ public class RegisterDialog extends JDialog {
                     }
                 });
                 buttonBar.add(okButton, "cell 0 0");
-
+                
                 //---- cancelButton ----
                 cancelButton.setText("Cancel");
                 cancelButton.addMouseListener(new MouseAdapter() {
@@ -191,7 +194,7 @@ public class RegisterDialog extends JDialog {
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
-
+    
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - Kevin
     private JPanel dialogPane;
@@ -207,6 +210,6 @@ public class RegisterDialog extends JDialog {
     private JButton cancelButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
     
-  
+    
 }
 
