@@ -313,11 +313,34 @@ public class AppUI extends JPanel {
     }
 
     private void playlistItemsMouseClicked(MouseEvent e) {
-        // TODO add your code here
+        if(SwingUtilities.isRightMouseButton(e)){
+            int index = playlistTable.getSelectedRow();
+            JPopupMenu jPopupMenu = new JPopupMenu();
+            JMenuItem rename = new JMenuItem("Rename");
+            rename.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String newName = JOptionPane.showInputDialog("Enter new name.");
+                    int index = playlistTable.getSelectedRow();
+                    Playlist playlist = playlistCollection.get(index);
+                    playlist.setNameOfPlaylist(newName);
+                    playlistCollection.set(index, playlist);
+                    playlistTable.setValueAt(newName, index, 0);
+                }
+            });
+
+            jPopupMenu.add(rename);
+            jPopupMenu.show(playlistTable, e.getX(), e.getY());
+
+        }
+        else if (SwingUtilities.isLeftMouseButton(e) && e.getClickCount() == 2){
+            //TODO: Play first song in playlist.
+        }
     }
 
     private void playlistItemsMouseReleased(MouseEvent e) {
-        // TODO add your code here
+        int r = playlistTable.rowAtPoint(e.getPoint());
+        playlistTable.setRowSelectionInterval(r, r);
     }
 
     private void setViewSongsButtonActionPerformed (ActionEvent e) {
