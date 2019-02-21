@@ -90,7 +90,7 @@ public class LoginPage extends JPanel {
     
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-        // Generated using JFormDesigner Evaluation license - PRAMOD REDDY CHAMALA
+        // Generated using JFormDesigner Evaluation license - Bryce Moser
         label1 = new JLabel();
         pic = new JLabel();
         userLabel = new JLabel();
@@ -99,65 +99,65 @@ public class LoginPage extends JPanel {
         passwordField = new JPasswordField();
         registerButton = new JButton();
         logInButton = new JButton();
-        
+
         //======== this ========
-        
+
         // JFormDesigner evaluation mark
         setBorder(new javax.swing.border.CompoundBorder(
-                new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder(0, 0, 0, 0),
-                        "JFormDesigner Evaluation", javax.swing.border.TitledBorder.CENTER,
-                        javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Dialog", java.awt.Font.BOLD, 12),
-                        java.awt.Color.red), getBorder())); addPropertyChangeListener(new java.beans.PropertyChangeListener(){public void propertyChange(java.beans.PropertyChangeEvent e){if("border".equals(e.getPropertyName()))throw new RuntimeException();}});
-        
+            new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder(0, 0, 0, 0),
+                "JFormDesigner Evaluation", javax.swing.border.TitledBorder.CENTER,
+                javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Dialog", java.awt.Font.BOLD, 12),
+                java.awt.Color.red), getBorder())); addPropertyChangeListener(new java.beans.PropertyChangeListener(){public void propertyChange(java.beans.PropertyChangeEvent e){if("border".equals(e.getPropertyName()))throw new RuntimeException();}});
+
         setLayout(new MigLayout(
-                "hidemode 3",
-                // columns
-                "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]",
-                // rows
-                "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]"));
-        
+            "hidemode 3",
+            // columns
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]" +
+            "[fill]",
+            // rows
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]" +
+            "[]"));
+
         //---- label1 ----
-        label1.setText("Welcome to RadioHead!");
+        label1.setText("Welcome to Rainbow Radio!");
         label1.setFont(new Font("Geeza Pro", Font.BOLD, 16));
         label1.setForeground(new Color(0, 51, 204));
         add(label1, "cell 8 2 2 1");
         add(pic, "cell 8 3 2 4");
-        
+
         //---- userLabel ----
         userLabel.setText("Username");
         add(userLabel, "cell 8 7");
         add(usernameField, "cell 9 7");
-        
+
         //---- passLabel ----
         passLabel.setText("Password");
         add(passLabel, "cell 8 8");
         add(passwordField, "cell 9 8");
-        
+
         //---- registerButton ----
         registerButton.setText("Register");
         registerButton.addMouseListener(new MouseAdapter() {
@@ -167,7 +167,7 @@ public class LoginPage extends JPanel {
             }
         });
         add(registerButton, "cell 8 9");
-        
+
         //---- logInButton ----
         logInButton.setText("Log In");
         logInButton.addMouseListener(new MouseAdapter() {
@@ -184,7 +184,7 @@ public class LoginPage extends JPanel {
     }
     
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    // Generated using JFormDesigner Evaluation license - PRAMOD REDDY CHAMALA
+    // Generated using JFormDesigner Evaluation license - Bryce Moser
     private JLabel label1;
     private JLabel pic;
     private JLabel userLabel;

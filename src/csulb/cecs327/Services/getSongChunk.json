@@ -1,0 +1,9 @@
+{
+    "remoteMethod":"getSongChunk",
+    "objectName":"SongServices",
+    "param":
+      {
+          "song":490183,
+          "fragment":2
+      }
+}
