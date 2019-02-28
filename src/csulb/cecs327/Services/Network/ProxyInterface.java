@@ -1,4 +1,4 @@
-package csulb.cecs327.Services;
+package csulb.cecs327.Services.Network;
 import com.google.gson.JsonObject;
 
 public interface ProxyInterface {

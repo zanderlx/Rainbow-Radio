@@ -6,14 +6,14 @@
 * @version 0.15
 * @since   2019-01-24 
 */
-package csulb.cecs327.Services;
+package csulb.cecs327.Services.Network;
 
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Base64;
 import com.google.gson.JsonObject;
-import java.util.concurrent.Semaphore; 
+
+import java.util.concurrent.Semaphore;
 
 
 
