@@ -5,7 +5,7 @@
 * @version 0.15
 * @since   02-11-2019 
 */
-package csulb.cecs327.Services;
+package csulb.cecs327.Services.Networking;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.FileReader;

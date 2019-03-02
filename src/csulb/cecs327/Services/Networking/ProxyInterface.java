@@ -1,4 +1,4 @@
-package csulb.cecs327.Services;
+package csulb.cecs327.Services.Networking;
 import com.google.gson.JsonObject;
 
 public interface ProxyInterface {
@@ -21,7 +21,7 @@ public interface ProxyInterface {
           },
    }
 }
-    * and sends it using the "send" method of CommunicationModule
+    * and sends it using the "send" method of CommunicationModuleInterface
     * @param  remoteMethod: Name of the remote method. The remote methods
     * are defined in a JSON file.
     * @param  param: An array of object that define the parameters of the 
