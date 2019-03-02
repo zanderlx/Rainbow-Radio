@@ -6,9 +6,8 @@
 * @version 0.15
 * @since   2019-01-24 
 */
-package csulb.cecs327.Services;
+package csulb.cecs327.Services.Networking;
 
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Base64;
@@ -34,11 +33,11 @@ public class CECS327InputStream extends InputStream {
     protected int pos = 0;
      /**
      * It stores a buffer with FRAGMENT_SIZE bytes for the current reading. 
-     * This variable is useful for UDP sockets. Thus bur is the datagram
+     * This variable is useful for UDP sockets. Thus buf is the datagram
      */
     protected byte buf[];
     /**
-     * It prepares for the nuext buffer. In UDP sockets you can read nextbufer 
+     * It prepares for the next buffer. In UDP sockets you can read nextbufer
      * while buf is in use
      */
     protected byte nextBuf[];

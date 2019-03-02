@@ -5,12 +5,13 @@
 * @version 0.15
 * @since   2019-01-24 
 */
-package csulb.cecs327.Services;
+package csulb.cecs327.Services.Networking;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 
 public class Proxy implements ProxyInterface {
+    //Todo: replace with communication module
     Dispatcher dispacher;   // This is only for test. it should use the Communication  Module
     public Proxy(Dispatcher dispacher)
     {
@@ -28,6 +29,7 @@ public class Proxy implements ProxyInterface {
         
         jsonRequest.addProperty("remoteMethod", remoteMethod);
         jsonRequest.addProperty("objectName", "SongServices");
+        //Todo: Add in RemoteRef
         // It is hardcoded. Instead it should be dynamic using  RemoteRef
         if (remoteMethod.equals("getSongChunk"))
         {
@@ -54,6 +56,7 @@ public class Proxy implements ProxyInterface {
     * return any value
     * 
     */
+    //Todo: implement this method
     public void asynchExecution(String remoteMethod, String[] param)
     {
         return;

@@ -1,4 +1,4 @@
-package csulb.cecs327.Services;
+package csulb.cecs327.Services.Networking;
 
 public interface DispatcherInterface {
 /*
