@@ -8,13 +8,11 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
 import javax.swing.*;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import csulb.cecs327.Models.User;
-import csulb.cecs327.Services.UserSerializer;
 import net.miginfocom.swing.*;
 
 
@@ -38,11 +36,10 @@ public class RegisterDialog extends JDialog {
     
     private void okButtonMouseClicked(MouseEvent e) {
         String userName = userNameTextField.getText();
-        String password = passwordTextField.getText();
+        String password = String.valueOf(passwordTextField.getPassword());
         String email = emailTextField.getText();
         GsonBuilder gsonBuilder = new GsonBuilder();
         //gsonBuilder.registerTypeAdapter(User.class, new UserDeserializer());
-        gsonBuilder.registerTypeAdapter(User.class, new UserSerializer());
         Gson gson = gsonBuilder.create();
         if (userName.equals("")) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Verify that the username is entered.");
@@ -53,9 +50,9 @@ public class RegisterDialog extends JDialog {
         } else {
             try(Reader reader = new FileReader("Users.json")){
                 boolean duplicateUserName = false;
-                List<User> users = gson.fromJson(reader, new TypeToken<List<User>>() {}.getType());
+                User[] users = gson.fromJson(reader, new TypeToken<User>() {}.getType());
                 for (User j : users){
-                    if (j.getUserName() == userName) {
+                    if (j.getUserName().equals(userName)) {
                         duplicateUserName = true;
                         break;
                     }
@@ -76,12 +73,15 @@ public class RegisterDialog extends JDialog {
         }
     }
     
-    private void writeToUsersJson(String userName, String password, String email, Gson gson, List<User> list) {
+    private void writeToUsersJson(String userName, String password, String email, Gson gson, User[] list) {
         if (list == null)
-            list = new ArrayList<>();
+            list = new User[1];
+        else{
+            ArrayList<User> tempList = new ArrayList<User>();
+        }
         try(Writer writer = new FileWriter("Users.json")){
-            User newUser = new User(userName, password, email, new ArrayList<>());
-            list.add(newUser);
+            User newUser = new User(userName, password, email, null);
+            list[list.length - 1] = newUser;
             gson.toJson(list, writer);
             dispose();
         } catch (IOException e1) {
