@@ -9,13 +9,10 @@ package csulb.cecs327.Services.Networking;
 import java.util.HashMap;
 import java.util.*;
 import java.lang.reflect.*;
-
+import java.nio.file.*;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-
-
-
 
 
 public class Dispatcher implements DispatcherInterface {
@@ -126,7 +123,7 @@ public class Dispatcher implements DispatcherInterface {
         ListOfObjects.put(objectName, remoteMethod);
     }
     
-    /*  Testing
+   /*  Testing
     public static void main(String[] args) {
         // Instance of the Dispatcher
         Dispatcher dispatcher = new Dispatcher();
@@ -139,7 +136,7 @@ public class Dispatcher implements DispatcherInterface {
         // First we read the request. In the final implementation the jsonRequest
         // is obtained from the communication module
         try {
-            String jsonRequest = new String(Files.readAllBytes(Paths.get("./getSongChunk.json")));
+            String jsonRequest = new String(Files.readAllBytes(Paths.get("/Users/pramodchamala/IdeaProjects/CECS-327-Music-Player/src/csulb/cecs327/Services/Networking/getSongChunk.json")));
             String ret = dispatcher.dispatch(jsonRequest);
             System.out.println(ret);
 
