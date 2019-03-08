@@ -37,7 +37,7 @@ public class CECS327InputStream extends InputStream {
      */
     protected byte buf[];
     /**
-     * It prepares for the next buffer. In UDP sockets you can read nextbufer
+     * It prepares for the next buffer. In UDP sockets you can read nextbuffer
      * while buf is in use
      */
     protected byte nextBuf[];
@@ -60,7 +60,7 @@ public class CECS327InputStream extends InputStream {
 
     /**
      * Constructor of the class. Initialize the variables and reads the first 
-     * frament in nextBuf
+     * fragment in nextBuf
      * @param fileName The name of the file
     */
     public CECS327InputStream(Long fileName, ProxyInterface proxy) throws IOException {

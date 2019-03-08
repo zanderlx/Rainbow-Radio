@@ -10,7 +10,6 @@ import java.util.*;
 import java.util.List;
 import java.util.Timer;
 import javax.swing.*;
-import javax.swing.event.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -58,41 +57,105 @@ public class AppUI extends JPanel {
     private DefaultTableModel playlistModel;
     private User user;
     private SongSerializer songSerializer = new SongSerializer();
-    private RootObject[] musicJson = songSerializer.getRootObjects();
+    private MusicEntry[] musicJson = songSerializer.getRootObjects();
     private TableSearch tableSearch;
     private static Thread songProgressThread;
     private boolean isPlaying = false;
     private int currentSongLength = 0;
     private Timer timer = new Timer();
-    private Playlist playlist;
     private ArrayList<Playlist> playlistCollection = new ArrayList<>();
-    private ArrayList<DefaultTableModel> playlists = new ArrayList<>();
+    private ArrayList<DefaultTableModel> playlistModels = new ArrayList<>();
     private int playlistCount = 1;
     
     private JMenu addToPlaylistMenu;
+    
+    private static final String[] TABLEHEADER = new String[]{"Song", "Artist", "Album", "Genre"};
+    private static final String PAUSE_BUTTON_PATH = "/csulb/cecs327/Resources/icon/Button-Pause-icon.png";
+    private static final String PLAY_BUTTON_PATH = "/csulb/cecs327/Resources/icon/Button-Play-icon.png";
 
     // Constructor
     public AppUI(User user) {
 
         initComponents();
         this.user = user;
+        startUp();
     }
-
+    
+    private void startUp() {
+    
+        addSongInfoTableMouseListener();
+    
+        model = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        model.setColumnIdentifiers(TABLEHEADER);
+        songInfoTable.getTableHeader().setReorderingAllowed(false);
+        songInfoTable.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
+        songInfoTable.setShowVerticalLines(false);
+        songInfoTable.setRowHeight(30);
+        songInfoTable.setModel(model);
+    
+        playlistModel = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        playlistModel.setColumnIdentifiers(new String[] {"Playlist"});
+        playlistTable.getTableHeader().setReorderingAllowed(false);
+        playlistTable.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
+        playlistTable.setShowVerticalLines(false);
+        playlistTable.setRowHeight(30);
+        playlistTable.setModel(playlistModel);
+        addDefaultTableRows();
+    
+        sortColumn(0);
+        tableSearch = new TableSearch(songInfoTable, songInfoPane, searchBox);
+        searchBox.setBorder(BorderFactory.createMatteBorder(0, 0,2, 0, Color.decode("#1DB954")));
+        searchBox.setBackground(null);
+        songInfoTable.setRowSelectionInterval(0, 0);
+        
+        setUpButton(playPauseButton);
+        setUpButton(nextButton);
+        setUpButton(previousButton);
+        setUpButton(removePlaylist);
+        setUpButton(addPlaylist);
+        setUpButton(logoutButton);
+        setUpButton(shuffleButton);
+    
+    
+        songProgress.setMinimum(0);
+        songProgress.setMaximum(100);
+        songProgress.setForeground(Color.decode("#1DB954"));
+    }
+    
+    private void setUpButton(JButton button){
+        button.setBackground(null);
+        button.setBorder(null);
+        button.setFocusPainted(false);
+    }
+    private void setRow(SongTableEntry songTableEntry, DefaultTableModel model){
+        model.addRow(new String[] {songTableEntry.getSong(), songTableEntry.getAlbum(), songTableEntry.getGenre()});
+    }
+    
     // Methods
 
     /**
-     * This button allows the user to play or pause a song
+     * PLAY: This button allows the user to play or pause a song.
      *
      * @param e The action performed when clicking the button
      */
     private void playPauseButtonActionPerformed(ActionEvent e) {
         if (!isPlaying) {
-            playPauseButton.setIcon(new ImageIcon(getClass().getResource("/csulb/cecs327/Resources/icon/Button-Pause-icon.png")));
+            playPauseButton.setIcon(new ImageIcon(getClass().getResource(PAUSE_BUTTON_PATH)));
             player.play();
             updateProgressBar();
             isPlaying = true;
         } else {
-            playPauseButton.setIcon(new ImageIcon(getClass().getResource("/csulb/cecs327/Resources/icon/Button-Play-icon.png")));
+            playPauseButton.setIcon(new ImageIcon(getClass().getResource(PLAY_BUTTON_PATH)));
             player.pause();
             songProgress.setValue(currentSongLength);
             timer.cancel();
@@ -102,6 +165,11 @@ public class AppUI extends JPanel {
         songLabel.setText((String)songInfoTable.getValueAt(row, 0));
         artistLabel.setText((String)songInfoTable.getValueAt(row, 1));
     }
+    
+    /**
+     * PREVIOUS: Play previous song.
+     * @param e
+     */
 
     private void previousButtonActionPerformed(ActionEvent e) {
         try {
@@ -121,7 +189,7 @@ public class AppUI extends JPanel {
             fakeCurrent = row;
             songLabel.setText((String)songInfoTable.getValueAt(row, 0));
             artistLabel.setText((String)songInfoTable.getValueAt(row, 1));
-            playPauseButton.setIcon(new ImageIcon(getClass().getResource("/csulb/cecs327/Resources/icon/Button-Pause-icon.png")));
+            playPauseButton.setIcon(new ImageIcon(getClass().getResource(PAUSE_BUTTON_PATH)));
         } catch (Exception exception) {
             exception.printStackTrace();
         }
@@ -141,7 +209,7 @@ public class AppUI extends JPanel {
             int row = ++fakeCurrent;
             fakeCurrent = row;
             row %= songInfoTable.getRowCount();
-            playPauseButton.setIcon(new ImageIcon(getClass().getResource("/csulb/cecs327/Resources/icon/Button-Pause-icon.png")));
+            playPauseButton.setIcon(new ImageIcon(getClass().getResource(PAUSE_BUTTON_PATH)));
             songLabel.setText((String)songInfoTable.getValueAt(row, 0));
             artistLabel.setText((String)songInfoTable.getValueAt(row, 1));
         } catch (Exception exception) {
@@ -178,11 +246,10 @@ public class AppUI extends JPanel {
                                 String artist = (String)songInfoTable.getValueAt(row, 1);
                                 String album = (String)songInfoTable.getValueAt(row, 2);
                                 String genre = (String)songInfoTable.getValueAt(row, 3);
-
-                                String[] addSong = new String[]{song, artist, album, genre};
-                                DefaultTableModel test = playlists.get(index);
-                                test.setColumnIdentifiers(new Object[]{"Song", "Artist", "Album", "Genre"});
-                                test.addRow(new Object[]{song, artist, album, genre});
+                                SongTableEntry entry = new SongTableEntry(song, artist, album, genre);
+                                DefaultTableModel currentPlaylistModel = playlistModels.get(index);
+                                currentPlaylistModel.setColumnIdentifiers(TABLEHEADER);
+                                setRow(entry, currentPlaylistModel);
                                 playlistCollection.get(index).setListOfSongs(new Object[]{song, artist, album, genre});
                                 selectPlaylist();
                             }
@@ -216,7 +283,7 @@ public class AppUI extends JPanel {
                     currentSongLength = 0;
                     updateProgressBar();
                     player.play();
-                    playPauseButton.setIcon(new ImageIcon(getClass().getResource("/csulb/cecs327/Resources/icon/Button-Pause-icon.png")));
+                    playPauseButton.setIcon(new ImageIcon(getClass().getResource(PAUSE_BUTTON_PATH)));
                     int row = songInfoTable.getSelectedRow();
                     songLabel.setText((String)songInfoTable.getValueAt(row, 0));
                     artistLabel.setText((String)songInfoTable.getValueAt(row, 1));
@@ -279,15 +346,11 @@ public class AppUI extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
                     int row = playlistTable.getSelectedRow();
-                    DefaultTableModel test = playlists.get(row);
+                    DefaultTableModel test = playlistModels.get(row);
 
 
-                    test.setColumnIdentifiers(new Object[]{"Song", "Artist", "Album", "Genre"});
+                    test.setColumnIdentifiers(TABLEHEADER);
                     JTable playlistView = new JTable(test);
-                    System.out.println(test.getValueAt(0, 0));
-                    System.out.println(test.getValueAt(0, 1));
-                    System.out.println(test.getValueAt(0, 2));
-                    System.out.println(test.getValueAt(0, 3));
                     playlistView.getTableHeader().setReorderingAllowed(false);
                     playlistView.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
                     playlistView.setShowVerticalLines(false);
@@ -300,15 +363,15 @@ public class AppUI extends JPanel {
 
     private void addPlaylistActionPerformed(ActionEvent e) {
         String name = "New Playlist ";
-        playlistModel.addRow(new Object[]{name + playlistCount});
+        playlistModel.addRow( new String[] {name + playlistCount});
         playlistCount++;
         playlistCollection.add(new Playlist(name + playlistCount));
-        playlists.add(new DefaultTableModel());
+        playlistModels.add(new DefaultTableModel());
     }
 
     private void removePlaylistActionPerformed(ActionEvent e) {
         playlistCollection.remove(playlistTable.getSelectedRow());
-        playlists.remove(playlistTable.getSelectedRow());
+        playlistModels.remove(playlistTable.getSelectedRow());
         playlistModel.removeRow(playlistTable.getSelectedRow());
     }
 
@@ -630,77 +693,6 @@ public class AppUI extends JPanel {
         nextButton.addActionListener(e -> nextButtonActionPerformed(e));
         add(nextButton, "cell 19 52,width 32:32:32");
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
-
-        addSongInfoTableMouseListener();
-
-        Object[] columns = {"Song Title", "Artist", "Album", "Genre"};
-        model = new DefaultTableModel() {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-        model.setColumnIdentifiers(columns);
-        songInfoTable.getTableHeader().setReorderingAllowed(false);
-        songInfoTable.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
-        songInfoTable.setShowVerticalLines(false);
-        songInfoTable.setRowHeight(30);
-        songInfoTable.setModel(model);
-
-        Object[] column = {"Playlist Name"};
-        playlistModel = new DefaultTableModel() {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-        playlistModel.setColumnIdentifiers(column);
-        playlistTable.getTableHeader().setReorderingAllowed(false);
-        playlistTable.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
-        playlistTable.setShowVerticalLines(false);
-        playlistTable.setRowHeight(30);
-        playlistTable.setModel(playlistModel);
-        addDefaultTableRows();
-
-        sortColumn(0);
-        tableSearch = new TableSearch(songInfoTable, songInfoPane, searchBox);
-        searchBox.setBorder(BorderFactory.createMatteBorder(0, 0,2, 0, Color.decode("#1DB954")));
-        searchBox.setBackground(null);
-        songInfoTable.setRowSelectionInterval(0, 0);
-
-        // Make background of button invisible
-        playPauseButton.setBackground(null);
-        playPauseButton.setBorder(null);
-        playPauseButton.setFocusPainted(false);
-
-        nextButton.setBackground(null);
-        nextButton.setBorder(null);
-        nextButton.setFocusPainted(false);
-
-        previousButton.setBackground(null);
-        previousButton.setBorder(null);
-        previousButton.setFocusPainted(false);
-
-        removePlaylist.setBackground(null);
-        removePlaylist.setBorder(null);
-        removePlaylist.setFocusPainted(false);
-
-        addPlaylist.setBackground(null);
-        addPlaylist.setBorder(null);
-        addPlaylist.setFocusPainted(false);
-
-        logoutButton.setBackground(null);
-        logoutButton.setBorder(null);
-        logoutButton.setFocusPainted(false);
-
-
-        songProgress.setMinimum(0);
-        songProgress.setMaximum(100);
-        songProgress.setForeground(Color.decode("#1DB954"));
-
-        shuffleButton.setBackground(null);
-        shuffleButton.setBorder(null);
-        shuffleButton.setFocusPainted(false);
     }
 
     // Initializing the JTable
@@ -728,19 +720,18 @@ public class AppUI extends JPanel {
     }
 
     public void addDefaultTableRows() {
-        model.addRow(new Object[]{"Faded", "Alan Walker", "Different World", "edm"});
-        model.addRow(new Object[]{"Mine", "Bazzi", "Cosmic", "hip hop"});
-        model.addRow(new Object[]{"Crab Rave", "Noisestorm", "Monstercat", "techno"});
-        model.addRow(new Object[]{"High Hopes", "Panic! At The Disco", "Pray for the Wicked", "rock"});
-        model.addRow(new Object[]{"Stressed Out", "Twenty One Pilots", "Blurryface", "alternative rock"});
-
-        for (RootObject rootObject : musicJson) {
-            model.addRow(new Object[]{
+        //TODO: Change to query for song list
+        setRow(new SongTableEntry("Faded", "Alan Walker", "Different World", "edm"), model);
+        setRow(new SongTableEntry("Mine", "Bazzi", "Cosmic", "hip hop"), model);
+        setRow(new SongTableEntry("Crab Rave", "Noisestorm", "Monstercat", "techno"), model);
+        setRow(new SongTableEntry("High Hopes", "Panic! At The Disco", "Pray for the Wicked", "rock"), model);
+        setRow(new SongTableEntry("Stressed Out", "Twenty One Pilots", "Blurryface", "alternative rock"), model);
+        for (MusicEntry rootObject : musicJson) {
+            setRow(new SongTableEntry(
                     rootObject.getSong().getTitle(),
                     rootObject.getArtist().getName(),
                     rootObject.getRelease().getName(),
-                    rootObject.getArtist().getTerms()
-            });
+                    rootObject.getArtist().getTerms()), model);
         }
     }
 }

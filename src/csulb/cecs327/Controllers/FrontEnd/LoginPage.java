@@ -10,21 +10,14 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import javax.swing.*;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-import csulb.cecs327.Models.Playlist;
-import csulb.cecs327.Models.RootObject;
-import csulb.cecs327.Models.SongDatabase;
 import csulb.cecs327.Models.User;
 import csulb.cecs327.Services.MusicPlayer;
-import csulb.cecs327.Services.SongSerializer;
-import csulb.cecs327.Services.UserSerializer;
 import net.miginfocom.swing.*;
 
 /**

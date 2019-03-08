@@ -1,6 +1,6 @@
 package csulb.cecs327.Models;
 
-public class RootObject {
+public class MusicEntry {
     private Release release;
     private Artist artist;
     private Song song;

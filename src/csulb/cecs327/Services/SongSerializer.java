@@ -10,7 +10,7 @@ public class SongSerializer {
 
     private Gson gson;
     private String path;
-    private RootObject[] rootObjects;
+    private MusicEntry[] rootObjects;
     private BufferedReader br;
 
     public SongSerializer() {
@@ -18,13 +18,13 @@ public class SongSerializer {
             gson = new Gson();
             path = "src/csulb/cecs327/Models/music.json";
             br = new BufferedReader(new FileReader(path));
-            rootObjects = gson.fromJson(br, RootObject[].class);
+            rootObjects = gson.fromJson(br, MusicEntry[].class);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public RootObject[] getRootObjects() {
+    public MusicEntry[] getRootObjects() {
         return rootObjects;
     }
 }
