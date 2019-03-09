@@ -1,0 +1,46 @@
+{
+    "remoteMethod": {
+        "name": "register",
+        "object": "RegisterServices",
+        "call-semantics": "at-most-one",
+        "param":
+        {
+            "user": "string",
+            "email": "string",
+            "password": "string"
+        }
+    },
+
+    "remoteMethod": {
+        "name": "login",
+        "object": "LoginServices",
+        "call-semantics": "at-most-one",
+        "param":
+        {
+            "user": "string",
+            "password": "string"
+        }
+    },
+
+    "remoteMethod":{
+        "name": "updatePlaylist",
+        "object": "SongServices",
+        "call-semantics": "maybe",
+        "param":{
+            "song": "Long"
+        }
+    },
+    
+    "remoteMethod":
+    {
+         "name":"getSongChunk",
+         "object":"SongServices",
+         "call-semantics":"maybe",
+         "param":
+           {
+               "song":"Long",
+               "fragment":"Long"
+           },
+         "return":"Byte[]"
+    }
+}
