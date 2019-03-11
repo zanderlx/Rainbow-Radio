@@ -7,6 +7,10 @@ public class SongTableEntry {
     private String genre;
     private Long songId;
     
+    public Long getSongId() {
+        return songId;
+    }
+    
     public SongTableEntry(String song, String artist, String album, String genre) {
         this.song = song;
         this.artist = artist;
@@ -44,5 +48,16 @@ public class SongTableEntry {
     
     public void setGenre(String genre) {
         this.genre = genre;
+    }
+    
+    @Override
+    public String toString() {
+        return "SongTableEntry{" +
+                "song='" + song + '\'' +
+                ", artist='" + artist + '\'' +
+                ", album='" + album + '\'' +
+                ", genre='" + genre + '\'' +
+                ", songId=" + songId +
+                '}';
     }
 }

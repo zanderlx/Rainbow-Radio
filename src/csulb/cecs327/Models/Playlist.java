@@ -3,19 +3,19 @@ package csulb.cecs327.Models;
 import java.util.ArrayList;
 
 public class Playlist {
-    private Object[] listOfSongs;
+    private ArrayList<SongTableEntry> listOfSongs;
     private String nameOfPlaylist;
     
     public Playlist(String name) {
-        this.listOfSongs = new Object[]{};
+        this.listOfSongs = new ArrayList<>();
         this.nameOfPlaylist = name;
     }
     
-    public Object[] getListOfSongs() {
+    public ArrayList<SongTableEntry> getListOfSongs() {
         return listOfSongs;
     }
     
-    public void setListOfSongs(Object[] listOfSongs) {
+    public void setListOfSongs(ArrayList<SongTableEntry> listOfSongs) {
         this.listOfSongs = listOfSongs;
     }
 
@@ -26,6 +26,7 @@ public class Playlist {
     public void setNameOfPlaylist(String nameOfPlaylist) {
         this.nameOfPlaylist = nameOfPlaylist;
     }
+    public void addSongTableEntry(SongTableEntry songTableEntry){listOfSongs.add(songTableEntry);}
     
    
     

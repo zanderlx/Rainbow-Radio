@@ -1,10 +1,6 @@
 package csulb.cecs327.Services.Networking;
 
-import com.google.gson.Gson;
-import csulb.cecs327.Models.*;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
+import com.google.gson.JsonObject;
 
 interface RemoteRefInterface {
 
@@ -45,7 +41,7 @@ interface RemoteRefInterface {
   * @param  remoteMethod: Name of the remote method or
   * if the remote method does not exists in the catalog
   */
-  Gson getRemoteReference(String remoteMethod, String object, String[] param);
+  JsonObject getRemoteReference(String remoteMethod, String object, String[] param);
 }
 
 

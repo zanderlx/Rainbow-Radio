@@ -18,6 +18,8 @@ import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import csulb.cecs327.Models.User;
 import csulb.cecs327.Services.MusicPlayer;
+import csulb.cecs327.Services.Networking.Proxy;
+import csulb.cecs327.Services.Networking.UserServices;
 import net.miginfocom.swing.*;
 
 /**
@@ -25,12 +27,14 @@ import net.miginfocom.swing.*;
  */
 public class LoginPage extends JPanel {
     public LoginPage() {
-        player.play();
+        //player.play();
         initComponents();
+        proxy = new Proxy(1024);
     }
+    private Proxy proxy;
     
     // Adding music
-    private MusicPlayer player = new MusicPlayer("src/csulb/cecs327/Resources/music/Rainbow Road - Mario Kart Wii.mp3");
+    //private MusicPlayer player = new MusicPlayer("src/csulb/cecs327/Resources/music/Rainbow Road - Mario Kart Wii.mp3");
     
     private void logInButtonMouseClicked(MouseEvent e) {
         String userName = usernameField.getText();
@@ -41,37 +45,21 @@ public class LoginPage extends JPanel {
         else if (password.length == 0)
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Verify that the password is entered.");
         else{
-            try(Reader reader = new FileReader("Users.json")) {
-                //Gson gson = new GsonBuilder().registerTypeAdapter(User.class, new UserDeserializer()).create();
+            JsonObject jsonResponse = proxy.synchExecution("login", new String[]{userName, String.valueOf(password)});
+            String response = jsonResponse.get("ret").getAsString();
+            if (response.equals("User not found"))
+                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "User not registered.");
+            else if(response.equals("Incorrect Password"))
+                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Password incorrect.");
+            else {
                 Gson gson = new Gson();
-                ArrayList<User> users = gson.fromJson(reader, new TypeToken<ArrayList<User>>(){}.getType());
-                boolean found = false;
-                for (int i = 0; i < users.size(); i++)
-                {
-                    User j = users.get(i);
-                    if (j.getUserName().equals(userName))
-                    {
-                        if (Arrays.equals(password, j.getPassword().toCharArray())){
-                            JFrame root = (JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, this);
-                            root.setContentPane(new AppUI(j));
-                            root.pack();
-                            player.stop();
-                            found = true;
-                        }
-                        else
-                            JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Password incorrect.");
-                    }
-                }
-                if (!found)
-                    JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Username not registered.");
+                User user = gson.fromJson(response, new TypeToken<User>(){}.getType());
+                JFrame root = (JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, this);
+                root.setContentPane(new AppUI(user));
+                root.pack();
                 
-            } catch (FileNotFoundException e1) {
-                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "No users detected. Please register.");
-            } catch (IOException e1) {
-                e1.printStackTrace();
             }
         }
-        
     }
     
     private void registerButtonMouseClicked(MouseEvent e) {
