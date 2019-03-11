@@ -1,16 +1,12 @@
 package csulb.cecs327.Services.Networking;
 
 import com.google.gson.JsonObject;
-import csulb.cecs327.Models.*;
-import java.io.FileWriter;
-import java.io.IOException;
 import com.google.gson.Gson;
-import com.google.gson.JsonParser;
 
 //Todo: implement this class
 public class RemoteRef implements RemoteRefInterface {
     @Override
-    public Gson getRemoteReference(String remoteMethod, String object, String[] param) {
+    public JsonObject getRemoteReference(String remoteMethod, String object, String[] param) {
 
         JsonObject jsonRequest = new JsonObject();
         JsonObject jsonParam = new JsonObject();
@@ -47,9 +43,7 @@ public class RemoteRef implements RemoteRefInterface {
 
         jsonRequest.add("param", jsonParam);
 
-        String jsonOut = gson.toJson(jsonRequest);
-
-        return jsonOut;
+        return jsonRequest;
 
     }
 

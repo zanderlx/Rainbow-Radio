@@ -86,13 +86,14 @@ new FormModel {
 			} )
 			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 				name: "playlistPane"
-				add( new FormComponent( "javax.swing.JTable" ) {
-					name: "playlistTable"
-					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "playlistItemsMouseClicked", true ) )
-					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "playlistItemsMouseReleased", true ) )
+				add( new FormComponent( "javax.swing.JList" ) {
+					name: "playlistList"
+					"minimumSize": new java.awt.Dimension( 30, 32 )
+					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "playlistListMouseClicked", true ) )
+					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "playlistListMouseReleased", true ) )
 				} )
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 6 21 8 26"
+				"value": "cell 6 21 8 26,grow"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "songLabel"

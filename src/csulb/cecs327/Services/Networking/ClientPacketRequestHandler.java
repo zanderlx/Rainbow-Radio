@@ -9,11 +9,10 @@ public class ClientPacketRequestHandler extends Thread{
     private DatagramPacket packet = null;
     public Dispatcher myDispatcher = null;
 
-    public ClientPacketRequestHandler(DatagramSocket s, DatagramPacket d){
+    public ClientPacketRequestHandler(DatagramSocket s, DatagramPacket d, Dispatcher dispatcher){
         this.socket = s;                                            // Set socket
         this.packet = d;                                            // Set packet as received request packet
-        this.myDispatcher = new Dispatcher();                       // Create a dispatcher object to process request
-        myDispatcher.registerObject(new SongDispatcher(), "SongServices");  // Add dispatcher modules
+        this.myDispatcher = dispatcher;
         System.out.println("New client packet handler created");
     }
 

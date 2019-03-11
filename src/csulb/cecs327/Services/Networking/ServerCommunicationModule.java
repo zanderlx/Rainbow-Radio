@@ -8,9 +8,11 @@ public class ServerCommunicationModule extends Thread{
 
     DatagramSocket socket = null;
     int portNumber;
+    Dispatcher dispatcher;
 
-    ServerCommunicationModule(int portNum){
+    ServerCommunicationModule(int portNum, Dispatcher dispatcher){
         this.portNumber = portNum;
+        this.dispatcher = dispatcher;
     }
 
     public void connect(){                        // portNumber must be > 1023
@@ -31,7 +33,7 @@ public class ServerCommunicationModule extends Thread{
                 System.out.println("Client packet received: " + requestPacket);
 
                 System.out.println("Creating new thread for handling this client packet.");             // Create new thread to handle this request packet and return a response packet
-                Thread t = new ClientPacketRequestHandler(socket, requestPacket);
+                Thread t = new ClientPacketRequestHandler(socket, requestPacket, dispatcher);
                 t.start();
             }
         }catch (IOException e) {
