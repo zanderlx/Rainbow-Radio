@@ -40,7 +40,7 @@ interface RemoteRefInterface {
   * @param  remoteMethod: Name of the remote method or
   * if the remote method does not exists in the catalog
   */
-  Gson getRemoteReference(String remoteMethod);
+  Gson getRemoteReference(String remoteMethod, String[] param);
 }
 
 

@@ -29,8 +29,7 @@ public class Proxy implements ProxyInterface {
         
         jsonRequest.addProperty("remoteMethod", remoteMethod);
         jsonRequest.addProperty("objectName", "SongServices");
-        //Todo: Add in RemoteRef
-        // It is hardcoded. Instead it should be dynamic using  RemoteRef
+
         if (remoteMethod.equals("getSongChunk"))
         {
             
