@@ -7,6 +7,11 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 
 interface RemoteRefInterface {
+
+
+  public class remoteMethod {
+   
+  }
   /*
   * return the Json object defining the remote method
   * The catalog of the remote methods are defined in 
@@ -40,7 +45,7 @@ interface RemoteRefInterface {
   * @param  remoteMethod: Name of the remote method or
   * if the remote method does not exists in the catalog
   */
-  Gson getRemoteReference(String remoteMethod, String[] param);
+  Gson getRemoteReference(String remoteMethod, String object, String[] param);
 }
 
 
