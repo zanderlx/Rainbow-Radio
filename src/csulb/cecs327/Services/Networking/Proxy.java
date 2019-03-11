@@ -26,15 +26,8 @@ public class Proxy implements ProxyInterface {
     */
     public JsonObject synchExecution(String remoteMethod, String[] param)
     {
-        JsonObject jsonRequest = new JsonObject();
-        JsonObject jsonParam = new JsonObject();
-        
-        jsonRequest.addProperty("remoteMethod", remoteMethod);
-        jsonRequest.addProperty("objectName", "UserServices");
-
-        jsonParam.addProperty("user", param[0]);
-        jsonParam.addProperty("password", param[1]);
-        jsonRequest.add("param", jsonParam);
+        RemoteRef remoteRef = new RemoteRef();
+        JsonObject jsonRequest = remoteRef.getRemoteReference("remoteMethod");
         
         JsonParser parser = new JsonParser();
         //String strRet =  this.dispacher.dispatch(jsonRequest.toString());

@@ -6,11 +6,10 @@ import com.google.gson.Gson;
 //Todo: implement this class
 public class RemoteRef implements RemoteRefInterface {
     @Override
-    public JsonObject getRemoteReference(String remoteMethod, String object, String[] param) {
-
+    public JsonObject getRemoteReference(String remoteMethod) {
+        
         JsonObject jsonRequest = new JsonObject();
         JsonObject jsonParam = new JsonObject();
-        Gson gson = new Gson();
 
         jsonRequest.addProperty("remoteMethod", remoteMethod);
         jsonRequest.addProperty("object", object);

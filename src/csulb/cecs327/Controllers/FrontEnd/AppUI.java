@@ -17,6 +17,7 @@ import javax.swing.table.TableRowSorter;
 import com.jgoodies.forms.factories.*;
 import csulb.cecs327.Models.*;
 import csulb.cecs327.Services.*;
+import csulb.cecs327.Services.Networking.Proxy;
 import net.miginfocom.swing.*;
 
 /**
@@ -63,6 +64,7 @@ public class AppUI extends JPanel {
     private Timer timer = new Timer();
     private DefaultListModel<Playlist> playlistModel;
     private int playlistCount = 1;
+    private Proxy proxy;
     
     private JMenu addToPlaylistMenu;
     
@@ -71,10 +73,11 @@ public class AppUI extends JPanel {
     private static final String PLAY_BUTTON_PATH = "/csulb/cecs327/Resources/icon/Button-Play-icon.png";
 
     // Constructor
-    AppUI(User user) {
+    AppUI(User user, Proxy proxy) {
 
         initComponents();
         this.user = user;
+        this.proxy = proxy;
         startUp();
     }
     
