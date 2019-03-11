@@ -33,7 +33,10 @@ public class SongDispatcher
     {
         byte buf[] = new byte[FRAGMENT_SIZE];
 
-        File file = new File("./" + key);
+        //File file = new File("./" + key);
+        File file = new File(System.getProperty("user.dir") + "\\src\\" +key);
+        // To check the status and if the file is found
+        System.out.println("SongDispatcher has found file: "+key+"\t, Status: "+file.exists());
         FileInputStream inputStream = new FileInputStream(file);
         inputStream.skip(fragment * FRAGMENT_SIZE);
         inputStream.read(buf);
@@ -48,7 +51,8 @@ public class SongDispatcher
      */
     public Integer getFileSize(Long key) throws FileNotFoundException, IOException
     {
-        File file = new File("./" + key);        
+        //File file = new File("./" + key);
+        File file = new File(System.getProperty("user.dir") + "\\src\\" +key);
         Integer total =  (int)file.length();
         
         return total;
