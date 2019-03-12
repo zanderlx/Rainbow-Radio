@@ -1,7 +1,10 @@
 package csulb.cecs327.Services.Networking;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 public class ClientRemoteRef implements RemoteRefInterface {
     private ClientCommunicationModule client;
@@ -12,46 +15,40 @@ public class ClientRemoteRef implements RemoteRefInterface {
     }
     
     @Override
+    /**
+     * This class is for client to receive a JSON with parameters
+     * for the desired Remote Method
+     * @param remoteMethod = name of method client wishes to find
+     * @return - JSON Object of desired method
+     */
     public JsonObject getRemoteReference(String remoteMethod) {
+        //Setting temp JsonObject
+        Gson gson = new Gson();
+        JsonObject request = new JsonObject();
+        JsonObject[] jsonRequest;
 
-        JsonObject jsonRequest = new JsonObject();
-        JsonObject jsonParam = new JsonObject();
-
-        jsonRequest.addProperty("remoteMethod", remoteMethod);
-//        String object = catalog.get("")
-//        jsonRequest.addProperty("object", object);
-
-//        // Register
-//        if (remoteMethod.equals("register")) {
-//            jsonParam.addProperty("user", param[0]);
-//            jsonParam.addProperty("email", param[1]);
-//            jsonParam.addProperty("password", param[2]);
-//        }
-//
-//        // Login
-//        if (remoteMethod.equals("login")) {
-//            jsonParam.addProperty("name", param[0]);
-//            jsonParam.addProperty("password", param[1]);
-//        }
-//
-//        // getSongChunk
-//        if (remoteMethod.equals("getSongChunk")) {
-//
-//            jsonParam.addProperty("song", param[0]);
-//            jsonParam.addProperty("fragment", param[1]);
-//
-//        }
-//
-//        // addToPlaylist
-//        if (remoteMethod.equals("addToPlaylist")) {
-//            jsonParam.addProperty("song", param[0]);
-//        }
-
-        jsonRequest.add("param", jsonParam);
-
-        return jsonRequest;
-
+        //Creating an array of Json Objects from catalog.json
+        try {
+            String path = "catalog.json";
+            BufferedReader br = new BufferedReader(new FileReader(path));
+            jsonRequest = gson.fromJson(br, JsonObject[].class);
+            
+            //Looks for method name, and returns JSON object with matching name 
+            for (JsonObject object : jsonRequest){
+                if( object.get("name").equals(remoteMethod))
+                    request = object;
+                else{
+                    System.out.println("Remote Method not found.");
+                }
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return request;
     }
+
+
+
     private JsonObject getCatalog() {
         JsonObject jsonRequest = new JsonObject();
         jsonRequest.addProperty("remoteMethod", "getCatalog");
