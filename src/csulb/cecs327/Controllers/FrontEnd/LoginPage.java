@@ -55,7 +55,7 @@ public class LoginPage extends JPanel {
                 Gson gson = new Gson();
                 User user = gson.fromJson(response, new TypeToken<User>(){}.getType());
                 JFrame root = (JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, this);
-                root.setContentPane(new AppUI(user));
+                root.setContentPane(new AppUI(user, proxy));
                 root.pack();
                 
             }

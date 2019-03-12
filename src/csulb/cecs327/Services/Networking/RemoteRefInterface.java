@@ -41,7 +41,7 @@ interface RemoteRefInterface {
   * @param  remoteMethod: Name of the remote method or
   * if the remote method does not exists in the catalog
   */
-  JsonObject getRemoteReference(String remoteMethod, String object, String[] param);
+  JsonObject getRemoteReference(String remoteMethod);
 }
 
 

@@ -28,14 +28,23 @@ public class Proxy implements ProxyInterface {
     {
         JsonObject jsonRequest = new JsonObject();
         JsonObject jsonParam = new JsonObject();
-        
+    
         jsonRequest.addProperty("remoteMethod", remoteMethod);
-        jsonRequest.addProperty("objectName", "UserServices");
-
-        jsonParam.addProperty("user", param[0]);
-        jsonParam.addProperty("password", param[1]);
-        jsonRequest.add("param", jsonParam);
+        jsonRequest.addProperty("objectName", "SongServices");
+    
+        if (remoteMethod.equals("getSongChunk"))
+        {
         
+            jsonParam.addProperty("song", param[0]);
+            jsonParam.addProperty("fragment", param[1]);
+        
+        }
+        if (remoteMethod.equals("getFileSize"))
+        {
+            jsonParam.addProperty("song", param[0]);
+        }
+        jsonRequest.add("param", jsonParam);
+    
         JsonParser parser = new JsonParser();
         //String strRet =  this.dispacher.dispatch(jsonRequest.toString());
         System.out.println("Sending request: "+ jsonRequest.toString());
