@@ -80,7 +80,7 @@ public class Dispatcher implements DispatcherInterface {
                     case "java.lang.Integer":
                         parameter[i] =  Integer.parseInt(strParam[i]);
                         break;
-                    case "String":
+                    case "java.lang.String":
                         parameter[i] = new String(strParam[i]);
                         break;
                 }

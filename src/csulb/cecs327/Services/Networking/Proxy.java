@@ -12,11 +12,17 @@ import com.google.gson.JsonParser;
 
 public class Proxy implements ProxyInterface {
     //Todo: replace with communication module
-    Dispatcher dispacher;   // This is only for test. it should use the Communication  Module
-    public Proxy(Dispatcher dispacher)
+    //Dispatcher dispacher;   // This is only for test. it should use the Communication  Module
+    private ClientCommunicationModule client = null;
+    private JsonObject catalog;
+
+    public Proxy(int portNumber)
     {
-        this.dispacher = dispacher;   
+        this.client = new ClientCommunicationModule();
+        client.connect(portNumber);
     }
+    
+
     
     /*
     * Executes the  remote method "remoteMethod". The method blocks until
@@ -26,27 +32,30 @@ public class Proxy implements ProxyInterface {
     {
         JsonObject jsonRequest = new JsonObject();
         JsonObject jsonParam = new JsonObject();
-        
+    
         jsonRequest.addProperty("remoteMethod", remoteMethod);
         jsonRequest.addProperty("objectName", "SongServices");
-
+    
         if (remoteMethod.equals("getSongChunk"))
         {
-            
+        
             jsonParam.addProperty("song", param[0]);
-            jsonParam.addProperty("fragment", param[1]);       
+            jsonParam.addProperty("fragment", param[1]);
         
         }
         if (remoteMethod.equals("getFileSize"))
         {
-            jsonParam.addProperty("song", param[0]);        
+            jsonParam.addProperty("song", param[0]);
         }
         jsonRequest.add("param", jsonParam);
-        
+    
         JsonParser parser = new JsonParser();
-        String strRet =  this.dispacher.dispatch(jsonRequest.toString());
-        
-        return parser.parse(strRet).getAsJsonObject();
+        //String strRet =  this.dispacher.dispatch(jsonRequest.toString());
+        System.out.println("Sending request: "+ jsonRequest.toString());
+        String strRet =  client.sendRequest(jsonRequest.toString());
+        System.out.println("Returning response from server to input stream: "+strRet);
+        String myReturn = strRet.trim();
+        return parser.parse(myReturn).getAsJsonObject();
     }
 
     /*
