@@ -4,6 +4,9 @@ import csulb.cecs327.Controllers.FrontEnd.LoginPage;
 
 import javax.swing.*;
 
+/**
+ * This thread runs a single UI
+ */
 public class Client extends Thread {
     @Override
     public void run() {
