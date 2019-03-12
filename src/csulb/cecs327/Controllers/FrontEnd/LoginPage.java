@@ -45,7 +45,7 @@ public class LoginPage extends JPanel {
         else if (password.length == 0)
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Verify that the password is entered.");
         else{
-            JsonObject jsonResponse = proxy.synchExecution("login", new String[]{userName, String.valueOf(password)});
+            JsonObject jsonResponse = proxy.synchExecution("login", new String[]{ userName, String.valueOf(password) });
             String response = jsonResponse.get("ret").getAsString();
             if (response.equals("User not found"))
                 JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "User not registered.");

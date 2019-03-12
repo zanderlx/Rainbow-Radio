@@ -32,6 +32,8 @@ public class MusicEntry {
         return release;
     }
 
+    public int getId() { return this.release.getId(); }
+
     @Override
     public String toString() {
         return
