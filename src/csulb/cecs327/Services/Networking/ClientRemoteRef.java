@@ -29,7 +29,7 @@ public class ClientRemoteRef implements RemoteRefInterface {
 
         //Creating an array of Json Objects from catalog.json
         try {
-            String path = "catalog.json";
+            String path = "C:\\Users\\studentuser01\\Documents\\GitHub\\CECS-327-Music-Player\\src\\csulb\\cecs327\\Services\\Networking\\catalog.json";
             BufferedReader br = new BufferedReader(new FileReader(path));
             jsonRequest = gson.fromJson(br, JsonObject[].class);
             
@@ -44,6 +44,10 @@ public class ClientRemoteRef implements RemoteRefInterface {
         } catch (Exception e){
             e.printStackTrace();
         }
+
+
+
+
         return request;
     }
 
@@ -53,6 +57,7 @@ public class ClientRemoteRef implements RemoteRefInterface {
         JsonObject jsonRequest = new JsonObject();
         jsonRequest.addProperty("remoteMethod", "getCatalog");
         jsonRequest.addProperty("objectName", "RemoteRefServices");
+        jsonRequest.add("param", new JsonObject());
         String strRet = client.sendRequest(jsonRequest.toString());
         JsonParser jsonParser = new JsonParser();
         return jsonParser.parse(strRet.trim()).getAsJsonObject();
