@@ -2,16 +2,21 @@ package csulb.cecs327.Services.Networking;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import csulb.cecs327.Controllers.FrontEnd.AppUI;
 import csulb.cecs327.Models.User;
 
-import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
+/**
+ * These are the services to store and update User
+ */
 public class UserServices {
-    
+    /**
+     * Returns a user for given username and password
+     * @param user username
+     * @param password password
+     * @return The user in json
+     */
     public String login(String user, String password){
         String userInfo = "";
         try(Reader reader = new FileReader("Users.json")) {
@@ -44,6 +49,11 @@ public class UserServices {
         return userInfo;
     }
     
+    /**
+     * Adds given user to user.json
+     * @param userJson The user as a json file
+     * @return confirmation of success
+     */
     public String register(String userJson){
         Gson gson = new Gson();
         User newUser = gson.fromJson(userJson, new TypeToken<User>(){}.getType());
@@ -71,6 +81,10 @@ public class UserServices {
         return "Success";
     }
     
+    /**
+     * Updates the user
+     * @param user the changed user
+     */
     public void updateUser(String user){
         Gson gson = new Gson();
         User updatedUser = gson.fromJson(user, new TypeToken<User>(){}.getType());
@@ -93,6 +107,13 @@ public class UserServices {
             e1.printStackTrace();
         }
     }
+    
+    /**
+     * Handles writing user to Users.json
+     * @param newUser user to be written
+     * @param gson used to serialize
+     * @param list the list of users
+     */
     private void writeToUsersJson(User newUser, Gson gson, ArrayList<User> list) {
         if (list == null)
             list = new ArrayList<>();
