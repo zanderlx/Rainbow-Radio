@@ -11,9 +11,11 @@ public class Server {
         // Instance of the services that te dispatcher can handle
         SongDispatcher songDispatcher = new SongDispatcher();
         UserServices userServices = new UserServices();
+        RemoteRefServices remoteRefServices = new RemoteRefServices();
 
         dispatcher.registerObject(songDispatcher, "SongServices");
         dispatcher.registerObject(userServices, "UserServices");
+        dispatcher.registerObject(remoteRefServices, "RemoteRefServices");
 
         // Testing  the dispatcher function
         // First we read the request. In the final implementation the jsonRequest

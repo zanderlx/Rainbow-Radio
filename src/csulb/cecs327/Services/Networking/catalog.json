@@ -38,5 +38,14 @@
       "fragment": "Long"
     },
     "return": "Byte[]"
+  },
+
+  "remoteMethod": {
+    "name": "getCatalog",
+    "object": "RemoteRefServices",
+    "call-semantics": "at-most-one",
+    "param": {
+    }
   }
 }
+
