@@ -102,6 +102,9 @@ public class MusicPlayer {
         }
     }
 
+    /**
+     * Calls the song method for internal player
+     */
     private void playInternal() {
         while (playerStatus != FINISHED) {
             try {
@@ -124,6 +127,9 @@ public class MusicPlayer {
         close();
     }
 
+    /**
+     * Cleanup method
+     */
     public void close() {
         synchronized (playerLock) {
             playerStatus = FINISHED;

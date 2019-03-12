@@ -18,7 +18,8 @@ public class TableSearch {
     private JTextField textField;
 
     /**
-     * This class is responsible for
+     * This class is responsible for displaying the information in the display GUI for song data when the information is sent from the
+     * server to the client.
      * @param table
      * @param scrollPane
      * @param textField
@@ -29,6 +30,12 @@ public class TableSearch {
         addDocumentListener();
     }
 
+    /**
+     * Initialize components
+     * @param table
+     * @param scrollPane
+     * @param textField
+     */
     private void initComponents(JTable table, JScrollPane scrollPane, JTextField textField) {
         this.scrollPane = scrollPane;
         this.table = table;
@@ -44,6 +51,10 @@ public class TableSearch {
         });
     }
 
+    /**
+     * Searches based on type of filter
+     * @param e
+     */
     public void searchOnType(ItemEvent e) {
         if (searchOnType.isSelected())
             textField.getDocument().addDocumentListener(documentListener);
@@ -71,6 +82,10 @@ public class TableSearch {
         searchOnType.setSelected(true);
     }
 
+    /**
+     * Searches through table contents
+     * @param searchString
+     */
     public void searchTableContents(String searchString) {
         DefaultTableModel currtableModel = (DefaultTableModel) table.getModel();
         //To empty the table before search
