@@ -9,7 +9,9 @@ package csulb.cecs327.Services.Networking;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-
+/**
+ * Proxy is the service that handles getting the remote method from RemoteRef and initializing the Communication Module
+ */
 public class Proxy implements ProxyInterface {
     private ClientCommunicationModule client = null;
     private JsonObject catalog;
@@ -69,7 +71,6 @@ public class Proxy implements ProxyInterface {
     * return any value
     * 
     */
-    //Todo: implement this method
     public void asynchExecution(String remoteMethod, String[] param)
     {
         JsonObject jsonRequest = new JsonObject();

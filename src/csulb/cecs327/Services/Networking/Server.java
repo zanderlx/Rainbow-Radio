@@ -1,8 +1,8 @@
 package csulb.cecs327.Services.Networking;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
+/**
+ * The main function for server backend
+ */
 public class Server {
 
     public static void main(String[] args) {
