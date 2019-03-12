@@ -5,7 +5,7 @@ import com.google.gson.JsonParser;
 
 public class ClientRemoteRef implements RemoteRefInterface {
     private ClientCommunicationModule client;
-    private JsonObject catalog;
+    private JsonObject catalog; // representing catalog.json from server
     public ClientRemoteRef(ClientCommunicationModule client) {
         this.client = client;
         catalog = getCatalog();
