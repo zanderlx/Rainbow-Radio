@@ -3,36 +3,27 @@ import java.io.*;
 import java.net.*;
 
 /**
- * This class works as a server communication Module which takes in the request and send back the response
- * 2 functions:
- * 1. connecting to the socket
- * 2. Listening to the defined port
+ * This class is for server communication, it handles the connections and listening
  */
 public class ServerCommunicationModule extends Thread{
-    // Initializing packet size
-    static final int FRAGMENT_SIZE = 8192;
+    static final int FRAGMENT_SIZE = 8192;                      // Packet size
     byte[] packetSize = new byte[FRAGMENT_SIZE];
-    // Initializing socket, port number and the dispatcher
+
     DatagramSocket socket = null;
     int portNumber;
     Dispatcher dispatcher;
 
-    /**
-     * Server constructor will takes in the port number and the dispatcher
-     * @param portNum
-     * @param dispatcher
-     */
     ServerCommunicationModule(int portNum, Dispatcher dispatcher){
         this.portNumber = portNum;
         this.dispatcher = dispatcher;
     }
 
     /**
-     * Connecting to the dsocket using port number
+     * Opens connection so long as UDP port is greater than 1023
      */
-    public void connect(){
+    public void connect(){                        // portNumber must be > 1023
         try{
-            socket = new DatagramSocket(this.portNumber);
+            socket = new DatagramSocket(this.portNumber);                             // Initialize socket
             System.out.println("ServerSocket opened on port: "+ this.portNumber);
         }catch (IOException e){
             System.out.println(e);
@@ -40,22 +31,18 @@ public class ServerCommunicationModule extends Thread{
     }
 
     /**
-     * Opening client sokcets and listen to the requests
+     * Listener module for server
      */
-    public void listen(){
-
+    public void listen(){                                       // Opens client socket and listens for requests
         System.out.println("Server listening.");
         try{
             while(true) {
-                // Initialize request packet
-                DatagramPacket requestPacket = new DatagramPacket(packetSize, packetSize.length);
-                // Receive request packet
-                socket.receive(requestPacket);
+                DatagramPacket requestPacket = new DatagramPacket(packetSize, packetSize.length);               // Initialize request packet
+                socket.receive(requestPacket);                                                                // Receive request packet
                 System.out.println("Client packet received: " + requestPacket);
-                // Create new thread to handle this request packet and return a response packet
-                System.out.println("Creating new thread for handling this client packet.");
-                // This is where the handler comes in and handle the request packet
-                Thread t = new PacketRequestHandler(socket, requestPacket, dispatcher);
+
+                System.out.println("Creating new thread for handling this client packet.");             // Create new thread to handle this request packet and return a response packet
+                Thread t = new ClientPacketRequestHandler(socket, requestPacket, dispatcher);
                 t.start();
             }
         }catch (IOException e) {
