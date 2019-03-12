@@ -1,51 +1,52 @@
-{
-  "remoteMethod": {
+[
+    {
     "name": "register",
     "object": "UserServices",
     "call-semantics": "at-most-one",
     "param": {
-      "user": "string",
-      "email": "string",
-      "password": "string"
+      "user": "java.lang.String",
+      "email": "java.lang.String",
+      "password": "java.lang.String"
     }
   },
 
-  "remoteMethod": {
+   {
     "name": "login",
     "object": "UserServices",
     "call-semantics": "at-most-one",
     "param": {
-      "user": "string",
-      "password": "string"
+      "user": "java.lang.String",
+      "password": "java.lang.String"
     }
   },
 
-  "remoteMethod": {
+  {
     "name": "addToPlaylist",
     "object": "SongServices",
     "call-semantics": "maybe",
     "param": {
-      "song": "Long"
+      "song": "java.lang.Long"
     }
   },
 
-  "remoteMethod": {
+  {
     "name": "getSongChunk",
     "object": "SongServices",
     "call-semantics": "maybe",
     "param": {
-      "song": "Long",
-      "fragment": "Long"
+      "song": "java.lang.Long",
+      "fragment": "java.lang.Long"
     },
-    "return": "Byte[]"
+    "return": "java.lang.Byte[]"
   },
 
-  "remoteMethod": {
+  {
     "name": "getCatalog",
     "object": "RemoteRefServices",
     "call-semantics": "at-most-one",
     "param": {
     }
   }
-}
+]
+
 
