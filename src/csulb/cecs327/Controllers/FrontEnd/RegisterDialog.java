@@ -13,6 +13,7 @@ import javax.swing.*;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import csulb.cecs327.Models.User;
+import csulb.cecs327.Services.Networking.Proxy;
 import net.miginfocom.swing.*;
 
 
@@ -20,12 +21,15 @@ import net.miginfocom.swing.*;
  * @author Kevin
  */
 public class RegisterDialog extends JDialog {
+    private Proxy proxy;
+    
     public RegisterDialog(Frame owner) {
         super(owner);
         initComponents();
     }
     
-    public RegisterDialog() {
+    public RegisterDialog(Proxy proxy) {
+        this.proxy = proxy;
         initComponents();
     }
     
@@ -48,46 +52,13 @@ public class RegisterDialog extends JDialog {
         } else if (email.equals("")) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Verify that email is entered.");
         } else {
-            try(Reader reader = new FileReader("Users.json")){
-                boolean duplicateUserName = false;
-                User[] users = gson.fromJson(reader, new TypeToken<User>() {}.getType());
-                for (User j : users){
-                    if (j.getUserName().equals(userName)) {
-                        duplicateUserName = true;
-                        break;
-                    }
-                }
-                if (duplicateUserName)
-                    JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Username taken. Please " +
-                            "use different username.");
-                else{
-                    writeToUsersJson(userName, password, email, gson, users);
-                }
-            } catch (FileNotFoundException | NullPointerException e1) {
-                writeToUsersJson(userName, password, email, gson, null);
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-    
-    
-        }
-    }
-    
-    private void writeToUsersJson(String userName, String password, String email, Gson gson, User[] list) {
-        if (list == null)
-            list = new User[1];
-        else{
-            ArrayList<User> tempList = new ArrayList<User>();
-        }
-        try(Writer writer = new FileWriter("Users.json")){
-            User newUser = new User(userName, password, email, null);
-            list[list.length - 1] = newUser;
-            gson.toJson(list, writer);
+            User newUser = new User(userName, password, email, new ArrayList<>());
+            proxy.synchExecution("register", new String[]{gson.toJson(newUser)});
             dispose();
-        } catch (IOException e1) {
-            e1.printStackTrace();
         }
     }
+    
+ 
     
     
     private void cancelButtonMouseClicked(MouseEvent e) {

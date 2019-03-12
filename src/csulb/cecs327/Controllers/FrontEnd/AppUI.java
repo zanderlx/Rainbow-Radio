@@ -14,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import com.google.gson.Gson;
 import com.jgoodies.forms.factories.*;
 import csulb.cecs327.Models.*;
 import csulb.cecs327.Services.*;
@@ -295,7 +296,8 @@ public class AppUI extends JPanel {
 
     private void logoutButtonActionPerformed(ActionEvent e) {
         System.out.println("Pressed Logout");
-        
+        Gson gson = new Gson();
+        proxy.asynchExecution("updateUser", new String[]{gson.toJson(user)});
         JFrame root = (JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, this);
         root.setContentPane(new LoginPage());
         root.pack();
