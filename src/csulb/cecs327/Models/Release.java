@@ -1,5 +1,8 @@
 package csulb.cecs327.Models;
 
+/**
+ * This class is responsible for getting the name and id of the specified song
+ */
 public class Release {
     private String name;
     private int id;

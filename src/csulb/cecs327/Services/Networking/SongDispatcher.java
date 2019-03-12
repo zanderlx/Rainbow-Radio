@@ -14,7 +14,10 @@ import java.io.File;
 import java.util.Base64;
 import java.io.FileNotFoundException;
 
-
+/**
+ * This class handles the song transfer from server and client.
+ * The file is taken in and pointed to the mp3 file contained within the project structure.
+ */
 public class SongDispatcher
 {
     static final int FRAGMENT_SIZE = 8192; 
@@ -23,7 +26,7 @@ public class SongDispatcher
         
     }
     
-    /* 
+    /**
     * getSongChunk: Gets a chunk of a given song
     * @param key: Song ID. Each song has a unique ID 
     * @param fragment: The chunk corresponds to 
@@ -45,10 +48,9 @@ public class SongDispatcher
          return Base64.getEncoder().encodeToString(buf);
     }
     
-    /* 
+    /**
     * getFileSize: Gets a size of the file
-    * @param key: Song ID. Each song has a unique ID 
-     */
+    * @param key: Song ID. Each song has a unique ID*/
     public Integer getFileSize(Long key) throws FileNotFoundException, IOException
     {
         //File file = new File("./" + key);

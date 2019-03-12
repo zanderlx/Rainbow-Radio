@@ -14,7 +14,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
-
+/**
+ * This class handles the sending and receiving and translates the data so to speak
+ */
 public class Dispatcher implements DispatcherInterface {
     HashMap<String, Object> ListOfObjects;
     
@@ -24,7 +26,7 @@ public class Dispatcher implements DispatcherInterface {
         ListOfObjects = new HashMap<String, Object>();
     }
     
-    /* 
+    /**
     * dispatch: Executes the remote method in the corresponding Object
     * @param request: Request: it is a Json file
     {

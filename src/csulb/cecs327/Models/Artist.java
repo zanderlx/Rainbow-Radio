@@ -1,5 +1,8 @@
 package csulb.cecs327.Models;
 
+/**
+ * This class contains the methods to pull in artist data for each song
+ */
 public class Artist {
     private String similar;
     private double familiarity;
