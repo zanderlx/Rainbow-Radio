@@ -49,7 +49,8 @@ public class UserServices {
         User newUser = gson.fromJson(userJson, new TypeToken<User>(){}.getType());
         try(Reader reader = new FileReader("Users.json")){
             boolean duplicateUserName = false;
-            User[] users = gson.fromJson(reader, new TypeToken<User>() {}.getType());
+            
+            ArrayList<User> users = gson.fromJson(reader, new TypeToken<ArrayList<User>>(){}.getType());
             for (User j : users){
                 if (j.getUserName().equals(newUser.getUserName())) {
                     duplicateUserName = true;
@@ -73,11 +74,13 @@ public class UserServices {
     public void updateUser(String user){
         Gson gson = new Gson();
         User updatedUser = gson.fromJson(user, new TypeToken<User>(){}.getType());
+        
         try(Reader reader = new FileReader("Users.json")){
-            User[] users = gson.fromJson(reader, new TypeToken<User>() {}.getType());
-            for (int i = 0; i < users.length - 1; i++){
-                if(users[i].getUserName().equals(updatedUser.getUserName())){
-                    users[i] = updatedUser;
+    
+            ArrayList<User> users = gson.fromJson(reader,new TypeToken<ArrayList<User>>(){}.getType());
+            for (int i = 0; i < users.size(); i++){
+                if(users.get(i).getUserName().equals(updatedUser.getUserName())){
+                    users.set(i, updatedUser);
                     break;
                 }
             }
@@ -90,14 +93,11 @@ public class UserServices {
             e1.printStackTrace();
         }
     }
-    private void writeToUsersJson(User newUser, Gson gson, User[] list) {
+    private void writeToUsersJson(User newUser, Gson gson, ArrayList<User> list) {
         if (list == null)
-            list = new User[1];
-        else{
-            ArrayList<User> tempList = new ArrayList<User>();
-        }
+            list = new ArrayList<>();
         try(Writer writer = new FileWriter("Users.json")){
-            list[list.length - 1] = newUser;
+            list.add(newUser);
             gson.toJson(list, writer);
         } catch (IOException e1) {
             e1.printStackTrace();

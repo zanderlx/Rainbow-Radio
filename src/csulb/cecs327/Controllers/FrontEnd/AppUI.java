@@ -100,6 +100,9 @@ public class AppUI extends JPanel {
         songInfoTable.setModel(model);
         
         playlistModel = new DefaultListModel<>();
+        for(Playlist playlist : user.getPlayLists()){
+            playlistModel.addElement(playlist);
+        }
         playlistList.setModel(playlistModel);
         addDefaultTableRows();
     
@@ -297,6 +300,11 @@ public class AppUI extends JPanel {
     private void logoutButtonActionPerformed(ActionEvent e) {
         System.out.println("Pressed Logout");
         Gson gson = new Gson();
+        ArrayList<Playlist> playlists = new ArrayList<>();
+        for(int i = 0; i < playlistModel.size(); i++){
+            playlists.add(playlistModel.getElementAt(i));
+        }
+        user.setPlayLists(playlists);
         proxy.asynchExecution("updateUser", new String[]{gson.toJson(user)});
         JFrame root = (JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, this);
         root.setContentPane(new LoginPage());

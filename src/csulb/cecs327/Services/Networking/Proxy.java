@@ -31,11 +31,14 @@ public class Proxy implements ProxyInterface {
         JsonObject jsonRequest = new JsonObject();
         JsonObject jsonParam = new JsonObject();
         jsonRequest.addProperty("remoteMethod", remoteMethod);
-        jsonRequest.addProperty("objectName", "UserServices");
-        jsonParam.addProperty("user", param[0]);
-//        jsonRequest.addProperty("objectName", "UserServices");
-//        jsonParam.addProperty("user", param[0]);
-//        jsonParam.addProperty("password", param[1]);
+        if (remoteMethod.equals("register")) {
+            jsonRequest.addProperty("objectName", "UserServices");
+            jsonParam.addProperty("user", param[0]);
+        } else if(remoteMethod.equals("login")) {
+            jsonRequest.addProperty("objectName", "UserServices");
+            jsonParam.addProperty("user", param[0]);
+            jsonParam.addProperty("password", param[1]);
+        }
 //        jsonRequest.addProperty("remoteMethod", remoteMethod);
 //        jsonRequest.addProperty("objectName", "SongServices");
 //
