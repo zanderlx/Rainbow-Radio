@@ -63,7 +63,7 @@ public class LoginPage extends JPanel {
     }
     
     private void registerButtonMouseClicked(MouseEvent e) {
-        RegisterDialog dialog = new RegisterDialog();
+        RegisterDialog dialog = new RegisterDialog(proxy);
         dialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         dialog.setVisible(true);

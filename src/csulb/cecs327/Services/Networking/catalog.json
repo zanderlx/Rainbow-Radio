@@ -4,9 +4,7 @@
     "object": "UserServices",
     "call-semantics": "at-most-one",
     "param": {
-      "user": "string",
-      "email": "string",
-      "password": "string"
+      "user": "String"
     }
   },
 
@@ -15,17 +13,18 @@
     "object": "UserServices",
     "call-semantics": "at-most-one",
     "param": {
-      "user": "string",
-      "password": "string"
-    }
+      "user": "String",
+      "password": "String"
+    },
+    "return": "String"
   },
 
   "remoteMethod": {
-    "name": "addToPlaylist",
-    "object": "SongServices",
+    "name": "updateUser",
+    "object": "UserServices",
     "call-semantics": "maybe",
     "param": {
-      "song": "Long"
+      "user": "String"
     }
   },
 
@@ -45,7 +44,8 @@
     "object": "RemoteRefServices",
     "call-semantics": "at-most-one",
     "param": {
-    }
+    },
+    "return": "String"
   }
 }
 
