@@ -39,6 +39,8 @@ public class PacketRequestHandler extends Thread{
             System.out.println("Server has sent response packet, thread terminating");
             // Killing the thread after execution
             this.interrupt();
+            socket = null;
+            packet = null;
         } catch (IOException e) {
             e.printStackTrace();
         }
