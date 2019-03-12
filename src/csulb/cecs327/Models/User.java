@@ -5,6 +5,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
 
+/**
+ * This class is responsible for parsing in and passing user data
+ */
 public class User {
     private String userName;
     private String password;

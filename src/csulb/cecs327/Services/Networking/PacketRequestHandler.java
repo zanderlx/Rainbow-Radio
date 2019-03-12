@@ -4,30 +4,41 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.Socket;
 
-public class ClientPacketRequestHandler extends Thread{
+/**
+ * This class is made to handler all the request packet coming from client to server
+ * it will send the request packet to dispatcher
+ */
+public class PacketRequestHandler extends Thread{
     private DatagramSocket socket = null;
     private DatagramPacket packet = null;
     public Dispatcher myDispatcher = null;
 
-    public ClientPacketRequestHandler(DatagramSocket s, DatagramPacket d, Dispatcher dispatcher){
-        this.socket = s;                                            // Set socket
-        this.packet = d;                                            // Set packet as received request packet
+    public PacketRequestHandler(DatagramSocket s, DatagramPacket d, Dispatcher dispatcher){
+        // Set socket
+        this.socket = s;
+        // Set packet as received request packet
+        this.packet = d;
         this.myDispatcher = dispatcher;
         System.out.println("New client packet handler created");
     }
 
     @Override
     public void run(){
-        String request = new String(packet.getData());               // Get packet's payload
+        // Getting request packet's payload
+        String request = new String(packet.getData());
         System.out.println("Server request string: "+ request);
-        String response = myDispatcher.dispatch(request.trim());           // Send request to dispatcher
+        // Send request to dispatcher
+        String response = myDispatcher.dispatch(request.trim());
         System.out.println("Server preparing response packet");
-        byte[] payload = response.getBytes();                       // Initialize payload with response bytes
+        byte[] payload = response.getBytes();
+        // Initialize payload with response bytes
         DatagramPacket responsePacket = new DatagramPacket(payload, payload.length, packet.getAddress(), packet.getPort());     // Prepare response packet
         try {
-            socket.send(responsePacket);                            // Send response packet
+            // Send response packet back to client
+            socket.send(responsePacket);
             System.out.println("Server has sent response packet, thread terminating");
-            this.interrupt();                                       // Kill thread after execution
+            // Killing the thread after execution
+            this.interrupt();
         } catch (IOException e) {
             e.printStackTrace();
         }

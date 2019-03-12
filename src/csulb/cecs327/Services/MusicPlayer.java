@@ -13,6 +13,9 @@ import javax.swing.*;
 import java.io.File;
 import java.io.FileInputStream;
 
+/**
+ * This class handles the playing of music
+ */
 public class MusicPlayer {
     // Player statuses
     private final static int NOT_STARTED = 0;
@@ -39,6 +42,9 @@ public class MusicPlayer {
         }
     }
 
+    /**
+     * Starts playing the song
+     */
     public void play() {
         synchronized (playerLock) {
             switch (playerStatus) {
@@ -50,6 +56,9 @@ public class MusicPlayer {
         }
     }
 
+    /**
+     * Starts playing the chosen music
+     */
     public void start() {
         final Runnable r = this::playInternal;
         final Thread t = new Thread(r);
@@ -58,6 +67,10 @@ public class MusicPlayer {
         t.start();
     }
 
+    /**
+     * Pauses the song
+     * @return
+     */
     public boolean pause() {
         synchronized (playerLock) {
             if (playerStatus == PLAYING) playerStatus = PAUSED;
@@ -65,6 +78,10 @@ public class MusicPlayer {
         }
     }
 
+    /**
+     * Plays a paused song
+     * @return
+     */
     public boolean resume() {
         synchronized (playerLock) {
             if (playerStatus == PAUSED) {
@@ -75,6 +92,9 @@ public class MusicPlayer {
         }
     }
 
+    /**
+     * Stops playing the song
+     */
     public void stop() {
         synchronized (playerLock) {
             playerStatus = FINISHED;
@@ -82,6 +102,9 @@ public class MusicPlayer {
         }
     }
 
+    /**
+     * Calls the song method for internal player
+     */
     private void playInternal() {
         while (playerStatus != FINISHED) {
             try {
@@ -104,6 +127,9 @@ public class MusicPlayer {
         close();
     }
 
+    /**
+     * Cleanup method
+     */
     public void close() {
         synchronized (playerLock) {
             playerStatus = FINISHED;
