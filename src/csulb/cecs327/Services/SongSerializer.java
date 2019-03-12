@@ -19,7 +19,7 @@ public class SongSerializer {
     public SongSerializer() {
         try {
             gson = new Gson();
-            path = "src/csulb/cecs327/Models/music.json";
+            path = "C:\\Users\\ZanderLx\\Desktop\\CECS-327\\Rainbow-Radio\\src\\csulb\\cecs327\\Services\\Networking\\music.json";
             br = new BufferedReader(new FileReader(path));
             rootObjects = gson.fromJson(br, MusicEntry[].class);
         } catch (Exception e) {

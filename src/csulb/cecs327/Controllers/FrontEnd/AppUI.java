@@ -14,9 +14,11 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import com.google.gson.Gson;
 import com.jgoodies.forms.factories.*;
 import csulb.cecs327.Models.*;
 import csulb.cecs327.Services.*;
+import csulb.cecs327.Services.Networking.CECS327InputStream;
 import csulb.cecs327.Services.Networking.Proxy;
 import net.miginfocom.swing.*;
 
@@ -52,12 +54,12 @@ public class AppUI extends JPanel {
     private int currentSong = 0;
     private int fakeCurrent = 0;
     private SongDatabase songDatabase = new SongDatabase();
-    private String song = songDatabase.getSongList().get(currentSong);
-    private MusicPlayer player = new MusicPlayer(song);
+    private MusicPlayer player;
     private DefaultTableModel model;;
     private User user;
     private SongSerializer songSerializer = new SongSerializer();
     private MusicEntry[] musicJson = songSerializer.getRootObjects();
+    private Long song = Long.parseLong(musicJson[currentSong].getId() + "");
     //    private static Thread songProgressThread;
     private boolean isPlaying = false;
     private int currentSongLength = 0;
@@ -80,11 +82,11 @@ public class AppUI extends JPanel {
         this.proxy = proxy;
         startUp();
     }
-    
+
     private void startUp() {
-    
+
         addSongInfoTableMouseListener();
-    
+
         model = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -97,17 +99,20 @@ public class AppUI extends JPanel {
         songInfoTable.setShowVerticalLines(false);
         songInfoTable.setRowHeight(30);
         songInfoTable.setModel(model);
-        
+
         playlistModel = new DefaultListModel<>();
+        for(Playlist playlist : user.getPlayLists()){
+            playlistModel.addElement(playlist);
+        }
         playlistList.setModel(playlistModel);
         addDefaultTableRows();
-    
+
         sortColumn(0);
 //        TableSearch tableSearch = new TableSearch(songInfoTable, songInfoPane, searchBox);
         searchBox.setBorder(BorderFactory.createMatteBorder(0, 0,2, 0, Color.decode("#1DB954")));
         searchBox.setBackground(null);
         songInfoTable.setRowSelectionInterval(0, 0);
-        
+
         setUpButton(playPauseButton);
         setUpButton(nextButton);
         setUpButton(previousButton);
@@ -115,13 +120,13 @@ public class AppUI extends JPanel {
         setUpButton(addPlaylist);
         setUpButton(logoutButton);
         setUpButton(shuffleButton);
-    
-    
+
+
         songProgress.setMinimum(0);
         songProgress.setMaximum(100);
         songProgress.setForeground(Color.decode("#1DB954"));
     }
-    
+
     private void setUpButton(JButton button){
         button.setBackground(null);
         button.setBorder(null);
@@ -131,7 +136,7 @@ public class AppUI extends JPanel {
         model.addRow(new String[] {songTableEntry.getSong(),songTableEntry.getArtist(), songTableEntry.getAlbum(),
                 songTableEntry.getGenre()});
     }
-    
+
     // Methods
 
     /**
@@ -156,7 +161,7 @@ public class AppUI extends JPanel {
         songLabel.setText((String)songInfoTable.getValueAt(row, 0));
         artistLabel.setText((String)songInfoTable.getValueAt(row, 1));
     }
-    
+
     /**
      * PREVIOUS: Play previous song.
      * @param e
@@ -168,8 +173,8 @@ public class AppUI extends JPanel {
             currentSong--;
             if (currentSong < 0)
                 currentSong = songDatabase.getSongList().size() - 1;
-            song = songDatabase.getSongList().get(currentSong);
-            player = new MusicPlayer(song);
+            song = Long.parseLong(musicJson[currentSong].getId() + "");
+            player = new MusicPlayer(new CECS327InputStream(song, proxy));
             timer.cancel();
             currentSongLength = 0;
             updateProgressBar();
@@ -191,8 +196,8 @@ public class AppUI extends JPanel {
             player.stop();
             currentSong++;
             currentSong %= songDatabase.getSongList().size();
-            song = songDatabase.getSongList().get(currentSong);
-            player = new MusicPlayer(song);
+            song = Long.parseLong(musicJson[currentSong].getId() + "");
+            player = new MusicPlayer(new CECS327InputStream(song, proxy));
             timer.cancel();
             currentSongLength = 0;
             updateProgressBar();
@@ -244,7 +249,7 @@ public class AppUI extends JPanel {
                             }
                         });
                     }
-                   
+
                     JPopupMenu jPopupMenu = new JPopupMenu();
                     jPopupMenu.add(addToPlaylistMenu);
                     jPopupMenu.show(songInfoTable, e.getX(), e.getY());
@@ -253,8 +258,8 @@ public class AppUI extends JPanel {
                     try{
                         currentSong = songInfoTable.getSelectedRow();
                         player.stop();
-                        song = songDatabase.getSongList().get(currentSong);
-                        player = new MusicPlayer(song);
+                        song = Long.parseLong(musicJson[currentSong].getId() + "");
+                        player = new MusicPlayer(new CECS327InputStream(song, proxy));
                         timer.cancel();
                         currentSongLength = 0;
                         updateProgressBar();
@@ -265,8 +270,14 @@ public class AppUI extends JPanel {
                         artistLabel.setText((String)songInfoTable.getValueAt(row, 1));
                         fakeCurrent = row;
                 } catch (Exception exception) {
-                        song = songDatabase.getSongList().get(new Random().nextInt(5));
-                        player = new MusicPlayer(song);
+
+                        song = Long.parseLong(musicJson[new Random().nextInt(5)].getId() + "");
+
+                        try {
+                            player = new MusicPlayer(new CECS327InputStream(song, proxy));
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
                         timer.cancel();
                         currentSongLength = 0;
                         updateProgressBar();
@@ -295,7 +306,14 @@ public class AppUI extends JPanel {
 
     private void logoutButtonActionPerformed(ActionEvent e) {
         System.out.println("Pressed Logout");
-        
+        Gson gson = new Gson();
+        ArrayList<Playlist> playlists = new ArrayList<>();
+        for(int i = 0; i < playlistModel.size(); i++){
+            playlists.add(playlistModel.getElementAt(i));
+        }
+        user.setPlayLists(playlists);
+        proxy.asynchExecution("updateUser", new String[]{gson.toJson(user)});
+
         JFrame root = (JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, this);
         root.setContentPane(new LoginPage());
         root.pack();
@@ -309,9 +327,9 @@ public class AppUI extends JPanel {
             player.stop();
            // currentSong++;
             currentSong = rand.nextInt(201);
-            currentSong %= songDatabase.getSongList().size();
-            song = songDatabase.getSongList().get(currentSong);
-            player = new MusicPlayer(song);
+            currentSong %= musicJson.length;
+            song = Long.parseLong(musicJson[currentSong].getId() + "");
+            player = new MusicPlayer(new CECS327InputStream(song, proxy));
             timer.cancel();
             currentSongLength = 0;
             updateProgressBar();
@@ -329,7 +347,7 @@ public class AppUI extends JPanel {
     private void muteButtonMouseClicked(MouseEvent e) {
         // TODO add your code here
     }
-    
+
 
     private void addPlaylistActionPerformed(ActionEvent e) {
         String name = "New Playlist ";
@@ -341,7 +359,7 @@ public class AppUI extends JPanel {
     private void removePlaylistActionPerformed(ActionEvent e) {
         playlistModel.remove(playlistList.getSelectedIndex());
     }
-    
+
     private void playlistListMouseClicked(MouseEvent e) {
         {
             if(SwingUtilities.isRightMouseButton(e)){
@@ -358,15 +376,15 @@ public class AppUI extends JPanel {
                         playlistModel.set(index, playlist);
                     }
                 });
-            
+
                 jPopupMenu.add(rename);
                 jPopupMenu.show(playlistList, e.getX(), e.getY());
-            
+
             }
             else if (SwingUtilities.isLeftMouseButton(e) && e.getClickCount() == 2){
                 int index = playlistList.getSelectedIndex();
                 DefaultTableModel playlistTableModel = createTableModel(playlistModel.get(index));
-               
+
                 JTable playlistView = new JTable(playlistTableModel);
                 playlistView.getTableHeader().setReorderingAllowed(false);
                 playlistView.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
@@ -375,9 +393,9 @@ public class AppUI extends JPanel {
                 songInfoPane.setViewportView(playlistView);
             }
         }
-    
+
     }
-    
+
     private void setViewSongsButtonActionPerformed (ActionEvent e) {
         songInfoPane.setViewportView(songInfoTable);
     }
@@ -391,7 +409,7 @@ public class AppUI extends JPanel {
             playlistList.setSelectedIndex(playlistList.locationToIndex(e.getPoint()));
     }
 
-   
+
     // Initialize music player components
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -706,17 +724,15 @@ public class AppUI extends JPanel {
 
     private void addDefaultTableRows() {
         //TODO: Change to query for song list
-        setRow(new SongTableEntry("Faded", "Alan Walker", "Different World", "edm"), model);
-        setRow(new SongTableEntry("Mine", "Bazzi", "Cosmic", "hip hop"), model);
-        setRow(new SongTableEntry("Crab Rave", "Noisestorm", "Monstercat", "techno"), model);
-        setRow(new SongTableEntry("High Hopes", "Panic! At The Disco", "Pray for the Wicked", "rock"), model);
-        setRow(new SongTableEntry("Stressed Out", "Twenty One Pilots", "Blurryface", "alternative rock"), model);
+        int index = 0;
         for (MusicEntry rootObject : musicJson) {
+            if (index == 10) break;
             setRow(new SongTableEntry(
                     rootObject.getSong().getTitle(),
                     rootObject.getArtist().getName(),
                     rootObject.getRelease().getName(),
                     rootObject.getArtist().getTerms()), model);
+            index++;
         }
     }
     

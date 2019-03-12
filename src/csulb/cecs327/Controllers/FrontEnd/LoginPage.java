@@ -45,7 +45,7 @@ public class LoginPage extends JPanel {
         else if (password.length == 0)
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Verify that the password is entered.");
         else{
-            JsonObject jsonResponse = proxy.synchExecution("login", new String[]{userName, String.valueOf(password)});
+            JsonObject jsonResponse = proxy.synchExecution("login", new String[]{ userName, String.valueOf(password) });
             String response = jsonResponse.get("ret").getAsString();
             if (response.equals("User not found"))
                 JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "User not registered.");
@@ -63,7 +63,7 @@ public class LoginPage extends JPanel {
     }
     
     private void registerButtonMouseClicked(MouseEvent e) {
-        RegisterDialog dialog = new RegisterDialog();
+        RegisterDialog dialog = new RegisterDialog(proxy);
         dialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         dialog.setVisible(true);

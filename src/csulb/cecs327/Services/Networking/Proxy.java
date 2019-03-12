@@ -11,8 +11,6 @@ import com.google.gson.JsonParser;
 
 
 public class Proxy implements ProxyInterface {
-    //Todo: replace with communication module
-    //Dispatcher dispacher;   // This is only for test. it should use the Communication  Module
     private ClientCommunicationModule client = null;
     private JsonObject catalog;
 
@@ -32,21 +30,28 @@ public class Proxy implements ProxyInterface {
     {
         JsonObject jsonRequest = new JsonObject();
         JsonObject jsonParam = new JsonObject();
-    
         jsonRequest.addProperty("remoteMethod", remoteMethod);
-        jsonRequest.addProperty("objectName", "SongServices");
-    
-        if (remoteMethod.equals("getSongChunk"))
+        if (remoteMethod.equals("register")) {
+            jsonRequest.addProperty("objectName", "UserServices");
+            jsonParam.addProperty("user", param[0]);
+        } else if(remoteMethod.equals("login")) {
+            jsonRequest.addProperty("objectName", "UserServices");
+            jsonParam.addProperty("user", param[0]);
+            jsonParam.addProperty("password", param[1]);
+        }
+        else if (remoteMethod.equals("getSongChunk"))
         {
-        
+            jsonRequest.addProperty("objectName", "SongServices");
             jsonParam.addProperty("song", param[0]);
             jsonParam.addProperty("fragment", param[1]);
-        
+
         }
-        if (remoteMethod.equals("getFileSize"))
+        else if (remoteMethod.equals("getFileSize"))
         {
+            jsonRequest.addProperty("objectName", "SongServices");
             jsonParam.addProperty("song", param[0]);
         }
+        
         jsonRequest.add("param", jsonParam);
     
         JsonParser parser = new JsonParser();
@@ -67,7 +72,19 @@ public class Proxy implements ProxyInterface {
     //Todo: implement this method
     public void asynchExecution(String remoteMethod, String[] param)
     {
-        return;
+        JsonObject jsonRequest = new JsonObject();
+        JsonObject jsonParam = new JsonObject();
+        jsonRequest.addProperty("remoteMethod", remoteMethod);
+        jsonRequest.addProperty("objectName", "UserServices");
+        
+        jsonParam.addProperty("user", param[0]);
+        jsonRequest.add("param", jsonParam);
+    
+        JsonParser parser = new JsonParser();
+        System.out.println("Sending request: "+ jsonRequest.toString());
+        client.sendRequest(jsonRequest.toString());
+        
+        
     }
 }
 

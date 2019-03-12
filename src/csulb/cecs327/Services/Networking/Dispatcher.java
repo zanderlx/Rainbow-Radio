@@ -34,7 +34,7 @@ public class Dispatcher implements DispatcherInterface {
         "objectName":"SongServices",
         "param":
           {
-              "song":490183,
+              "song":300848,
               "fragment":2
           }
     }
@@ -101,6 +101,8 @@ public class Dispatcher implements DispatcherInterface {
                     case "java.lang.String":
                         ret = (String)method.invoke(object, parameter);
                         break;
+                    case "void":
+                        method.invoke(object, parameter);
                 }
                 jsonReturn.addProperty("ret", ret);
    

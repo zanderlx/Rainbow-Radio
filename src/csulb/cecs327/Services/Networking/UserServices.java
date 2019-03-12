@@ -6,14 +6,12 @@ import csulb.cecs327.Controllers.FrontEnd.AppUI;
 import csulb.cecs327.Models.User;
 
 import javax.swing.*;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class UserServices {
+    
     public String login(String user, String password){
         String userInfo = "";
         try(Reader reader = new FileReader("Users.json")) {
@@ -44,5 +42,65 @@ public class UserServices {
         }
     
         return userInfo;
+    }
+    
+    public String register(String userJson){
+        Gson gson = new Gson();
+        User newUser = gson.fromJson(userJson, new TypeToken<User>(){}.getType());
+        try(Reader reader = new FileReader("Users.json")){
+            boolean duplicateUserName = false;
+            
+            ArrayList<User> users = gson.fromJson(reader, new TypeToken<ArrayList<User>>(){}.getType());
+            for (User j : users){
+                if (j.getUserName().equals(newUser.getUserName())) {
+                    duplicateUserName = true;
+                    break;
+                }
+            }
+            if (duplicateUserName){
+                //todo: send back an error message
+            }
+            else{
+                writeToUsersJson(newUser, gson, users);
+            }
+        } catch (FileNotFoundException | NullPointerException e1) {
+            writeToUsersJson(newUser, gson, null);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        return "Success";
+    }
+    
+    public void updateUser(String user){
+        Gson gson = new Gson();
+        User updatedUser = gson.fromJson(user, new TypeToken<User>(){}.getType());
+        
+        try(Reader reader = new FileReader("Users.json")){
+    
+            ArrayList<User> users = gson.fromJson(reader,new TypeToken<ArrayList<User>>(){}.getType());
+            for (int i = 0; i < users.size(); i++){
+                if(users.get(i).getUserName().equals(updatedUser.getUserName())){
+                    users.set(i, updatedUser);
+                    break;
+                }
+            }
+            try(Writer writer = new FileWriter("Users.json")){
+                gson.toJson(users, writer);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        } catch (NullPointerException | IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+    private void writeToUsersJson(User newUser, Gson gson, ArrayList<User> list) {
+        if (list == null)
+            list = new ArrayList<>();
+        try(Writer writer = new FileWriter("Users.json")){
+            list.add(newUser);
+            gson.toJson(list, writer);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
     }
 }
