@@ -2,6 +2,9 @@ package csulb.cecs327.Models;
 
 import java.util.ArrayList;
 
+/**
+ * This class is responsible for handling the playlists and creating an arraylist of songs
+ */
 public class Playlist {
     private ArrayList<SongTableEntry> listOfSongs;
     private String nameOfPlaylist;

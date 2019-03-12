@@ -17,7 +17,12 @@ public class TableSearch {
     private JCheckBox searchOnType;
     private JTextField textField;
 
-
+    /**
+     * This class is responsible for
+     * @param table
+     * @param scrollPane
+     * @param textField
+     */
     public TableSearch(JTable table, JScrollPane scrollPane, JTextField textField) {
         initComponents(table, scrollPane, textField);
         originalTableModel = (Vector) ((DefaultTableModel) table.getModel()).getDataVector().clone();

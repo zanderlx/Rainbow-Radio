@@ -1,5 +1,8 @@
 package csulb.cecs327.Models;
 
+/**
+ * This class assigns song entities
+ */
 public class MusicEntry {
     private Release release;
     private Artist artist;
