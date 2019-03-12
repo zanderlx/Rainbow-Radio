@@ -28,9 +28,9 @@ public class ServerCommunicationModule extends Thread{
     }
 
     /**
-     * Connecting to the dsocket using port number
+     * Opens connection so long as UDP port is greater than 1023
      */
-    public void connect(){
+    public void connect(){                       
         try{
             socket = new DatagramSocket(this.portNumber);
             System.out.println("ServerSocket opened on port: "+ this.portNumber);
@@ -41,9 +41,8 @@ public class ServerCommunicationModule extends Thread{
 
     /**
      * Opening client sokcets and listen to the requests
-     */
-    public void listen(){
-
+     */    
+    public void listen(){                                      
         System.out.println("Server listening.");
         try{
             while(true) {
