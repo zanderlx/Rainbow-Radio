@@ -27,11 +27,13 @@ public class ClientRemoteRef implements RemoteRefInterface {
         JsonObject request = new JsonObject();
         JsonObject[] jsonRequest;
 
-        //Reading in catalog.json
+        //Creating an array of Json Objects from catalog.json
         try {
             String path = "catalog.json";
             BufferedReader br = new BufferedReader(new FileReader(path));
             jsonRequest = gson.fromJson(br, JsonObject[].class);
+            
+            //Looks for method name, and returns JSON object with matching name 
             for (JsonObject object : jsonRequest){
                 if( object.get("name").equals(remoteMethod))
                     request = object;
