@@ -51,9 +51,9 @@ public class Proxy implements ProxyInterface {
             jsonRequest.addProperty("objectName", "SongServices");
             jsonParam.addProperty("song", param[0]);
         }
-
+        
         jsonRequest.add("param", jsonParam);
-
+    
         JsonParser parser = new JsonParser();
         //String strRet =  this.dispacher.dispatch(jsonRequest.toString());
         System.out.println("Sending request: "+ jsonRequest.toString());
