@@ -1,5 +1,8 @@
 package csulb.cecs327.Models;
 
+/**
+ * This class pulls the song
+ */
 public class Song {
     private String title;
     

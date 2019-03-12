@@ -2,6 +2,9 @@ package csulb.cecs327.Services.Networking;
 import java.io.*;
 import java.net.*;
 
+/**
+ * This class is for server communication, it handles the connections and listening
+ */
 public class ServerCommunicationModule extends Thread{
     static final int FRAGMENT_SIZE = 8192;                      // Packet size
     byte[] packetSize = new byte[FRAGMENT_SIZE];
@@ -15,6 +18,9 @@ public class ServerCommunicationModule extends Thread{
         this.dispatcher = dispatcher;
     }
 
+    /**
+     * Opens connection so long as UDP port is greater than 1023
+     */
     public void connect(){                        // portNumber must be > 1023
         try{
             socket = new DatagramSocket(this.portNumber);                             // Initialize socket
@@ -24,6 +30,9 @@ public class ServerCommunicationModule extends Thread{
         }
     }
 
+    /**
+     * Listener module for server
+     */
     public void listen(){                                       // Opens client socket and listens for requests
         System.out.println("Server listening.");
         try{

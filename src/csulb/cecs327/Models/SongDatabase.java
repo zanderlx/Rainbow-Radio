@@ -2,6 +2,9 @@ package csulb.cecs327.Models;
 
 import java.util.ArrayList;
 
+/**
+ * This class pulls all songs and initializes them into an arraylist
+ */
 public class SongDatabase {
     private ArrayList<String> songList = new ArrayList<>();
 

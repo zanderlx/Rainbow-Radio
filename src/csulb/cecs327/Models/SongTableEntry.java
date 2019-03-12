@@ -1,5 +1,8 @@
 package csulb.cecs327.Models;
 
+/**
+ * This class is responsible for parsing in the data that is displayed in the table
+ */
 public class SongTableEntry {
     private String song;
     private String artist;

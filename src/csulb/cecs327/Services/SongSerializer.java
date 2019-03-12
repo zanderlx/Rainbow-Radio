@@ -13,6 +13,9 @@ public class SongSerializer {
     private MusicEntry[] rootObjects;
     private BufferedReader br;
 
+    /**
+     * Parses the song
+     */
     public SongSerializer() {
         try {
             gson = new Gson();
