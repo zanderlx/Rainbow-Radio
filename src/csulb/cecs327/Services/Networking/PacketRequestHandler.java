@@ -9,9 +9,9 @@ import java.net.Socket;
  * it will send the request packet to dispatcher
  */
 public class PacketRequestHandler extends Thread{
-    private DatagramSocket socket = null;
-    private DatagramPacket packet = null;
-    public Dispatcher myDispatcher = null;
+    private DatagramSocket socket;
+    private DatagramPacket packet;
+    public Dispatcher myDispatcher;
 
     public PacketRequestHandler(DatagramSocket s, DatagramPacket d, Dispatcher dispatcher){
         // Set socket
@@ -39,8 +39,6 @@ public class PacketRequestHandler extends Thread{
             System.out.println("Server has sent response packet, thread terminating");
             // Killing the thread after execution
             this.interrupt();
-            socket = null;
-            packet = null;
         } catch (IOException e) {
             e.printStackTrace();
         }
