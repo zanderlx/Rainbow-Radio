@@ -13,12 +13,16 @@ import com.google.gson.JsonParser;
 public class Proxy implements ProxyInterface {
     //Todo: replace with communication module
     //Dispatcher dispacher;   // This is only for test. it should use the Communication  Module
-    ClientCommunicationModule client = null;
+    private ClientCommunicationModule client = null;
+    private JsonObject catalog;
+
     public Proxy(int portNumber)
     {
         this.client = new ClientCommunicationModule();
         client.connect(portNumber);
     }
+    
+
     
     /*
     * Executes the  remote method "remoteMethod". The method blocks until
