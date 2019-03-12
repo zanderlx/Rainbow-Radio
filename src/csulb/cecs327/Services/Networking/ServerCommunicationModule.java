@@ -11,7 +11,7 @@ import java.net.*;
 public class ServerCommunicationModule extends Thread{
     // Initializing packet size
     static final int FRAGMENT_SIZE = 8192;
-    byte[] packetSize = new byte[FRAGMENT_SIZE];
+    byte[] packetSize;
     // Initializing socket, port number and the dispatcher
     DatagramSocket socket = null;
     int portNumber;
@@ -46,6 +46,7 @@ public class ServerCommunicationModule extends Thread{
         System.out.println("Server listening.");
         try{
             while(true) {
+                packetSize = new byte[FRAGMENT_SIZE];
                 // Initialize request packet
                 DatagramPacket requestPacket = new DatagramPacket(packetSize, packetSize.length);
                 // Receive request packet

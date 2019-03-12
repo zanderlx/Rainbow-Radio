@@ -53,7 +53,6 @@ public class AppUI extends JPanel {
     // Custom Variables
     private int currentSong = 0;
     private int fakeCurrent = 0;
-    private SongDatabase songDatabase = new SongDatabase();
     private MusicPlayer player;
     private DefaultTableModel model;;
     private User user;
@@ -70,7 +69,7 @@ public class AppUI extends JPanel {
     
     private JMenu addToPlaylistMenu;
     
-    private static final String[] TABLEHEADER = new String[]{"Song", "Artist", "Album", "Genre"};
+    private static final String[] TABLE_HEADER = new String[]{"Song", "Artist", "Album", "Genre"};
     private static final String PAUSE_BUTTON_PATH = "/csulb/cecs327/Resources/icon/Button-Pause-icon.png";
     private static final String PLAY_BUTTON_PATH = "/csulb/cecs327/Resources/icon/Button-Play-icon.png";
 
@@ -93,7 +92,7 @@ public class AppUI extends JPanel {
                 return false;
             }
         };
-        model.setColumnIdentifiers(TABLEHEADER);
+        model.setColumnIdentifiers(TABLE_HEADER);
         songInfoTable.getTableHeader().setReorderingAllowed(false);
         songInfoTable.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
         songInfoTable.setShowVerticalLines(false);
@@ -172,7 +171,7 @@ public class AppUI extends JPanel {
             player.stop();
             currentSong--;
             if (currentSong < 0)
-                currentSong = songDatabase.getSongList().size() - 1;
+                currentSong = musicJson.length - 1;
             song = Long.parseLong(musicJson[currentSong].getId() + "");
             player = new MusicPlayer(new CECS327InputStream(song, proxy));
             timer.cancel();
@@ -195,7 +194,7 @@ public class AppUI extends JPanel {
         try {
             player.stop();
             currentSong++;
-            currentSong %= songDatabase.getSongList().size();
+            currentSong %= musicJson.length;
             song = Long.parseLong(musicJson[currentSong].getId() + "");
             player = new MusicPlayer(new CECS327InputStream(song, proxy));
             timer.cancel();
@@ -743,7 +742,7 @@ public class AppUI extends JPanel {
                 return false;
             }
         };
-        newPlaylistModel.setColumnIdentifiers(TABLEHEADER);
+        newPlaylistModel.setColumnIdentifiers(TABLE_HEADER);
         for(SongTableEntry songTableEntry : playlist.getListOfSongs()){
             setRow(songTableEntry, newPlaylistModel);
         }

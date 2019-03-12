@@ -21,10 +21,10 @@ public class SongDatabase {
         songList.add("src/csulb/cecs327/Resources/music/300822");
         songList.add("src/csulb/cecs327/Resources/music/490183.mp3");
         songList.add("src/csulb/cecs327/Resources/music/358182");
-        songList.add("src/csulb/cecs327/Resources/music/815863");
-        songList.add("src/csulb/cecs327/Resources/music/605134");
-        songList.add("src/csulb/cecs327/Resources/music/463514");
-        songList.add("src/csulb/cecs327/Resources/music/663761");
+        songList.add("src/csulb/cecs327/Resources/music/692313");
+        songList.add("src/csulb/cecs327/Resources/music/41838");
+        songList.add("src/csulb/cecs327/Resources/music/8876");
+        songList.add("src/csulb/cecs327/Resources/music/25824");
         songList.add("src/csulb/cecs327/Resources/music/Empire State Of Mind.mp3");
         songList.add("src/csulb/cecs327/Resources/music/Eye Of The Tiger.mp3");
         songList.add("src/csulb/cecs327/Resources/music/Fireflies.mp3");
