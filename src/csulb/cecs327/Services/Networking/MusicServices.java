@@ -20,7 +20,7 @@ public class MusicServices {
 
     public MusicServices() {
 
-        try (Reader reader = new FileReader("C:\\Users\\ZanderLx\\Desktop\\CECS-327\\Rainbow-Radio\\src\\csulb\\cecs327\\Models\\music.json")) {
+        try (Reader reader = new FileReader("src/csulb/cecs327/Services/Networking/music.json")) {
             songs = gson.fromJson(reader, new TypeToken<ArrayList<MusicEntry>>(){}.getType());
         } catch (IOException e) {
             e.printStackTrace();
