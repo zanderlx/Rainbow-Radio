@@ -87,7 +87,7 @@ public class AppUI extends JPanel {
     }
 
     private void startUp() {
-        addDefaultTableRows();
+
         addSongInfoTableMouseListener();
 
         model = new DefaultTableModel() {
@@ -97,6 +97,7 @@ public class AppUI extends JPanel {
             }
         };
         model.setColumnIdentifiers(TABLE_HEADER);
+        addDefaultTableRows();
         songInfoTable.getTableHeader().setReorderingAllowed(false);
         songInfoTable.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
         songInfoTable.setShowVerticalLines(false);
