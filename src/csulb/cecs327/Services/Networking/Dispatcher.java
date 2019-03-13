@@ -23,7 +23,7 @@ public class Dispatcher implements DispatcherInterface {
 
     public Dispatcher()
     {
-        ListOfObjects = new HashMap<String, Object>();
+        ListOfObjects = new HashMap<>();
     }
     
     /**
@@ -47,13 +47,14 @@ public class Dispatcher implements DispatcherInterface {
         
         try {
             // Obtains the object pointing to SongServices
-            Object object = ListOfObjects.get(jsonRequest.get("objectName").getAsString());
+            Object object = ListOfObjects.get(jsonRequest.get("object").getAsString());
             Method[] methods = object.getClass().getMethods();
             Method method = null;
+
             // Obtains the method
             for (int i=0; i<methods.length; i++)
             {   
-                if (methods[i].getName().equals(jsonRequest.get("remoteMethod").getAsString()))
+                if (methods[i].getName().equals(jsonRequest.get("remotemethod").getAsString()))
                     method = methods[i];
             }
             if (method == null)

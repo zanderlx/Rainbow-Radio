@@ -6,6 +6,7 @@ package csulb.cecs327.Controllers.FrontEnd;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.List;
 import java.util.Timer;
@@ -15,6 +16,9 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.TypeAdapter;
+import com.google.gson.reflect.TypeToken;
 import com.jgoodies.forms.factories.*;
 import csulb.cecs327.Models.*;
 import csulb.cecs327.Services.*;
@@ -56,9 +60,9 @@ public class AppUI extends JPanel {
     private MusicPlayer player;
     private DefaultTableModel model;;
     private User user;
-    private SongSerializer songSerializer = new SongSerializer();
-    private MusicEntry[] musicJson = songSerializer.getRootObjects();
-    private Long song = Long.parseLong(musicJson[currentSong].getId() + "");
+    private Gson gson = new Gson();
+    ArrayList<MusicEntry> musicEntries = new ArrayList<>();
+    private Long song;
     //    private static Thread songProgressThread;
     private boolean isPlaying = false;
     private int currentSongLength = 0;
@@ -83,7 +87,7 @@ public class AppUI extends JPanel {
     }
 
     private void startUp() {
-
+        addDefaultTableRows();
         addSongInfoTableMouseListener();
 
         model = new DefaultTableModel() {
@@ -104,7 +108,7 @@ public class AppUI extends JPanel {
             playlistModel.addElement(playlist);
         }
         playlistList.setModel(playlistModel);
-        addDefaultTableRows();
+
 
         sortColumn(0);
 //        TableSearch tableSearch = new TableSearch(songInfoTable, songInfoPane, searchBox);
@@ -171,8 +175,8 @@ public class AppUI extends JPanel {
             player.stop();
             currentSong--;
             if (currentSong < 0)
-                currentSong = musicJson.length - 1;
-            song = Long.parseLong(musicJson[currentSong].getId() + "");
+                currentSong = musicEntries.size() - 1;
+            song = (long)musicEntries.get(currentSong).getRelease().getId();
             player = new MusicPlayer(new CECS327InputStream(song, proxy));
             timer.cancel();
             currentSongLength = 0;
@@ -194,8 +198,8 @@ public class AppUI extends JPanel {
         try {
             player.stop();
             currentSong++;
-            currentSong %= musicJson.length;
-            song = Long.parseLong(musicJson[currentSong].getId() + "");
+            currentSong %= musicEntries.size();
+            song = (long)musicEntries.get(currentSong).getRelease().getId();
             player = new MusicPlayer(new CECS327InputStream(song, proxy));
             timer.cancel();
             currentSongLength = 0;
@@ -241,6 +245,7 @@ public class AppUI extends JPanel {
                                 String artist = (String)songInfoTable.getValueAt(row, 1);
                                 String album = (String)songInfoTable.getValueAt(row, 2);
                                 String genre = (String)songInfoTable.getValueAt(row, 3);
+
                                 SongTableEntry entry = new SongTableEntry(song, artist, album, genre);
                                 Playlist playlist = playlistModel.get(index);
                                 playlist.addSongTableEntry(entry);
@@ -257,7 +262,7 @@ public class AppUI extends JPanel {
                     try{
                         currentSong = songInfoTable.getSelectedRow();
                         player.stop();
-                        song = Long.parseLong(musicJson[currentSong].getId() + "");
+                        song = (long)musicEntries.get(currentSong).getRelease().getId();
                         player = new MusicPlayer(new CECS327InputStream(song, proxy));
                         timer.cancel();
                         currentSongLength = 0;
@@ -269,9 +274,7 @@ public class AppUI extends JPanel {
                         artistLabel.setText((String)songInfoTable.getValueAt(row, 1));
                         fakeCurrent = row;
                 } catch (Exception exception) {
-
-                        song = Long.parseLong(musicJson[new Random().nextInt(5)].getId() + "");
-
+                        song = (long)musicEntries.get(new Random().nextInt(5)).getRelease().getId();
                         try {
                             player = new MusicPlayer(new CECS327InputStream(song, proxy));
                         } catch (Exception ex) {
@@ -326,8 +329,8 @@ public class AppUI extends JPanel {
             player.stop();
            // currentSong++;
             currentSong = rand.nextInt(201);
-            currentSong %= musicJson.length;
-            song = Long.parseLong(musicJson[currentSong].getId() + "");
+            currentSong %= musicEntries.size();
+            song = (long) musicEntries.get(currentSong).getRelease().getId();
             player = new MusicPlayer(new CECS327InputStream(song, proxy));
             timer.cancel();
             currentSongLength = 0;
@@ -724,15 +727,22 @@ public class AppUI extends JPanel {
     private void addDefaultTableRows() {
         //TODO: Change to query for song list
         int index = 0;
-        for (MusicEntry rootObject : musicJson) {
-            if (index == 10) break;
-            setRow(new SongTableEntry(
-                    rootObject.getSong().getTitle(),
-                    rootObject.getArtist().getName(),
-                    rootObject.getRelease().getName(),
-                    rootObject.getArtist().getTerms()), model);
-            index++;
+        String[] blag = new String[]{"test"};
+        JsonObject jsonResponse = proxy.synchExecution("getSongsFromServer", blag);
+        String ret = jsonResponse.get("ret").getAsString();
+        musicEntries = gson.fromJson(ret, new TypeToken<ArrayList<MusicEntry>>(){}.getType());
+        for (MusicEntry song : musicEntries) {
+            SongTableEntry entry = new SongTableEntry(
+                    song.getSong().getTitle(),
+                    song.getArtist().getName(),
+                    song.getRelease().getName(),
+                    song.getArtist().getTerms());
+            setRow(entry, model);
+
+
         }
+
+
     }
     
     private DefaultTableModel createTableModel(Playlist playlist){
