@@ -40,7 +40,7 @@ public class ServerCommunicationModule extends Thread{
     }
 
     /**
-     * Opening client sokcets and listen to the requests
+     * Opening client sockets and listen to the requests
      */    
     public void listen(){                                      
         System.out.println("Server listening.");
