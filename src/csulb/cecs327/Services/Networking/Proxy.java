@@ -23,11 +23,12 @@ public class Proxy implements ProxyInterface {
         this.crr = new ClientRemoteRef(client);
     }
 
-
-
-    /*
-     * Executes the  remote method "remoteMethod". The method blocks until
-     * it receives the reply of the message.
+    /**
+     * This class creates a JSON object by referencing the catalog.json
+     * The method then dynamically enters the parameters necessary for the method
+     * @param remoteMethod = name of method client wishes to find
+     * @param param = String array of parameters
+     * @return - JSON Object of desired method
      */
     public JsonObject synchExecution(String remoteMethod, String[] param)
     {
