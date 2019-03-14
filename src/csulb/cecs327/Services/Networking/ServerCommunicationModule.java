@@ -40,7 +40,7 @@ public class ServerCommunicationModule extends Thread{
     }
 
     /**
-     * Opening client sokcets and listen to the requests
+     * Opening client sockets and listen to the requests
      */    
     public void listen(){                                      
         System.out.println("Server listening.");
@@ -51,7 +51,7 @@ public class ServerCommunicationModule extends Thread{
                 DatagramPacket requestPacket = new DatagramPacket(packetSize, packetSize.length);
                 // Receive request packet
                 socket.receive(requestPacket);
-                System.out.println("Client packet received: " + requestPacket);
+                System.out.println("Client packet received: " + new String(requestPacket.getData()));
                 // Create new thread to handle this request packet and return a response packet
                 System.out.println("Creating new thread for handling this client packet.");
                 // This is where the handler comes in and handle the request packet

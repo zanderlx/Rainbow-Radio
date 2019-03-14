@@ -1,6 +1,5 @@
 [
-    {"remotemethod": "remoteMethod",
-    "name": "register",
+    {"remotemethod": "register",
     "object": "UserServices",
     "call-semantics": "at-most-one",
     "param": {
@@ -11,8 +10,7 @@
   },
 
    {
-     "remotemethod": "remoteMethod",
-    "name": "login",
+     "remotemethod": "login",
     "object": "UserServices",
     "call-semantics": "at-most-one",
     "param": {
@@ -22,8 +20,7 @@
   },
 
   {
-    "remotemethod": "remoteMethod",
-    "name": "addToPlaylist",
+    "remotemethod": "addToPlaylist",
     "object": "SongServices",
     "call-semantics": "maybe",
     "param": {
@@ -32,8 +29,7 @@
   },
 
   {
-    "remotemethod": "remoteMethod",
-    "name": "getSongChunk",
+    "remotemethod": "getSongChunk",
     "object": "SongServices",
     "call-semantics": "maybe",
     "param": {
@@ -44,9 +40,17 @@
   },
 
   {
-    "remotemethod": "remoteMethod",
-    "name": "getCatalog",
+    "remotemethod": "getCatalog",
     "object": "RemoteRefServices",
+    "call-semantics": "at-most-one",
+    "param": {
+      "test": "blah"
+    }
+  },
+
+  {
+    "remotemethod": "getSongsFromServer",
+    "object": "MusicServices",
     "call-semantics": "at-most-one",
     "param": {
       "test": "blah"

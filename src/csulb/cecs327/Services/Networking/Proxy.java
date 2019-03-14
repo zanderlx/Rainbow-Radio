@@ -41,9 +41,7 @@ public class Proxy implements ProxyInterface {
             jsonParam.addProperty(s, param[i]);
             i++;
         }
-        if (jsonParam==null){
-            jsonParam = new JsonObject();
-        }
+
         jsonRequest.add("param", jsonParam);
 
         JsonParser parser = new JsonParser();

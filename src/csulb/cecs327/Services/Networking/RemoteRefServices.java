@@ -15,7 +15,7 @@ public class RemoteRefServices {
      */
     public String getCatalog(){
         try {
-            return  new String(Files.readAllBytes(Paths.get("C:\\Users\\studentuser01\\Documents\\GitHub\\CECS-327-Music-Player\\src\\csulb\\cecs327\\Services\\Networking\\catalog.json")), StandardCharsets.UTF_8);
+            return  new String(Files.readAllBytes(Paths.get("src/csulb/cecs327/Services/Networking/catalog.json")), StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
         }

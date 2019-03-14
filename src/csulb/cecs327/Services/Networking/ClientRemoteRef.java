@@ -29,16 +29,15 @@ public class ClientRemoteRef implements RemoteRefInterface {
 
         //Creating an array of Json Objects from catalog.json
         try {
-            String path = "C:\\Users\\studentuser01\\Documents\\GitHub\\CECS-327-Music-Player\\src\\csulb\\cecs327\\Services\\Networking\\catalog.json";
+            String path = "src/csulb/cecs327/Services/Networking/catalog.json";
             BufferedReader br = new BufferedReader(new FileReader(path));
             jsonRequest = gson.fromJson(br, JsonObject[].class);
             
             //Looks for method name, and returns JSON object with matching name 
             for (JsonObject object : jsonRequest){
-                if( object.get("name").equals(remoteMethod))
+                if( object.get("remotemethod").getAsString().equals(remoteMethod)) {
                     request = object;
-                else{
-                    System.out.println("Remote Method not found.");
+                    break;
                 }
             }
         } catch (Exception e){
@@ -55,8 +54,8 @@ public class ClientRemoteRef implements RemoteRefInterface {
 
     private JsonObject getCatalog() {
         JsonObject jsonRequest = new JsonObject();
-        jsonRequest.addProperty("remoteMethod", "getCatalog");
-        jsonRequest.addProperty("objectName", "RemoteRefServices");
+        jsonRequest.addProperty("remotemethod", "getCatalog");
+        jsonRequest.addProperty("object", "RemoteRefServices");
         jsonRequest.add("param", new JsonObject());
         String strRet = client.sendRequest(jsonRequest.toString());
         JsonParser jsonParser = new JsonParser();

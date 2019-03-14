@@ -12,7 +12,7 @@ import java.net.InetAddress;
 public class ClientCommunicationModule {
     // Initializing packets size
     static final int FRAGMENT_SIZE = 15000;
-    byte[] packetSize = new byte[FRAGMENT_SIZE];
+    byte[] packetSize;
 
     // Initializing the socket and IP Address and port
     private DatagramSocket socket = null;
@@ -47,6 +47,7 @@ public class ClientCommunicationModule {
     public String sendRequest(String request){
         String response = "";
         try {
+            packetSize = new byte[FRAGMENT_SIZE];
             // Initialize payload
             byte[] requestPayload = new byte[FRAGMENT_SIZE];
             // Fill in payload

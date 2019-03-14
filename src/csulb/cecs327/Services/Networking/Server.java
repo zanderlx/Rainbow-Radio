@@ -12,10 +12,12 @@ public class Server {
         SongDispatcher songDispatcher = new SongDispatcher();
         UserServices userServices = new UserServices();
         RemoteRefServices remoteRefServices = new RemoteRefServices();
+        MusicServices musicServices = new MusicServices();
 
         dispatcher.registerObject(songDispatcher, "SongServices");
         dispatcher.registerObject(userServices, "UserServices");
         dispatcher.registerObject(remoteRefServices, "RemoteRefServices");
+        dispatcher.registerObject(musicServices, "MusicServices");
 
         ServerCommunicationModule serverCommunicationModule = new ServerCommunicationModule(1024, dispatcher);
         serverCommunicationModule.connect();

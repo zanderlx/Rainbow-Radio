@@ -4,16 +4,11 @@ package csulb.cecs327.Models;
  * This class is responsible for parsing in the data that is displayed in the table
  */
 public class SongTableEntry {
-    private String song;
-    private String artist;
-    private String album;
-    private String genre;
-    private Long songId;
-    
-    public Long getSongId() {
-        return songId;
-    }
-    
+    private String song = "";
+    private String artist = "";
+    private String album = "";
+    private String genre = "";
+
     public SongTableEntry(String song, String artist, String album, String genre) {
         this.song = song;
         this.artist = artist;
@@ -60,7 +55,6 @@ public class SongTableEntry {
                 ", artist='" + artist + '\'' +
                 ", album='" + album + '\'' +
                 ", genre='" + genre + '\'' +
-                ", songId=" + songId +
                 '}';
     }
 }
