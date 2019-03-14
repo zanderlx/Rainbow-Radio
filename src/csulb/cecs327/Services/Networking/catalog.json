@@ -67,5 +67,15 @@
       "song": "java.lang.Long"
     },
     "return": "java.lang.Integer"
+  },
+
+  {
+    "remoteMethod": "getSongTableEntrySearch",
+    "object": "MusicServices",
+    "call-semantics": "at-least-one",
+    "param": {
+      "song": "java.lang.String"
+    },
+    "return": "java.lang.String"
   }
 ]

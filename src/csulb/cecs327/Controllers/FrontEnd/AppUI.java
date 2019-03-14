@@ -6,6 +6,7 @@ package csulb.cecs327.Controllers.FrontEnd;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.List;
 import java.util.Timer;
@@ -69,7 +70,7 @@ public class AppUI extends JPanel {
     private int playlistCount = 1;
     private Proxy proxy;
     private TableSearch tableSearch;
-    
+
     private JMenu addToPlaylistMenu;
     
     private static final String[] TABLE_HEADER = new String[]{"Song", "Artist", "Album", "Genre"};
@@ -128,7 +129,42 @@ public class AppUI extends JPanel {
         songProgress.setMaximum(100);
         songProgress.setForeground(Color.decode("#1DB954"));
 
-        tableSearch = new TableSearch(songInfoTable, songInfoPane, searchBox);
+
+        searchBox.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                // Do nothing
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER ) {
+                    JsonObject jsonResponse = proxy.synchExecution("getSongTableEntrySearch", new String[]{searchBox.getText()});
+                    String ret = jsonResponse.get("ret").getAsString();
+                    ArrayList<SongTableEntry> result = gson.fromJson(ret, new TypeToken<ArrayList<SongTableEntry>>(){}.getType());
+                    DefaultTableModel newModel = new DefaultTableModel();
+                    newModel.setColumnIdentifiers(TABLE_HEADER);
+                    for (SongTableEntry entry : result) {
+                        setRow(entry, newModel);
+                    }
+                    JTable newTable = new JTable(newModel);
+                    newTable.getTableHeader().setReorderingAllowed(false);
+                    newTable.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
+                    newTable.setShowVerticalLines(false);
+                    newTable.setRowHeight(30);
+                    songInfoPane.setViewportView(newTable);
+
+
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                // Do nothing
+            }
+        });
+
+        // tableSearch = new TableSearch(songInfoTable, songInfoPane, searchBox);
     }
 
     private void setUpButton(JButton button){
@@ -739,11 +775,7 @@ public class AppUI extends JPanel {
                     song.getRelease().getName(),
                     song.getArtist().getTerms());
             setRow(entry, model);
-
-
         }
-
-
     }
     
     private DefaultTableModel createTableModel(Playlist playlist){
