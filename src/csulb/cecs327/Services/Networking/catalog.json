@@ -55,5 +55,15 @@
     "param": {
       "test": "blah"
     }
+  },
+
+  {
+    "remotemethod": "getFileSize",
+    "object": "SongServices",
+    "call-semantics": "at-least-one",
+    "param": {
+      "song": "java.lang.Long"
+    },
+    "return": "java.lang.Integer"
   }
 ]
