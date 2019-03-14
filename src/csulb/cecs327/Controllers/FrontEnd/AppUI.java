@@ -6,7 +6,6 @@ package csulb.cecs327.Controllers.FrontEnd;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.List;
 import java.util.Timer;
@@ -17,7 +16,6 @@ import javax.swing.table.TableRowSorter;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
 import com.jgoodies.forms.factories.*;
 import csulb.cecs327.Models.*;
@@ -44,7 +42,7 @@ public class AppUI extends JPanel {
     private JScrollPane songInfoPane;
     private JTable songInfoTable;
     private JScrollPane playlistPane;
-    private JList playlistList;
+    private JList<Playlist> playlistList;
     private JLabel songLabel;
     private JProgressBar songProgress;
     private JLabel artistLabel;
@@ -70,6 +68,7 @@ public class AppUI extends JPanel {
     private DefaultListModel<Playlist> playlistModel;
     private int playlistCount = 1;
     private Proxy proxy;
+    private TableSearch tableSearch;
     
     private JMenu addToPlaylistMenu;
     
@@ -112,7 +111,6 @@ public class AppUI extends JPanel {
 
 
         sortColumn(0);
-//        TableSearch tableSearch = new TableSearch(songInfoTable, songInfoPane, searchBox);
         searchBox.setBorder(BorderFactory.createMatteBorder(0, 0,2, 0, Color.decode("#1DB954")));
         searchBox.setBackground(null);
         songInfoTable.setRowSelectionInterval(0, 0);
@@ -129,6 +127,8 @@ public class AppUI extends JPanel {
         songProgress.setMinimum(0);
         songProgress.setMaximum(100);
         songProgress.setForeground(Color.decode("#1DB954"));
+
+        tableSearch = new TableSearch(songInfoTable, songInfoPane, searchBox);
     }
 
     private void setUpButton(JButton button){
@@ -429,7 +429,7 @@ public class AppUI extends JPanel {
         songInfoPane = new JScrollPane();
         songInfoTable = new JTable();
         playlistPane = new JScrollPane();
-        playlistList = new JList();
+        playlistList = new JList<>();
         songLabel = new JLabel();
         songProgress = new JProgressBar();
         artistLabel = new JLabel();
@@ -709,18 +709,18 @@ public class AppUI extends JPanel {
     private void updateProgressBar() {
         int delay = 1000; // delay for 5 sec.
         int period = 1000; // repeat every sec.
+
         songProgress.setMaximum(player.getSongLength());
-        System.out.println(player.getSongLength());
+        System.out.println("Song Length: " + player.getSongLength());
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask()
         {
             public void run()
             {
-                // Your code
                 songProgress.setValue(currentSongLength);
                 System.out.println(currentSongLength);
-                currentSongLength++;
-                if (currentSongLength == player.getSongLength()) currentSongLength = 0;
+                currentSongLength+=0; // Progress bar doesn't work so just set 0 for now
+                if (currentSongLength == songProgress.getMaximum()) currentSongLength = 0;
             }
         }, delay, period);
     }

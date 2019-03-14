@@ -54,7 +54,7 @@ public class Dispatcher implements DispatcherInterface {
             // Obtains the method
             for (int i=0; i<methods.length; i++)
             {   
-                if (methods[i].getName().equals(jsonRequest.get("remotemethod").getAsString()))
+                if (methods[i].getName().equals(jsonRequest.get("remoteMethod").getAsString()))
                     method = methods[i];
             }
             if (method == null)

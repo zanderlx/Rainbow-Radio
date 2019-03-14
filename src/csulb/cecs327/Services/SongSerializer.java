@@ -19,7 +19,7 @@ public class SongSerializer {
     public SongSerializer() {
         try {
             gson = new Gson();
-            path = "/Users/pramodchamala/IdeaProjects/CECS-327-Music-Player/src/csulb/cecs327/Services/Networking/music.json";
+            path = "src/csulb/cecs327/Services/Networking/music.json";
             br = new BufferedReader(new FileReader(path));
             rootObjects = gson.fromJson(br, MusicEntry[].class);
         } catch (Exception e) {

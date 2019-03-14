@@ -35,7 +35,7 @@ public class ClientRemoteRef implements RemoteRefInterface {
             
             //Looks for method name, and returns JSON object with matching name 
             for (JsonObject object : jsonRequest){
-                if( object.get("remotemethod").getAsString().equals(remoteMethod)) {
+                if( object.get("remoteMethod").getAsString().equals(remoteMethod)) {
                     request = object;
                     break;
                 }
@@ -54,7 +54,7 @@ public class ClientRemoteRef implements RemoteRefInterface {
 
     private JsonObject getCatalog() {
         JsonObject jsonRequest = new JsonObject();
-        jsonRequest.addProperty("remotemethod", "getCatalog");
+        jsonRequest.addProperty("remoteMethod", "getCatalog");
         jsonRequest.addProperty("object", "RemoteRefServices");
         jsonRequest.add("param", new JsonObject());
         String strRet = client.sendRequest(jsonRequest.toString());
