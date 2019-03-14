@@ -65,7 +65,7 @@ public class Proxy implements ProxyInterface {
         JsonObject jsonRequest = new JsonObject();
         JsonObject jsonParam = new JsonObject();
         jsonRequest.addProperty("remoteMethod", remoteMethod);
-        jsonRequest.addProperty("objectName", "UserServices");
+        jsonRequest.addProperty("object", "UserServices");
 
         jsonParam.addProperty("user", param[0]);
         jsonRequest.add("param", jsonParam);

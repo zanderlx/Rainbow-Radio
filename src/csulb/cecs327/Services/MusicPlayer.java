@@ -2,6 +2,9 @@ package csulb.cecs327.Services;
 
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
+import org.jaudiotagger.audio.AudioFile;
+import org.jaudiotagger.audio.AudioFileIO;
+
 import java.io.InputStream;
 
 /**

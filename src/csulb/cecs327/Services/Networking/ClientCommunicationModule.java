@@ -57,7 +57,7 @@ public class ClientCommunicationModule {
             System.out.println("Client sending request packet to server.");
             // Sending the request-packet
             socket.send(requestPacket);
-            System.out.print("Client request packet has been sent to server.");
+            System.out.println("Client request packet has been sent to server.");
 
             // Making the response packet
             byte[] responseData = new byte[FRAGMENT_SIZE];

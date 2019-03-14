@@ -1,5 +1,6 @@
 [
-    {"remotemethod": "register",
+    {
+      "remoteMethod": "register",
     "object": "UserServices",
     "call-semantics": "at-most-one",
     "param": {
@@ -10,7 +11,7 @@
   },
 
    {
-     "remotemethod": "login",
+     "remoteMethod": "login",
     "object": "UserServices",
     "call-semantics": "at-most-one",
     "param": {
@@ -20,7 +21,7 @@
   },
 
   {
-    "remotemethod": "addToPlaylist",
+    "remoteMethod": "addToPlaylist",
     "object": "SongServices",
     "call-semantics": "maybe",
     "param": {
@@ -29,7 +30,7 @@
   },
 
   {
-    "remotemethod": "getSongChunk",
+    "remoteMethod": "getSongChunk",
     "object": "SongServices",
     "call-semantics": "maybe",
     "param": {
@@ -40,7 +41,7 @@
   },
 
   {
-    "remotemethod": "getCatalog",
+    "remoteMethod": "getCatalog",
     "object": "RemoteRefServices",
     "call-semantics": "at-most-one",
     "param": {
@@ -49,16 +50,17 @@
   },
 
   {
-    "remotemethod": "getSongsFromServer",
+    "remoteMethod": "getSongsFromServer",
     "object": "MusicServices",
     "call-semantics": "at-most-one",
     "param": {
       "test": "blah"
-    }
+    },
+    "return":"java.lang.String"
   },
 
   {
-    "remotemethod": "getFileSize",
+    "remoteMethod": "getFileSize",
     "object": "SongServices",
     "call-semantics": "at-least-one",
     "param": {

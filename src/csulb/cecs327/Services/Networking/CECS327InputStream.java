@@ -93,13 +93,13 @@ public class CECS327InputStream extends InputStream {
         {
             public void run() {
                 String[] param = new String[2];
-                param[0] = String.valueOf(fileName);
-                param[1] = String.valueOf(fragment);
+                param[0] = String.valueOf(fragment);
+                param[1] = String.valueOf(fileName);
 
                 JsonObject jsonRet = proxy.synchExecution("getSongChunk", param);
                 String s = jsonRet.get("ret").getAsString();
                 nextBuf = Base64.getDecoder().decode(s);
-                sem.release(); 
+                sem.release();
                 System.out.println("Read buffer");
             }
         }.start();
