@@ -56,7 +56,7 @@ public class AppUI extends JPanel {
     private int currentSong = 0;
     private int fakeCurrent = 0;
     private MusicPlayer player;
-    private DefaultTableModel model;;
+    private DefaultTableModel model;
     private User user;
     private Gson gson = new Gson();
     ArrayList<MusicEntry> musicEntries = new ArrayList<>();
@@ -111,9 +111,28 @@ public class AppUI extends JPanel {
 
 
         sortColumn(0);
+        searchBox.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    searchSongs();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
         searchBox.setBorder(BorderFactory.createMatteBorder(0, 0,2, 0, Color.decode("#1DB954")));
         searchBox.setBackground(null);
         songInfoTable.setRowSelectionInterval(0, 0);
+
 
         setUpButton(playPauseButton);
         setUpButton(nextButton);
@@ -305,7 +324,6 @@ public class AppUI extends JPanel {
         sorter.setSortKeys(sortKeys);
         songInfoTable.setRowSorter(sorter);
     }
-
 
     private void logoutButtonActionPerformed(ActionEvent e) {
         System.out.println("Pressed Logout");
@@ -707,22 +725,46 @@ public class AppUI extends JPanel {
     }
 
     private void updateProgressBar() {
-        int delay = 1000; // delay for 5 sec.
-        int period = 1000; // repeat every sec.
+//        int delay = 1000; // delay for 5 sec.
+//        int period = 1000; // repeat every sec.
+//
+//        songProgress.setMaximum(player.getSongLength());
+//        System.out.println("Song Length: " + player.getSongLength());
+//        timer = new Timer(tes);
+//        timer.scheduleAtFixedRate(new TimerTask()
+//        {
+//            public void run()
+//            {
+//                songProgress.setValue(currentSongLength);
+//                System.out.println(currentSongLength);
+//                currentSongLength+=0; // Progress bar doesn't work so just set 0 for now
+//                if (currentSongLength == songProgress.getMaximum()) currentSongLength = 0;
+//            }
+//        }, delay, period);
+    }
 
-        songProgress.setMaximum(player.getSongLength());
-        System.out.println("Song Length: " + player.getSongLength());
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask()
-        {
-            public void run()
-            {
-                songProgress.setValue(currentSongLength);
-                System.out.println(currentSongLength);
-                currentSongLength+=0; // Progress bar doesn't work so just set 0 for now
-                if (currentSongLength == songProgress.getMaximum()) currentSongLength = 0;
-            }
-        }, delay, period);
+    private void searchSongs() {
+
+        String searchItem = searchBox.getText();
+        String[] query = new String[] { searchItem };
+        JsonObject request = proxy.synchExecution("searchSongsFromServer", query);
+        String response = request.get("ret").getAsString();
+        ArrayList<MusicEntry> searchedSongs = gson.fromJson(response, new TypeToken<ArrayList<MusicEntry>>(){}.getType());
+
+        int rowCount = model.getRowCount();
+        for (int i = rowCount - 1; i >= 0; i--) {
+            model.removeRow(i);
+        }
+
+        for (MusicEntry song : searchedSongs) {
+            SongTableEntry entry = new SongTableEntry(
+                    song.getSong().getTitle(),
+                    song.getArtist().getName(),
+                    song.getRelease().getName(),
+                    song.getArtist().getTerms());
+            setRow(entry, model);
+        }
+
     }
 
     private void addDefaultTableRows() {
@@ -739,11 +781,7 @@ public class AppUI extends JPanel {
                     song.getRelease().getName(),
                     song.getArtist().getTerms());
             setRow(entry, model);
-
-
         }
-
-
     }
     
     private DefaultTableModel createTableModel(Playlist playlist){
