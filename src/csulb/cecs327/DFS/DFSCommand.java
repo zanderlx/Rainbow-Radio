@@ -1,7 +1,8 @@
 package csulb.cecs327.DFS;
 
 import java.io.*;
-
+import java.util.*;
+import com.google.gson.Gson;
 
 public class DFSCommand
 {
@@ -40,17 +41,27 @@ public class DFSCommand
             }
             if (result[0].equals("touch"))
             {
-                dfs.create("New File");
+                // Pass in actual json file with values ( songs )
+                dfs.create(result[1]);
                 System.out.print("New File Created ");
             }
-            if (result[0].equals("delete"))
+            if (result[0].equals("append"))
             {
-                dfs.delete("New File");
-                System.out.print("New File Deleted ");
+                RemoteInputFileStream input = new RemoteInputFileStream(result[2]);
+                dfs.append(result[1], input);
+                System.out.println("Page added");
             }
-            if (result[0].equals("tail"))
+            if (result[0].equals("read"))
             {
-                dfs.tail("File Name");
+                int pageNumber = Integer.parseInt(result[2]);
+                int i;
+                RemoteInputFileStream r = dfs.read(result[1], pageNumber);
+                r.connect();
+                while((i = r.read()) != -1){
+                    System.out.print((char) i);
+                }
+                System.out.println();
+                System.out.println("page read");
             }
             if (result[0].equals("head"))
             {
@@ -62,8 +73,14 @@ public class DFSCommand
             // join, ls, touch, delete, read, tail, head, append, move
     }
 
-    static public void main(String args[]) throws Exception
+    static public void main(String arg[]) throws Exception
     {
+        System.out.println("Enter port: ");
+        Scanner input = new Scanner(System.in);
+        String userInput = input.nextLine();
+        String[] args = new String[1];
+        args[0] = userInput;
+
         if (args.length < 1 ) {
             throw new IllegalArgumentException("Parameter: <port> <portToJoin>");
         }
