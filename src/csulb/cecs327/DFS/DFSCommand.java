@@ -7,33 +7,36 @@ import com.google.gson.Gson;
 public class DFSCommand
 {
     DFS dfs;
-        
+
     public DFSCommand(int p, int portToJoin) throws Exception {
         dfs = new DFS(p);
-        
+
         if (portToJoin > 0)
         {
             System.out.println("Joining "+ portToJoin);
-            dfs.join("127.0.0.1", portToJoin);            
+            dfs.join("127.0.0.1", portToJoin);
         }
-        
+
         BufferedReader buffer=new BufferedReader(new InputStreamReader(System.in));
-        String line = buffer.readLine();  
+        String line = buffer.readLine();
         while (!line.equals("quit"))
         {
             String[] result = line.split("\\s");
             if (result[0].equals("join")  && result.length > 1)
             {
-                dfs.join("127.0.0.1", Integer.parseInt(result[1]));     
+                dfs.join("127.0.0.1", Integer.parseInt(result[1]));
             }
             if (result[0].equals("print"))
             {
-                dfs.print();     
+                dfs.print();
             }
-            
+            if (result[0].equals("delete"))
+            {
+                dfs.delete();
+            }
             if (result[0].equals("leave"))
             {
-                dfs.leave();     
+                dfs.leave();
             }
             if (result[0].equals("ls"))
             {
@@ -44,6 +47,10 @@ public class DFSCommand
                 // Pass in actual json file with values ( songs )
                 dfs.create(result[1]);
                 System.out.print("New File Created ");
+            }
+            if (result[0].equals("move"))
+            {
+                dfs.move();
             }
             if (result[0].equals("append"))
             {
@@ -65,12 +72,12 @@ public class DFSCommand
             }
             if (result[0].equals("head"))
             {
-                dfs.head("File Name");
+                dfs.head(result[1]);
             }
-            line=buffer.readLine();  
+            line=buffer.readLine();
         }
-            // User interface:
-            // join, ls, touch, delete, read, tail, head, append, move
+        // User interface:
+        // join, ls, touch, delete, read, tail, head, append, move
     }
 
     static public void main(String arg[]) throws Exception
@@ -91,5 +98,5 @@ public class DFSCommand
         {
             DFSCommand dfsCommand=new DFSCommand( Integer.parseInt(args[0]), 0);
         }
-     } 
+    }
 }
