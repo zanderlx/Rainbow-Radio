@@ -36,13 +36,13 @@ public class DFS {
      */
     public class PagesJson {
         Long guid;
-        Long size;
+        int size;
         int pageNumber;
-        public PagesJson(long guid, long size) {
+        public PagesJson(long guid, int size) {
             this.guid = guid;
             this.size = size;
         }
-        public long getPageNumber()
+        public int getPageNumber()
         {
             return size;
         }
@@ -59,7 +59,7 @@ public class DFS {
      */
     public class FileJson {
         String name;
-        Long size;
+        int size;
         ArrayList<PagesJson> pages;
         
         public FileJson(String name) {
@@ -67,7 +67,7 @@ public class DFS {
         }
         public void addPage(long guid)
         {
-            pages.add(new PagesJson(pages.size()+1, guid));
+            pages.add(new PagesJson(guid,pages.size()+1));
         }
         public String getName()
         {
@@ -77,7 +77,7 @@ public class DFS {
         {
             this.name = name;
         }
-        public long getNumOfPages()
+        public int getNumOfPages()
         {
             return pages.size();
         }
@@ -337,8 +337,60 @@ public class DFS {
         else
             System.out.println("That file does not exist. Try again.");
     }
-    
-    
+
+    public void tail(String filename) throws Exception
+    {
+        FilesJson md = readMetaData();
+        if (md.fileExists(filename))
+        {
+            FileJson metafile = md.getFile(filename);
+            if (metafile.getNumOfPages() > 0)
+            {
+                PagesJson page = metafile.getPage(metafile.getNumOfPages());
+                long guid = page.getGUID();
+                ChordMessageInterface peer = chord.locateSuccessor(guid);
+                InputStream metadataraw = peer.get(guid);
+
+                int content;
+                while ((content = metadataraw.read()) != 0)
+                {
+                    System.out.print((char) content);
+                }
+                System.out.println("");
+            }
+            else
+                System.out.println("Could not find any pages under that filename");
+        }
+        else
+            System.out.println("That file does not exist. Try again.");
+    }
+    public void head(String filename) throws Exception
+    {
+        FilesJson md = readMetaData();
+        if (md.fileExists(filename))
+        {
+            FileJson metafile = md.getFile(filename);
+            if (metafile.getNumOfPages() > 0)
+            {
+                PagesJson page = metafile.getPage(1);
+                long guid = page.getGUID();
+                ChordMessageInterface peer = chord.locateSuccessor(guid);
+                InputStream metadataraw = peer.get(guid);
+
+                int content;
+                while ((content = metadataraw.read()) != 0)
+                {
+                    System.out.print((char) content);
+                }
+                System.out.println("");
+            }
+            else
+                System.out.println("Could not find any pages under that filename");
+        }
+        else
+            System.out.println("That file does not exist. Try again.");
+    }
+
     public RemoteInputFileStream read(String fileName, int pageNumber) throws Exception {
         FilesJson md = readMetaData();
         if (md.fileExists(fileName))

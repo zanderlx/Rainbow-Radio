@@ -48,12 +48,20 @@ public class DFSCommand
                 dfs.delete("New File");
                 System.out.print("New File Deleted ");
             }
+            if (result[0].equals("tail"))
+            {
+                dfs.tail("File Name");
+            }
+            if (result[0].equals("head"))
+            {
+                dfs.head("File Name");
+            }
             line=buffer.readLine();  
         }
             // User interface:
             // join, ls, touch, delete, read, tail, head, append, move
     }
-    
+
     static public void main(String args[]) throws Exception
     {
         if (args.length < 1 ) {
