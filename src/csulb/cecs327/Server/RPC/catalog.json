@@ -1,0 +1,79 @@
+[
+    {
+      "remoteMethod": "register",
+    "object": "UserServices",
+    "call-semantics": "at-most-one",
+    "param": {
+      "user": "java.lang.String"
+    }
+  },
+
+   {
+     "remoteMethod": "login",
+    "object": "UserServices",
+    "call-semantics": "at-most-one",
+    "param": {
+      "user": "java.lang.String",
+      "password": "java.lang.String"
+    }
+  },
+
+  {
+    "remoteMethod": "addToPlaylist",
+    "object": "SongServices",
+    "call-semantics": "maybe",
+    "param": {
+      "song": "java.lang.Long"
+    }
+  },
+
+  {
+    "remoteMethod": "getSongChunk",
+    "object": "SongServices",
+    "call-semantics": "maybe",
+    "param": {
+      "song": "java.lang.Long",
+      "fragment": "java.lang.Long"
+    },
+    "return": "java.lang.Byte[]"
+  },
+
+  {
+    "remoteMethod": "getCatalog",
+    "object": "RemoteRefServices",
+    "call-semantics": "at-most-one",
+    "param": {
+      "test": "blah"
+    }
+  },
+
+  {
+    "remoteMethod": "getSongsFromServer",
+    "object": "MusicServices",
+    "call-semantics": "at-least-one",
+    "param": {
+      "test": "blah"
+    },
+    "return":"java.util.List;"
+  },
+
+  {
+    "remoteMethod": "searchSongsFromServer",
+    "object": "MusicServices",
+    "call-semantics": "at-least-one",
+    "param": {
+      "test": "blah"
+    },
+    "return":"java.util.List;"
+  },
+
+  {
+    "remoteMethod": "getFileSize",
+    "object": "SongServices",
+    "call-semantics": "at-least-one",
+    "param": {
+      "song": "java.lang.Long"
+    },
+    "return": "java.lang.Integer"
+  }
+]
