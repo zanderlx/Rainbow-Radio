@@ -5,11 +5,9 @@ import java.nio.file.*;
 import java.io.*;
 import java.math.BigInteger;
 import java.security.*;
-
 import com.google.gson.Gson;
 
 /* JSON Format
-
 {"file":
   [
      {"name":"MyFile",
@@ -27,7 +25,7 @@ import com.google.gson.Gson;
       ]
       }
    ]
-} 
+}
 */
 
 public class DFS {
@@ -37,62 +35,60 @@ public class DFS {
      */
     public class PagesJson {
         Long guid;
-        Long size;
+        int size;
         int pageNumber;
-
-        public PagesJson(long guid, long size) {
+        public PagesJson(long guid, int size) {
             this.guid = guid;
             this.size = size;
         }
-
-        public long getPageNumber() {
+        public int getPageNumber()
+        {
             return size;
         }
-
-        public long getGUID() {
+        public long getGUID()
+        {
             return guid;
         }
         // getters
         // setters
-    }
-
-    ;
+    };
 
     /**
      * This class is for Meta File
      */
     public class FileJson {
         String name;
-        Long size;
+        int size;
         ArrayList<PagesJson> pages;
 
         public FileJson(String name) {
             this.name = name;
         }
-
-        public void addPage(long guid) {
-            pages.add(new PagesJson(pages.size() + 1, guid));
+        public void addPage(long guid)
+        {
+            pages.add(new PagesJson(guid,pages.size()+1));
         }
-
-        public String getName() {
+        public String getName()
+        {
             return name;
         }
-
-        public void setName(String name) {
+        public void setName(String name)
+        {
             this.name = name;
         }
-
-        public long getNumOfPages() {
+        public int getNumOfPages()
+        {
             return pages.size();
         }
-
-        public PagesJson getPage(int pageNumber) {
-            return pages.get(pageNumber - 1);
+        public PagesJson getPage(int pageNumber)
+        {
+            return pages.get(pageNumber-1);
         }
-
-        public void printListOfPages() {
+        public void printListOfPages()
+        {
             System.out.printf("\n%-5s%-15s%-15s\n", "", "Page Number", "GUID");
-            for (int i = 0; i < pages.size(); i++) {
+            for (int i = 0; i < pages.size(); i++)
+            {
                 PagesJson temp = pages.get(i);
 
                 System.out.printf("%-5s%-15s%-15d\n", "", temp.getPageNumber(), temp.getGUID());
@@ -101,9 +97,7 @@ public class DFS {
         }
         // getters
         // setters
-    }
-
-    ;
+    };
 
     /**
      * This class is for Meta Data
@@ -111,7 +105,6 @@ public class DFS {
     public class FilesJson {
         //List<FileJson> file;
         ArrayList<FileJson> file = new ArrayList<FileJson>();
-
         public FilesJson() {
 
         }
@@ -120,10 +113,11 @@ public class DFS {
             FileJson newFile = new FileJson(fileName);
             file.add(newFile);
         }
-
-        public void printListOfFiles() {
+        public void printListOfFiles()
+        {
             System.out.printf("\n%-15s%-15s\n", "Filename", "Number of Pages");
-            for (int i = 0; i < file.size(); i++) {
+            for (int i = 0; i < file.size(); i++)
+            {
                 FileJson temp = file.get(i);
 
                 System.out.printf("%-15s%-15d\n", temp.getName(), temp.getNumOfPages());
@@ -133,48 +127,51 @@ public class DFS {
             }
             System.out.println("");
         }
-
-        public FileJson getFile(String filename) {
-            for (int i = 0; i < file.size(); i++) {
+        public FileJson getFile(String filename)
+        {
+            for (int i = 0; i < file.size(); i++)
+            {
                 FileJson temp = file.get(i);
 
-                if (temp.getName().equals(filename)) {
+                if (temp.getName().equals(filename))
+                {
                     return temp;
                 }
             }
             return null;
         }
-
-        public boolean fileExists(String filename) {
-            for (int i = 0; i < file.size(); i++) {
+        public boolean fileExists(String filename)
+        {
+            for(int i = 0; i < file.size(); i++)
+            {
                 FileJson temp = file.get(i);
 
-                if (temp.getName().equals(filename)) {
+                if (temp.getName().equals(filename))
+                {
                     return true;
                 }
             }
             return false;
         }
-
-        public void deleteFile(String filename) {
+        public void deleteFile(String filename)
+        {
             ListIterator<FileJson> listIterator = file.listIterator();
 
-            while (listIterator.hasNext()) {
+            while (listIterator.hasNext())
+            {
                 FileJson temp = listIterator.next();
 
                 if (temp.getName().equals(filename))
                     listIterator.remove();
             }
         }
-
-        public void clear() {
+        public void clear()
+        {
             file.clear();
         }
         // getters
         // setters
-    }
-
-    ;
+    };
 
     int port;
     Chord chord;
@@ -210,6 +207,7 @@ public class DFS {
 
     /**
      * Join the chord
+     *
      */
     public void join(String Ip, int port) throws Exception {
         chord.joinRing(Ip, port);
@@ -218,6 +216,7 @@ public class DFS {
 
     /**
      * leave the chord
+     *
      */
     public void leave() throws Exception {
         chord.leave();
@@ -225,6 +224,7 @@ public class DFS {
 
     /**
      * print the status of the peer in the chord
+     *
      */
     public void print() throws Exception {
         chord.print();
@@ -232,6 +232,7 @@ public class DFS {
 
     /**
      * readMetaData read the metadata from the chord
+     *
      */
     public FilesJson readMetaData() throws Exception {
         FilesJson filesJson = null;
@@ -254,6 +255,7 @@ public class DFS {
 
     /**
      * writeMetaData write the metadata back to the chord
+     *
      */
     public void writeMetaData(FilesJson filesJson) throws Exception {
         long guid = md5("Metadata");
@@ -265,6 +267,7 @@ public class DFS {
 
     /**
      * Change Name
+     *
      */
     public void move(String oldName, String newName) throws Exception {
         // TODO: Change the name in Metadata
@@ -272,11 +275,13 @@ public class DFS {
 
         // Setting temp JsonObject
         FilesJson md = readMetaData();
-        if (md.fileExists(oldName)) {
+        if (md.fileExists(oldName))
+        {
             FileJson metafile = md.getFile(oldName);
             metafile.setName(newName);
             writeMetaData(md);
-        } else
+        }
+        else
             System.out.println("That file does not exist. Try again.");
 
     }
@@ -285,23 +290,24 @@ public class DFS {
      * create an empty file
      */
     public void create(String fileName) throws Exception {
-        FilesJson metaData = new FilesJson();
+        FilesJson metaData= new FilesJson();
         metaData.addFile(fileName);
         writeMetaData(metaData);
     }
 
     /**
      * list
-     *
      * @return
      * @throws Exception
      */
     public void lists() throws Exception {
         FilesJson metaData = readMetaData();
-        if (metaData.file.size() > 0 || metaData == null) {
+        if (metaData.file.size() > 0 || metaData == null)
+        {
             FilesJson metadata = readMetaData();
             metadata.printListOfFiles();
-        } else
+        }
+        else
             System.out.println("No files found in metadata.");
     }
 
@@ -311,10 +317,13 @@ public class DFS {
      */
     public void delete(String fileName) throws Exception {
         FilesJson md = readMetaData();
-        if (md.fileExists(fileName)) {
+        if (md.fileExists(fileName))
+        {
             FileJson metafile = md.getFile(fileName);
-            if (metafile.getNumOfPages() > 0) {
-                for (int i = 0; i < metafile.getNumOfPages(); i++) {
+            if(metafile.getNumOfPages() > 0)
+            {
+                for (int i = 0; i < metafile.getNumOfPages(); i++)
+                {
                     PagesJson page = metafile.pages.get(i);
                     long guid = page.getGUID();
                     ChordMessageInterface peer = chord.locateSuccessor(guid);
@@ -323,14 +332,68 @@ public class DFS {
             }
             md.deleteFile(fileName);
             writeMetaData(md);
-        } else
+        }
+        else
             System.out.println("That file does not exist. Try again.");
     }
 
+    public void tail(String filename) throws Exception
+    {
+        FilesJson md = readMetaData();
+        if (md.fileExists(filename))
+        {
+            FileJson metafile = md.getFile(filename);
+            if (metafile.getNumOfPages() > 0)
+            {
+                PagesJson page = metafile.getPage(metafile.getNumOfPages());
+                long guid = page.getGUID();
+                ChordMessageInterface peer = chord.locateSuccessor(guid);
+                InputStream metadataraw = peer.get(guid);
+
+                int content;
+                while ((content = metadataraw.read()) != 0)
+                {
+                    System.out.print((char) content);
+                }
+                System.out.println("");
+            }
+            else
+                System.out.println("Could not find any pages under that filename");
+        }
+        else
+            System.out.println("That file does not exist. Try again.");
+    }
+    public void head(String filename) throws Exception
+    {
+        FilesJson md = readMetaData();
+        if (md.fileExists(filename))
+        {
+            FileJson metafile = md.getFile(filename);
+            if (metafile.getNumOfPages() > 0)
+            {
+                PagesJson page = metafile.getPage(1);
+                long guid = page.getGUID();
+                ChordMessageInterface peer = chord.locateSuccessor(guid);
+                InputStream metadataraw = peer.get(guid);
+
+                int content;
+                while ((content = metadataraw.read()) != 0)
+                {
+                    System.out.print((char) content);
+                }
+                System.out.println("");
+            }
+            else
+                System.out.println("Could not find any pages under that filename");
+        }
+        else
+            System.out.println("That file does not exist. Try again.");
+    }
 
     public RemoteInputFileStream read(String fileName, int pageNumber) throws Exception {
         FilesJson md = readMetaData();
-        if (md.fileExists(fileName)) {
+        if (md.fileExists(fileName))
+        {
             FileJson metafile = md.getFile(fileName);
             PagesJson page = metafile.getPage(pageNumber);
             long guid = page.getGUID();
@@ -338,14 +401,17 @@ public class DFS {
             InputStream metadataraw = peer.get(guid);
 
             int content;
-            while ((content = metadataraw.read()) != 0) {
+            while ((content = metadataraw.read()) != 0)
+            {
                 System.out.print((char) content);
             }
             System.out.println("");
-        } else
+        }
+        else
             System.out.println("That file could not be located...");
         return null;
     }
+
 
 
     public void append(String filename, RemoteInputFileStream data) throws Exception {
@@ -364,5 +430,6 @@ public class DFS {
         } else
             System.out.println("That file could not be located...");
     }
+
 
 }
