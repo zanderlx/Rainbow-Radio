@@ -9,7 +9,6 @@ import java.security.*;
 import com.google.gson.Gson;
 
 /* JSON Format
-
 {"file":
   [
      {"name":"MyFile",
@@ -27,11 +26,11 @@ import com.google.gson.Gson;
       ]
       }
    ]
-} 
+}
 */
 
 public class DFS {
-    
+
     /**
      * This class is for Meta Page
      */
@@ -95,12 +94,13 @@ public class DFS {
             this.counter = counter;
         }
     };
-    
+
     /**
      * This class is for Meta File
      */
     public class FileJson {
         String name;
+
         Long size;
         String CreateTimeStamp;
         String WriteTimeStamp;
@@ -120,6 +120,7 @@ public class DFS {
             this.WriteTimeStamp = "0";
             this.MaxPageNumber = 0;
             this.pages = new ArrayList<PagesJson>();
+
         }
         public void addPage(Long guid, Long size, String CreateTimeStamp, String ReadTimeStamp, String WriteTimeStamp,int counter)
         {
@@ -196,7 +197,7 @@ public class DFS {
         // getters
         // setters
     };
-    
+
     /**
      * This class is for Meta Data
      */
@@ -204,6 +205,7 @@ public class DFS {
         List<FileJson> metaFile;
         //ArrayList<FileJson> file = new ArrayList<FileJson>();
         public FilesJson() {
+
             metaFile = new ArrayList<FileJson>();
         }
         // Getter
@@ -215,34 +217,12 @@ public class DFS {
         }
         public void addFile(FileJson newFile) {
             metaFile.add(newFile);
+
+
         }
 
 
-        public boolean fileExists(String filename)
-        {
-            for(int i = 0; i < metaFile.size(); i++)
-            {
-                FileJson temp = metaFile.get(i);
-                
-                if (temp.getName().equals(filename))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-        public void deleteFile(String filename)
-        {
-            ListIterator<FileJson> listIterator = metaFile.listIterator();
-            
-            while (listIterator.hasNext())
-            {
-                FileJson temp = listIterator.next();
-                
-                if (temp.getName().equals(filename))
-                    listIterator.remove();
-            }
-        }
+  
         public void clear()
         {
             metaFile.clear();
@@ -250,11 +230,13 @@ public class DFS {
         // getters
         // setters
     };
-    
+
     int port;
     Chord chord;
+
     FilesJson MetaData;
     
+
     private long md5(String objectName) {
         try {
             MessageDigest m = MessageDigest.getInstance("MD5");
@@ -264,11 +246,11 @@ public class DFS {
             return Math.abs(bigInt.longValue());
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-            
+
         }
         return 0;
     }
-    
+
     public DFS(int port) throws Exception {
         this.port = port;
         long guid = md5("" + port);
@@ -281,9 +263,9 @@ public class DFS {
                 chord.leave();
             }
         });
-        
+
     }
-    
+
     /**
      * Join the chord
      *
@@ -292,7 +274,7 @@ public class DFS {
         chord.joinRing(Ip, port);
         chord.print();
     }
-    
+
     /**
      * leave the chord
      *
@@ -300,7 +282,7 @@ public class DFS {
     public void leave() throws Exception {
         chord.leave();
     }
-    
+
     /**
      * print the status of the peer in the chord
      *
@@ -308,7 +290,7 @@ public class DFS {
     public void print() throws Exception {
         chord.print();
     }
-    
+
     /**
      * readMetaData read the metadata from the chord
      *
@@ -339,19 +321,34 @@ public class DFS {
     public void writeMetaData(FilesJson filesJson) throws Exception {
         long guid = md5("Metadata");
         ChordMessageInterface peer = chord.locateSuccessor(guid);
-        
+
         Gson gson = new Gson();
         peer.put(guid, gson.toJson(filesJson));
     }
-    
+
     /**
      * Change Name
      *
      */
     public void move(String oldName, String newName) throws Exception {
 
+        // TODO: Change the name in Metadata
+        // Write Metadata
+
+        // Setting temp JsonObject
+        //FilesJson md = readMetaData();
+        //if (md.fileExists(oldName))
+        //{
+          //  FileJson metafile = md.getFile(oldName);
+            //metafile.setName(newName);
+            //writeMetaData(md);
+        //}
+        //else
+          //  System.out.println("That file does not exist. Try again.");
+
+
     }
-    
+
     /**
      * create an empty file
      */
@@ -361,7 +358,7 @@ public class DFS {
         MetaData.addFile(MetaFile);
         writeMetaData(MetaData);
     }
-    
+
     /**
      * list
      * @return
@@ -370,8 +367,8 @@ public class DFS {
     public void lists() throws Exception {
 
     }
-    
-    
+
+
     /**
      * delete file
      */
@@ -417,8 +414,6 @@ public class DFS {
 
         for(int i = 0; i < MetaData.getSize();i++)
         {
-            //append the page to the file specified by the user
-            if(MetaData.getFile(i).getName().equalsIgnoreCase(filename))
             {
 
                 //update information in the file we are going to append
@@ -449,8 +444,4 @@ public class DFS {
 
 
     }
-    
-    
-
-    
 }
