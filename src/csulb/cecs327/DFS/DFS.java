@@ -1,5 +1,6 @@
 package csulb.cecs327.DFS;
 
+import java.io.File;
 import java.time.*;
 import java.util.*;
 import java.nio.file.*;
@@ -417,24 +418,7 @@ public class DFS {
             FileList += " " + FileName + "\n";
         }
         System.out.println(FileList);
-        //return FileList;
     }
-    /*public void lists() throws Exception {
-        MetaData = readMetaData();
-        if (MetaData.getSize() > 0 || MetaData == null)
-        {
-            FilesJson metadata = readMetaData();
-            metadata.printListOfFiles();
-        }
-        else
-            System.out.println("No files found in metadata.");
-    }*/
-
-
-    /**
-     *
-     * Deletes the file, must specify index, if only one file then index 0
-     */
 
     /**
      * Deletes the file, must specify index, if only one file then index 0
@@ -455,6 +439,8 @@ public class DFS {
         }
         writeMetaData(md);
     }
+
+
 
     /**
      * tail - to read from the last page
