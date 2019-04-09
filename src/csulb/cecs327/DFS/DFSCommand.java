@@ -33,7 +33,7 @@ public class DFSCommand {
                 dfs.print();
             }
             if (result[0].equals("delete")) {
-                dfs.delete(result[1]);
+                dfs.delete();
             }
             if (result[0].equals("leave")) {
                 dfs.leave();
