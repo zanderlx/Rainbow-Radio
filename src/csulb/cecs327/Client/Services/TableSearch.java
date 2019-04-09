@@ -20,6 +20,7 @@ public class TableSearch {
     /**
      * This class is responsible for displaying the information in the display GUI for song data when the information is sent from the
      * server to the client.
+     *
      * @param table
      * @param scrollPane
      * @param textField
@@ -32,6 +33,7 @@ public class TableSearch {
 
     /**
      * Initialize components
+     *
      * @param table
      * @param scrollPane
      * @param textField
@@ -53,6 +55,7 @@ public class TableSearch {
 
     /**
      * Searches based on type of filter
+     *
      * @param e
      */
     public void searchOnType(ItemEvent e) {
@@ -84,6 +87,7 @@ public class TableSearch {
 
     /**
      * Searches through table contents
+     *
      * @param searchString
      */
     public void searchTableContents(String searchString) {

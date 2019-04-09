@@ -11,11 +11,12 @@ import java.io.FileReader;
 public class ClientRemoteRef implements RemoteRefInterface {
     private ClientCommunicationModule client;
     private JsonObject catalog; // representing catalog.json from server
+
     public ClientRemoteRef(ClientCommunicationModule client) {
         this.client = client;
         catalog = getCatalog();
     }
-    
+
     @Override
     /**
      * This class is for client to receive a JSON with parameters
@@ -34,24 +35,21 @@ public class ClientRemoteRef implements RemoteRefInterface {
             String path = "src/csulb/cecs327/Server/RPC/catalog.json";
             BufferedReader br = new BufferedReader(new FileReader(path));
             jsonRequest = gson.fromJson(br, JsonObject[].class);
-            
+
             //Looks for method name, and returns JSON object with matching name
-            for (JsonObject object : jsonRequest){
-                if( object.get("remoteMethod").getAsString().equals(remoteMethod)) {
+            for (JsonObject object : jsonRequest) {
+                if (object.get("remoteMethod").getAsString().equals(remoteMethod)) {
                     request = object;
                     break;
                 }
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
 
-
-
         return request;
     }
-
 
 
     private JsonObject getCatalog() {

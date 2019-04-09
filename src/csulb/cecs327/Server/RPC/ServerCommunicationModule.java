@@ -1,4 +1,5 @@
 package csulb.cecs327.Server.RPC;
+
 import java.io.*;
 import java.net.*;
 
@@ -8,7 +9,7 @@ import java.net.*;
  * 1. connecting to the socket
  * 2. Listening to the defined port
  */
-public class ServerCommunicationModule extends Thread{
+public class ServerCommunicationModule extends Thread {
     // Initializing packet size
     static final int FRAGMENT_SIZE = 8192;
     byte[] packetSize;
@@ -19,10 +20,11 @@ public class ServerCommunicationModule extends Thread{
 
     /**
      * Server constructor will takes in the port number and the dispatcher
+     *
      * @param portNum
      * @param dispatcher
      */
-    public ServerCommunicationModule(int portNum, Dispatcher dispatcher){
+    public ServerCommunicationModule(int portNum, Dispatcher dispatcher) {
         this.portNumber = portNum;
         this.dispatcher = dispatcher;
     }
@@ -30,22 +32,22 @@ public class ServerCommunicationModule extends Thread{
     /**
      * Opens connection so long as UDP port is greater than 1023
      */
-    public void connect(){                       
-        try{
+    public void connect() {
+        try {
             socket = new DatagramSocket(this.portNumber);
-            System.out.println("ServerSocket opened on port: "+ this.portNumber);
-        }catch (IOException e){
+            System.out.println("ServerSocket opened on port: " + this.portNumber);
+        } catch (IOException e) {
             System.out.println(e);
         }
     }
 
     /**
      * Opening client sockets and listen to the requests
-     */    
-    public void listen(){                                      
+     */
+    public void listen() {
         System.out.println("Server listening.");
-        try{
-            while(true) {
+        try {
+            while (true) {
                 packetSize = new byte[FRAGMENT_SIZE];
                 // Initialize request packet
                 DatagramPacket requestPacket = new DatagramPacket(packetSize, packetSize.length);
@@ -58,13 +60,13 @@ public class ServerCommunicationModule extends Thread{
                 Thread t = new PacketRequestHandler(socket, requestPacket, dispatcher);
                 t.start();
             }
-        }catch (IOException e) {
+        } catch (IOException e) {
             System.out.println(e);
         }
     }
 
     @Override
-    public void run(){
+    public void run() {
         connect();
         listen();
     }
