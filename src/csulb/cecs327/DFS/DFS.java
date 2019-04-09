@@ -373,21 +373,24 @@ public class DFS {
     }
 
     /**
-     * Changes the name of the file. Asks for input of index, specify index of file, if only one file is there then
-     * index 0. The enter the new file name. EX, "touch wang.js", "move", "0", "bang.js"
+     * Changes the name of the file. Enter olf file name and new file name
      * @throws Exception needed for writeMetaData and readMetaData
      */
-    public void move() throws Exception {
-        FilesJson md = readMetaData();
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Please enter the index of the old file:");
-        int indexOfOldFile = scan.nextInt();
-        FileJson file1 = md.getFile(indexOfOldFile);
-        System.out.println("Please enter the name of the new file:");
-        String newName = scan.next();
-        file1.setName(newName);
-        writeMetaData(md);
-        System.out.println("Name changed successfully!");
+    public void move(String oldName, String newName) throws Exception
+    {
+        boolean fileExists = false;
+        for(int i = 0; i < MetaData.getSize(); i++){
+            if(MetaData.getFile(i).getName().equalsIgnoreCase(oldName)){
+                MetaData.getFile(i).setName(newName);
+                String timeWriteStamp = LocalDateTime.now().toString();
+                MetaData.getFile(i).setWriteTimeStamp(timeWriteStamp);
+                fileExists = true;
+            }
+        }
+        if(fileExists)
+            System.out.println(oldName + " has been renamed to " + newName + ".\n");
+        else
+            System.out.println(oldName + " was not found in the file system, please check name using the command ls.\n");
     }
 
     /**
