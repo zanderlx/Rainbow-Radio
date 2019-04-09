@@ -356,8 +356,9 @@ public class DFS {
     }
 
     /**
-     * writeMetaData write the metadata back to the chord
-     *
+     * Writes meta data into the pages
+     * @param filesJson The parameter being passed in, it is then written to
+     * @throws Exception
      */
     public void writeMetaData(FilesJson filesJson) throws Exception {
         long guid = md5("Metadata");
@@ -367,11 +368,10 @@ public class DFS {
         peer.put(guid, gson.toJson(filesJson));
     }
 
-
     /**
-     * DONE
      * Changes the name of the file. Asks for input of index, specify index of file, if only one file is there then
      * index 0. The enter the new file name. EX, "touch wang.js", "move", "0", "bang.js"
+     * @throws Exception needed for writeMetaData and readMetaData
      */
     public void move() throws Exception {
         FilesJson md = readMetaData();
@@ -387,7 +387,9 @@ public class DFS {
     }
 
     /**
-     * creates an empty file, must specify extension ".js", EX) touch wang.js
+     * Creates a new file according to the port that chord is connected too
+     * @param fileName The name of the file you want to create
+     * @throws Exception
      */
     public void create(String fileName) throws Exception {
         FileJson MetaFile= new FileJson();
@@ -423,8 +425,13 @@ public class DFS {
 
 
     /**
-     * DONE
+     *
      * Deletes the file, must specify index, if only one file then index 0
+     */
+
+    /**
+     * Deletes the file, must specify index, if only one file then index 0
+     * @throws Exception required for read and write metadata
      */
     public void delete() throws Exception {
         FilesJson md = readMetaData();
@@ -495,9 +502,9 @@ public class DFS {
 
     /**
      * Reads from the actual pages in chord
-     * @param fileName
-     * @param pageNumber
-     * @return
+     * @param fileName Name of file being read
+     * @param pageNumber Index of page being read
+     * @return the data contained in the page
      * @throws Exception
      */
     public RemoteInputFileStream read(String fileName, int pageNumber) throws Exception {
@@ -535,33 +542,22 @@ public class DFS {
 
         for(int i = 0; i < MetaData.getSize();i++)
         {
-            //append the page to the file specified by the user
             if(MetaData.getFile(i).getName().equalsIgnoreCase(filename))
             {
-
-                //update information in the file we are going to append
-                //data.connect();
-                //This is used to get the size of the file
-                Long sizeOfFile = new Long(data.available());
+                Long sizeOfFile = (long) data.available();
                 String timeOfAppend = LocalDateTime.now().toString();
                 MetaData.getFile(i).setWriteTimeStamp(timeOfAppend);
                 MetaData.getFile(i).addPageNumber(1);
                 MetaData.getFile(i).addSize(sizeOfFile);
-
-                //create the page metadata information
                 String objectName = filename + LocalDateTime.now();
                 Long guid = md5(objectName);
-
                 ChordMessageInterface peer = chord.locateSuccessor(guid);
                 peer.put(guid, data);
-                //chord locate successor , then put
 
-                //filesJson.getFileJson(i).addPageInfo(guid, size, creationTS, readTS, writeTs, referenceCount);
-                Long defaultZero = new Long(0);
+                Long defaultZero = 0L;
                 MetaData.getFile(i).addPage(guid,sizeOfFile,timeOfAppend,"0","0",0);
 
             }
-
         }
         writeMetaData(MetaData);
     }
