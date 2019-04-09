@@ -32,7 +32,7 @@ import com.google.gson.Gson;
 public class DFS {
 
     /**
-     * This class is for pages and the setters and getters
+     * This class is for pagesJson, containing the setters and getters
      */
     public class PagesJson {
         Long guid;
@@ -41,6 +41,16 @@ public class DFS {
         String WriteTimeStamp;
         String ReadTimeStamp;
         int counter;
+
+        /**
+         * Constructor for the pages
+         * @param guid - specifies the global unique identifier
+         * @param size - size of
+         * @param CreationTimeStamp
+         * @param ReadTimeStamp
+         * @param WriteTimeStamp
+         * @param counter
+         */
         public PagesJson(Long guid, Long size, String CreationTimeStamp, String ReadTimeStamp, String WriteTimeStamp,int counter) {
             this.guid = guid;
             this.size = size;
