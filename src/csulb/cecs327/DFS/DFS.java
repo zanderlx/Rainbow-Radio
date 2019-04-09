@@ -1,6 +1,6 @@
 package csulb.cecs327.DFS;
 
-import java.time.LocalDateTime;
+import java.time.*;
 import java.util.*;
 import java.nio.file.*;
 import java.math.BigInteger;
@@ -41,7 +41,6 @@ public class DFS {
         String WriteTimeStamp;
         String ReadTimeStamp;
         int counter;
-        //int pageNumber;
         public PagesJson(Long guid, Long size, String CreationTimeStamp, String ReadTimeStamp, String WriteTimeStamp,int counter) {
             this.guid = guid;
             this.size = size;
@@ -71,7 +70,7 @@ public class DFS {
         public void setSize(Long size){
             this.size = size;
         }
-        public void setGuid(Long guid)
+        public void setGUID(Long guid)
         {
             this.guid = guid;
         }
@@ -192,9 +191,7 @@ public class DFS {
             }
             System.out.println("");
         }
-        // getters
-        // setters
-    };
+    }
 
     /**
      * This class is for FilesJSon and its setters and getters
@@ -260,9 +257,7 @@ public class DFS {
             }
             System.out.println("");
         }
-        // getters
-        // setters
-    };
+    }
 
     int port;
     Chord chord;
@@ -282,7 +277,6 @@ public class DFS {
             return Math.abs(bigInt.longValue());
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-
         }
         return 0;
     }
