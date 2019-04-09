@@ -527,9 +527,9 @@ public class DFS {
 
     /**
      * Adds the specified data to the end of a page/file
-     * @param filename
-     * @param data
-     * @throws Exception
+     * @param filename name of file
+     * @param data data being passed in
+     * @throws Exception needed for read and write metadata
      */
     public void append(String filename, RemoteInputFileStream data) throws Exception
     {

@@ -43,7 +43,7 @@ public class DFSCommand {
             }
             if (result[0].equals("touch")) {
                 dfs.create(result[1]);
-                System.out.print("New File Created ");
+                System.out.print("New File Created\n");
             }
             if (result[0].equals("move")) {
                 dfs.move();
@@ -51,7 +51,7 @@ public class DFSCommand {
             if (result[0].equals("append")) {
                 RemoteInputFileStream input = new RemoteInputFileStream(result[2]);
                 dfs.append(result[1], input);
-                System.out.println("Page added");
+                System.out.println("Page added\n");
             }
             if (result[0].equals("read")) {
                 int pageNumber = Integer.parseInt(result[2]);
