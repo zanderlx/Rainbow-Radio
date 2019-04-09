@@ -32,7 +32,7 @@ import com.google.gson.Gson;
 public class DFS {
 
     /**
-     * This class is for Meta Page
+     * This class is for pages and the setters and getters
      */
     public class PagesJson {
         Long guid;
@@ -96,7 +96,7 @@ public class DFS {
     };
 
     /**
-     * This class is for Meta File
+     * This class is for FileJson and its setters and getters
      */
     public class FileJson {
         String name;
@@ -197,7 +197,7 @@ public class DFS {
     };
 
     /**
-     * This class is for Meta Data
+     * This class is for FilesJSon and its setters and getters
      */
     public class FilesJson {
         List<FileJson> metaFile;
@@ -268,6 +268,11 @@ public class DFS {
     Chord chord;
     FilesJson MetaData;
 
+    /**
+     * This class is for making guid's and hashes
+     * @param objectName the name of the object that is being hashed
+     * @return 0
+     */
     private long md5(String objectName) {
         try {
             MessageDigest m = MessageDigest.getInstance("MD5");
@@ -282,6 +287,11 @@ public class DFS {
         return 0;
     }
 
+    /**
+     * This method opens a new connection to the specified port
+     * @param port
+     * @throws Exception
+     */
     public DFS(int port) throws Exception {
         this.port = port;
         long guid = md5("" + port);
@@ -377,7 +387,7 @@ public class DFS {
     }
 
     /**
-     * create an empty file
+     * creates an empty file, must specify extension ".js", EX) touch wang.js
      */
     public void create(String fileName) throws Exception {
         FileJson MetaFile= new FileJson();
@@ -387,7 +397,7 @@ public class DFS {
     }
 
     /**
-     * list
+     * list lists all files contained within the current connected port
      * @return
      * @throws Exception
      */
@@ -483,6 +493,13 @@ public class DFS {
         return head;
     }
 
+    /**
+     * Reads from the actual pages in chord
+     * @param fileName
+     * @param pageNumber
+     * @return
+     * @throws Exception
+     */
     public RemoteInputFileStream read(String fileName, int pageNumber) throws Exception {
         pageNumber--;
         RemoteInputFileStream InputStream = null;
@@ -507,6 +524,12 @@ public class DFS {
         return InputStream;
     }
 
+    /**
+     * Adds the specified data to the end of a page/file
+     * @param filename
+     * @param data
+     * @throws Exception
+     */
     public void append(String filename, RemoteInputFileStream data) throws Exception
     {
 
@@ -541,11 +564,5 @@ public class DFS {
 
         }
         writeMetaData(MetaData);
-
-
     }
-
-
-
-
 }
