@@ -45,8 +45,8 @@ public class DFSCommand {
                 dfs.create(result[1]);
                 System.out.print("New File Created\n");
             }
-            if (result[0].equals("move")) {
-                dfs.move();
+            if (result[0].equals("mv")) {
+                dfs.move(result[1], result[2]);
             }
             if (result[0].equals("append")) {
                 RemoteInputFileStream input = new RemoteInputFileStream(result[2]);
@@ -89,7 +89,7 @@ public class DFSCommand {
         System.out.println("leave");
         System.out.println("ls");
         System.out.println("touch");
-        System.out.println("move");
+        System.out.println("mv");
         System.out.println("append");
         System.out.println("read");
         System.out.println("head\n\n");
