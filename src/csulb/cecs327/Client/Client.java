@@ -19,7 +19,7 @@ public class Client extends Thread {
         login.setVisible(true);
         login.pack();
     }
-    
+
     public static void main(String[] args) {
         Client client = new Client();
         client.run();

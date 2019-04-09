@@ -18,7 +18,7 @@ public class MusicPlayer {
     private final static int FINISHED = 3;
 
     // Player attributes
-    private  Player songPlayer;
+    private Player songPlayer;
     private final Object playerLock = new Object();
     private int playerStatus = NOT_STARTED;
     private int songLength;
@@ -38,10 +38,17 @@ public class MusicPlayer {
     public void play() {
         synchronized (playerLock) {
             switch (playerStatus) {
-                case NOT_STARTED: start(); break;
-                case PAUSED: resume(); break;
-                case FINISHED: start(); break;
-                default: break;
+                case NOT_STARTED:
+                    start();
+                    break;
+                case PAUSED:
+                    resume();
+                    break;
+                case FINISHED:
+                    start();
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -59,6 +66,7 @@ public class MusicPlayer {
 
     /**
      * Pauses the song
+     *
      * @return
      */
     public boolean pause() {
@@ -70,6 +78,7 @@ public class MusicPlayer {
 
     /**
      * Plays a paused song
+     *
      * @return
      */
     public boolean resume() {
