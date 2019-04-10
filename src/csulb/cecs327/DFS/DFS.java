@@ -378,12 +378,13 @@ public class DFS {
      */
     public void move(String oldName, String newName) throws Exception
     {
+        FilesJson md = this.readMetaData();
         boolean fileExists = false;
-        for(int i = 0; i < MetaData.getSize(); i++){
-            if(MetaData.getFile(i).getName().equalsIgnoreCase(oldName)){
-                MetaData.getFile(i).setName(newName);
+        for(int i = 0; i < md.getSize(); i++){
+            if(md.getFile(i).getName().equalsIgnoreCase(oldName)){
+                md.getFile(i).setName(newName);
                 String timeWriteStamp = LocalDateTime.now().toString();
-                MetaData.getFile(i).setWriteTimeStamp(timeWriteStamp);
+                md.getFile(i).setWriteTimeStamp(timeWriteStamp);
                 fileExists = true;
             }
         }
@@ -400,9 +401,10 @@ public class DFS {
      */
     public void create(String fileName) throws Exception {
         FileJson MetaFile= new FileJson();
+        FilesJson md = this.readMetaData();
         MetaFile.setName(fileName);
-        MetaData.addFile(MetaFile);
-        writeMetaData(MetaData);
+        md.addFile(MetaFile);
+        writeMetaData(md);
     }
 
     /**
@@ -411,9 +413,10 @@ public class DFS {
      * @throws Exception
      */
     public void lists() throws Exception{
+        FilesJson md = this.readMetaData();
         String FileList = " ";
-        for(int i = 0; i<MetaData.getSize();i++){
-            String FileName = MetaData.getFile(i).getName();
+        for(int i = 0; i<md.getSize();i++){
+            String FileName = md.getFile(i).getName();
             FileList += " " + FileName + "\n";
         }
         System.out.println(FileList);
@@ -503,21 +506,21 @@ public class DFS {
         pageNumber--;
         RemoteInputFileStream InputStream = null;
         FilesJson md = readMetaData();
-        for(int i = 0; i < MetaData.getSize(); i++){
-            if(MetaData.getFile(i).getName().equalsIgnoreCase(fileName)){
-                ArrayList<PagesJson> pagesList = MetaData.getFile(i).getPages();
+        for(int i = 0; i < md.getSize(); i++){
+            if(md.getFile(i).getName().equalsIgnoreCase(fileName)){
+                ArrayList<PagesJson> pagesList = md.getFile(i).getPages();
                 for(int k = 0; k < pagesList.size(); k++){
                     if(k == pageNumber){
                         PagesJson pageToRead = pagesList.get(k);
                         String timeOfRead = LocalDateTime.now().toString();
                         pageToRead.setReadTimeStamp(timeOfRead);
-                        MetaData.getFile(i).setReadTimeStamp(timeOfRead);
+                        md.getFile(i).setReadTimeStamp(timeOfRead);
                         Long pageGUID = md5(fileName + pageToRead.getCreateTimeStamp());
                         ChordMessageInterface peer = chord.locateSuccessor(pageGUID);
                         InputStream = peer.get(pageGUID);
                     }
                 }
-                writeMetaData(MetaData);
+                writeMetaData(md);
             }
         }
         return InputStream;
@@ -531,34 +534,35 @@ public class DFS {
      */
     public void append(String filename, RemoteInputFileStream data) throws Exception
     {
-
-        for(int i = 0; i < MetaData.getSize();i++)
+        FilesJson md = this.readMetaData();
+        for(int i = 0; i < md.getSize();i++)
         {
-            if(MetaData.getFile(i).getName().equalsIgnoreCase(filename))
+            if(md.getFile(i).getName().equalsIgnoreCase(filename))
             {
                 Long sizeOfFile = (long) data.available();
                 String timeOfAppend = LocalDateTime.now().toString();
-                MetaData.getFile(i).setWriteTimeStamp(timeOfAppend);
-                MetaData.getFile(i).addPageNumber(1);
-                MetaData.getFile(i).addSize(sizeOfFile);
+                md.getFile(i).setWriteTimeStamp(timeOfAppend);
+                md.getFile(i).addPageNumber(1);
+                md.getFile(i).addSize(sizeOfFile);
                 String objectName = filename + LocalDateTime.now();
                 Long guid = md5(objectName);
                 ChordMessageInterface peer = chord.locateSuccessor(guid);
                 peer.put(guid, data);
 
                 Long defaultZero = 0L;
-                MetaData.getFile(i).addPage(guid,sizeOfFile,timeOfAppend,"0","0",0);
+                md.getFile(i).addPage(guid,sizeOfFile,timeOfAppend,"0","0",0);
 
             }
         }
-        writeMetaData(MetaData);
+        writeMetaData(md);
     }
 
     public void writePage(String filename, RemoteInputFileStream data, int pageNumber) throws Exception
     {
-        for(int i = 0; i < MetaData.getSize();i++)
+        FilesJson md = this.readMetaData();
+        for(int i = 0; i < md.getSize();i++)
         {
-            if(MetaData.getFile(i).getName().equalsIgnoreCase(filename))
+            if(md.getFile(i).getName().equalsIgnoreCase(filename))
             {
                 //check if there is data
                 Long sizeOfFile = (long) data.available();
@@ -566,11 +570,11 @@ public class DFS {
                 //Getting timestamp
                 String timeOfWrite = LocalDateTime.now().toString();
                 //Set the  write time stamp
-                MetaData.getFile(i).setWriteTimeStamp(timeOfWrite);
+                md.getFile(i).setWriteTimeStamp(timeOfWrite);
                 //Add data to specified page number
-                MetaData.getFile(i).addPageNumber(pageNumber);
+                md.getFile(i).addPageNumber(pageNumber);
                 //Get size of file and specify
-                MetaData.getFile(i).addSize(sizeOfFile);
+                md.getFile(i).addSize(sizeOfFile);
 
                 //Recall that you obtain the guid of the page by applying MD5 to a unique feature, such as  file " filename + timestamp"
                 String objectName = filename + LocalDateTime.now();
@@ -579,10 +583,10 @@ public class DFS {
                 peer.put(guid, data);
 
                 Long defaultZero = 0L;
-                MetaData.getFile(i).addPage(guid,sizeOfFile,timeOfWrite,"0","0",0);
+                md.getFile(i).addPage(guid,sizeOfFile,timeOfWrite,"0","0",0);
             }
         }
-        writeMetaData(MetaData);
+        writeMetaData(md);
     }
 
 
