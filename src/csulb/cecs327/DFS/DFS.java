@@ -1,6 +1,5 @@
 package csulb.cecs327.DFS;
 
-import java.io.File;
 import java.time.*;
 import java.util.*;
 import java.nio.file.*;
@@ -41,7 +40,7 @@ public class DFS {
         String CreateTimeStamp;
         String WriteTimeStamp;
         String ReadTimeStamp;
-        int counter;
+        int pageNum;
 
         /**
          * Constructor for the pages
@@ -58,7 +57,7 @@ public class DFS {
             this.CreateTimeStamp = CreationTimeStamp;
             this.ReadTimeStamp = ReadTimeStamp;
             this.WriteTimeStamp = WriteTimeStamp;
-            this.counter = counter;
+            this.pageNum = counter;
         }
         // getters
         public long getSize()
@@ -74,8 +73,8 @@ public class DFS {
         public String getCreateTimeStamp(){
             return this.CreateTimeStamp;
         }
-        public int getCounter(){
-            return this.counter;
+        public int getPageNumber(){
+            return this.pageNum;
         }
         // setters
         public void setSize(Long size){
@@ -99,9 +98,9 @@ public class DFS {
         {
             this.ReadTimeStamp = ReadTimeStamp;
         }
-        public void setCounter(int counter)
+        public void setPageNumber(int pageNum)
         {
-            this.counter = counter;
+            this.pageNum = this.pageNum;
         }
     };
 
@@ -198,7 +197,7 @@ public class DFS {
             {
                 PagesJson temp = pages.get(i);
 
-                System.out.printf("%-5s%-15s%-15d\n", "", temp.getCounter(), temp.getGUID());
+                System.out.printf("%-5s%-15s%-15d\n", "", temp.getPageNumber(), temp.getGUID());
             }
             System.out.println("");
         }
@@ -554,4 +553,37 @@ public class DFS {
         }
         writeMetaData(MetaData);
     }
+
+    public void writePage(String filename, RemoteInputFileStream data, int pageNumber) throws Exception
+    {
+        for(int i = 0; i < MetaData.getSize();i++)
+        {
+            if(MetaData.getFile(i).getName().equalsIgnoreCase(filename))
+            {
+                //check if there is data
+                Long sizeOfFile = (long) data.available();
+
+                //Getting timestamp
+                String timeOfWrite = LocalDateTime.now().toString();
+                //Set the  write time stamp
+                MetaData.getFile(i).setWriteTimeStamp(timeOfWrite);
+                //Add data to specified page number
+                MetaData.getFile(i).addPageNumber(pageNumber);
+                //Get size of file and specify
+                MetaData.getFile(i).addSize(sizeOfFile);
+
+                //Recall that you obtain the guid of the page by applying MD5 to a unique feature, such as  file " filename + timestamp"
+                String objectName = filename + LocalDateTime.now();
+                Long guid = md5(objectName);
+                ChordMessageInterface peer = chord.locateSuccessor(guid);
+                peer.put(guid, data);
+
+                Long defaultZero = 0L;
+                MetaData.getFile(i).addPage(guid,sizeOfFile,timeOfWrite,"0","0",0);
+            }
+        }
+        writeMetaData(MetaData);
+    }
+
+
 }
