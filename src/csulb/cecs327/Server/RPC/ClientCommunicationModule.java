@@ -1,4 +1,5 @@
 package csulb.cecs327.Server.RPC;
+
 import java.io.*;
 import java.net.*;
 import java.net.DatagramSocket;
@@ -21,9 +22,10 @@ public class ClientCommunicationModule {
 
     /**
      * This class is to connect the client to server using a port number
+     *
      * @param port = the port number that as used for communication between server and client
      */
-    public void connect(int port){
+    public void connect(int port) {
         try {
             // Get localhost IP address
             this.IPAddress = InetAddress.getByName("localhost");
@@ -34,17 +36,18 @@ public class ClientCommunicationModule {
 
         } catch (UnknownHostException e) {
             e.printStackTrace();
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     /**
      * This class is for client to send request to server
+     *
      * @param request = the data that client is requesting from server
      * @return - the response from server in which client requested for
      */
-    public String sendRequest(String request){
+    public String sendRequest(String request) {
         String response = "";
         try {
             packetSize = new byte[FRAGMENT_SIZE];

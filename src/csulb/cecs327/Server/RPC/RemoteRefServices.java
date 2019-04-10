@@ -11,11 +11,12 @@ import java.nio.file.Paths;
 public class RemoteRefServices {
     /**
      * This method is called to get the catalog of services
+     *
      * @return String: catalog.json
      */
-    public String getCatalog(){
+    public String getCatalog() {
         try {
-            return  new String(Files.readAllBytes(Paths.get("src/csulb/cecs327/Server/RPC/catalog.json")), StandardCharsets.UTF_8);
+            return new String(Files.readAllBytes(Paths.get("src/csulb/cecs327/Server/RPC/catalog.json")), StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
         }

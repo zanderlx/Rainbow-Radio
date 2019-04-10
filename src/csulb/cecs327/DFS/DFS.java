@@ -1,6 +1,6 @@
 package csulb.cecs327.DFS;
 
-import java.time.LocalDateTime;
+import java.time.*;
 import java.util.*;
 import java.nio.file.*;
 import java.math.BigInteger;
@@ -32,7 +32,7 @@ import com.google.gson.Gson;
 public class DFS {
 
     /**
-     * This class is for pages and the setters and getters
+     * This class is for pagesJson, containing the setters and getters
      */
     public class PagesJson {
         Long guid;
@@ -40,15 +40,24 @@ public class DFS {
         String CreateTimeStamp;
         String WriteTimeStamp;
         String ReadTimeStamp;
-        int counter;
-        //int pageNumber;
+        int pageNum;
+
+        /**
+         * Constructor for the pages
+         * @param guid - specifies the global unique identifier
+         * @param size - size of
+         * @param CreationTimeStamp
+         * @param ReadTimeStamp
+         * @param WriteTimeStamp
+         * @param counter
+         */
         public PagesJson(Long guid, Long size, String CreationTimeStamp, String ReadTimeStamp, String WriteTimeStamp,int counter) {
             this.guid = guid;
             this.size = size;
             this.CreateTimeStamp = CreationTimeStamp;
             this.ReadTimeStamp = ReadTimeStamp;
             this.WriteTimeStamp = WriteTimeStamp;
-            this.counter = counter;
+            this.pageNum = counter;
         }
         // getters
         public long getSize()
@@ -64,14 +73,14 @@ public class DFS {
         public String getCreateTimeStamp(){
             return this.CreateTimeStamp;
         }
-        public int getCounter(){
-            return this.counter;
+        public int getPageNumber(){
+            return this.pageNum;
         }
         // setters
         public void setSize(Long size){
             this.size = size;
         }
-        public void setGuid(Long guid)
+        public void setGUID(Long guid)
         {
             this.guid = guid;
         }
@@ -89,9 +98,9 @@ public class DFS {
         {
             this.ReadTimeStamp = ReadTimeStamp;
         }
-        public void setCounter(int counter)
+        public void setPageNumber(int pageNum)
         {
-            this.counter = counter;
+            this.pageNum = this.pageNum;
         }
     };
 
@@ -188,13 +197,11 @@ public class DFS {
             {
                 PagesJson temp = pages.get(i);
 
-                System.out.printf("%-5s%-15s%-15d\n", "", temp.getCounter(), temp.getGUID());
+                System.out.printf("%-5s%-15s%-15d\n", "", temp.getPageNumber(), temp.getGUID());
             }
             System.out.println("");
         }
-        // getters
-        // setters
-    };
+    }
 
     /**
      * This class is for FilesJSon and its setters and getters
@@ -260,9 +267,7 @@ public class DFS {
             }
             System.out.println("");
         }
-        // getters
-        // setters
-    };
+    }
 
     int port;
     Chord chord;
@@ -282,7 +287,6 @@ public class DFS {
             return Math.abs(bigInt.longValue());
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-
         }
         return 0;
     }
@@ -369,21 +373,24 @@ public class DFS {
     }
 
     /**
-     * Changes the name of the file. Asks for input of index, specify index of file, if only one file is there then
-     * index 0. The enter the new file name. EX, "touch wang.js", "move", "0", "bang.js"
+     * Changes the name of the file. Enter olf file name and new file name
      * @throws Exception needed for writeMetaData and readMetaData
      */
-    public void move() throws Exception {
-        FilesJson md = readMetaData();
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Please enter the index of the old file:");
-        int indexOfOldFile = scan.nextInt();
-        FileJson file1 = md.getFile(indexOfOldFile);
-        System.out.println("Please enter the name of the new file:");
-        String newName = scan.next();
-        file1.setName(newName);
-        writeMetaData(md);
-        System.out.println("Name changed successfully!");
+    public void move(String oldName, String newName) throws Exception
+    {
+        boolean fileExists = false;
+        for(int i = 0; i < MetaData.getSize(); i++){
+            if(MetaData.getFile(i).getName().equalsIgnoreCase(oldName)){
+                MetaData.getFile(i).setName(newName);
+                String timeWriteStamp = LocalDateTime.now().toString();
+                MetaData.getFile(i).setWriteTimeStamp(timeWriteStamp);
+                fileExists = true;
+            }
+        }
+        if(fileExists)
+            System.out.println(oldName + " has been renamed to " + newName + ".\n");
+        else
+            System.out.println(oldName + " was not found in the file system, please check name using the command ls.\n");
     }
 
     /**
@@ -410,24 +417,7 @@ public class DFS {
             FileList += " " + FileName + "\n";
         }
         System.out.println(FileList);
-        //return FileList;
     }
-    /*public void lists() throws Exception {
-        MetaData = readMetaData();
-        if (MetaData.getSize() > 0 || MetaData == null)
-        {
-            FilesJson metadata = readMetaData();
-            metadata.printListOfFiles();
-        }
-        else
-            System.out.println("No files found in metadata.");
-    }*/
-
-
-    /**
-     *
-     * Deletes the file, must specify index, if only one file then index 0
-     */
 
     /**
      * Deletes the file, must specify index, if only one file then index 0
@@ -448,6 +438,8 @@ public class DFS {
         }
         writeMetaData(md);
     }
+
+
 
     /**
      * tail - to read from the last page
@@ -533,9 +525,9 @@ public class DFS {
 
     /**
      * Adds the specified data to the end of a page/file
-     * @param filename
-     * @param data
-     * @throws Exception
+     * @param filename name of file
+     * @param data data being passed in
+     * @throws Exception needed for read and write metadata
      */
     public void append(String filename, RemoteInputFileStream data) throws Exception
     {
@@ -561,4 +553,37 @@ public class DFS {
         }
         writeMetaData(MetaData);
     }
+
+    public void writePage(String filename, RemoteInputFileStream data, int pageNumber) throws Exception
+    {
+        for(int i = 0; i < MetaData.getSize();i++)
+        {
+            if(MetaData.getFile(i).getName().equalsIgnoreCase(filename))
+            {
+                //check if there is data
+                Long sizeOfFile = (long) data.available();
+
+                //Getting timestamp
+                String timeOfWrite = LocalDateTime.now().toString();
+                //Set the  write time stamp
+                MetaData.getFile(i).setWriteTimeStamp(timeOfWrite);
+                //Add data to specified page number
+                MetaData.getFile(i).addPageNumber(pageNumber);
+                //Get size of file and specify
+                MetaData.getFile(i).addSize(sizeOfFile);
+
+                //Recall that you obtain the guid of the page by applying MD5 to a unique feature, such as  file " filename + timestamp"
+                String objectName = filename + LocalDateTime.now();
+                Long guid = md5(objectName);
+                ChordMessageInterface peer = chord.locateSuccessor(guid);
+                peer.put(guid, data);
+
+                Long defaultZero = 0L;
+                MetaData.getFile(i).addPage(guid,sizeOfFile,timeOfWrite,"0","0",0);
+            }
+        }
+        writeMetaData(MetaData);
+    }
+
+
 }
