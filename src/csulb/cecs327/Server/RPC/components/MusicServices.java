@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import csulb.cecs327.Client.Models.MusicEntry;
 import csulb.cecs327.Client.Services.SongSerializer;
+import csulb.cecs327.DFS.DFS;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -17,7 +18,7 @@ public class MusicServices {
     ArrayList<MusicEntry> songs = null;
     Gson gson = new Gson();
 
-    public MusicServices() {
+    public MusicServices(DFS dfs) {
         try (Reader reader = new FileReader("src/csulb/cecs327/Server/Files/music.json")) {
             songs = gson.fromJson(reader, new TypeToken<ArrayList<MusicEntry>>(){}.getType());
         } catch (IOException e) {
