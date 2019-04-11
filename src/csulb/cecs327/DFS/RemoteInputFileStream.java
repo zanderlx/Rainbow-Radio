@@ -119,7 +119,7 @@ public class RemoteInputFileStream extends InputStream implements Serializable {
             public void run() {
                 try
                 {
-                    Thread.sleep(500);
+                    Thread.sleep(200);
                     input.read(nextBuf);
                     sem.release();
                     //  System.out.println(new String(nextBuf, "UTF-8"));

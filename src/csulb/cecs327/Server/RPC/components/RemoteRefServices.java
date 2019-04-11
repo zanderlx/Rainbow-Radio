@@ -1,4 +1,6 @@
-package csulb.cecs327.Server.RPC;
+package csulb.cecs327.Server.RPC.components;
+
+import csulb.cecs327.DFS.DFS;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -9,6 +11,10 @@ import java.nio.file.Paths;
  * This service handles uploading catalog.json
  */
 public class RemoteRefServices {
+    public RemoteRefServices(DFS dfs) {
+    
+    }
+    
     /**
      * This method is called to get the catalog of services
      *
