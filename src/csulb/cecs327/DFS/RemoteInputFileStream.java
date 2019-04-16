@@ -131,7 +131,7 @@ public class RemoteInputFileStream extends InputStream implements Serializable {
                                     (input.available() < total % BUFFER_LENGTH)))
                     {
 
-                        Thread.sleep(1);
+                        Thread.sleep(200);
                     }
                     input.read(nextBuf);
                     sem.release();

@@ -362,7 +362,7 @@ public class DFS {
             Scanner scan = new Scanner(metadataraw);
             scan.useDelimiter("\\A");
             String strMetaData = scan.next();
-            System.out.println(strMetaData);
+//            System.out.println(strMetaData);
             filesJson = gson.fromJson(strMetaData, FilesJson.class);
         } catch (NoSuchElementException ex) {
             filesJson = new FilesJson();
