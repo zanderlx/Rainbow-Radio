@@ -6,6 +6,8 @@
 * @since   02-11-2019 
 */
 package csulb.cecs327.Server.RPC.components;
+import csulb.cecs327.DFS.DFS;
+
 import java.io.IOException;
 import java.io.FileInputStream;
 import java.io.File;
@@ -18,10 +20,11 @@ import java.io.FileNotFoundException;
  */
 public class SongDispatcher
 {
-    static final int FRAGMENT_SIZE = 8192; 
-    public SongDispatcher()
+    DFS dfs;
+    static final int FRAGMENT_SIZE = 8192;
+    public SongDispatcher(DFS dfs)
     {
-        
+        this.dfs = dfs;
     }
     
     /**
@@ -35,15 +38,20 @@ public class SongDispatcher
         byte buf[] = new byte[FRAGMENT_SIZE];
 
         //File file = new File("./" + key);
-        File file = new File(System.getProperty("user.dir") + "\\music\\" +key);
+//        File file = new File(System.getProperty("user.dir") + "\\music\\" +key);
         // To check the status and if the file is found
-        System.out.println("SongDispatcher has found file: "+key+"\t, Status: "+file.exists());
-        FileInputStream inputStream = new FileInputStream(file);
-        inputStream.skip(fragment * FRAGMENT_SIZE);
-        inputStream.read(buf);
-        inputStream.close();
-        // Encode in base64 so it can be transmitted 
-         return Base64.getEncoder().encodeToString(buf);
+//        System.out.println("SongDispatcher has found file: "+key+"\t, Status: "+file.exists());
+//        FileInputStream inputStream = new FileInputStream(file);
+//        inputStream.skip(fragment * FRAGMENT_SIZE);
+//        inputStream.read(buf);
+//        inputStream.close();
+//        // Encode in base64 so it can be transmitted
+        try {
+            buf = dfs.get(key.toString(), FRAGMENT_SIZE * fragment, FRAGMENT_SIZE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Base64.getEncoder().encodeToString(buf);
     }
     
     /**
@@ -52,10 +60,16 @@ public class SongDispatcher
     public Integer getFileSize(Long key) throws FileNotFoundException, IOException
     {
         //File file = new File("./" + key);
-        File file = new File(System.getProperty("user.dir") + "\\music\\" +key);
-        Integer total =  (int)file.length();
-        
-        return total;
+//        File file = new File(System.getProperty("user.dir") + "\\music\\" +key);
+//        Integer total =  (int)file.length();
+//
+//        return total;
+        try {
+            return dfs.getFileLength(key.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
     
 }
