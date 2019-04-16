@@ -1,10 +1,11 @@
-package csulb.cecs327.DFS; /**
+package csulb.cecs327.DFS;
+/**
  * RemoteInputFileStream Implements an Input Stream for big
  * files. It creates a server and return the address
  * The client must call connect() before reading
  *
  * @author  Oscar Morales-Ponce
- * @version 0.15
+ * @version 0.16
  * @since   03-3-2019
  */
 
@@ -22,7 +23,7 @@ public class RemoteInputFileStream extends InputStream implements Serializable {
     public int pos;
     public InputStream input;
     public Semaphore sem;
-    private static int BUFFER_LENGTH = 4098;
+    private static int BUFFER_LENGTH = 1<< 16;
     /**
      * It stores a buffer with FRAGMENT_SIZE bytes for the current reading.
      * This variable is useful for UDP sockets. Thus bur is the datagram
@@ -43,7 +44,7 @@ public class RemoteInputFileStream extends InputStream implements Serializable {
      */
     public void connect()
     {
-        this.buf  = new byte[BUFFER_LENGTH];
+        //this.buf  = new byte[BUFFER_LENGTH];
         this.nextBuf  = new byte[BUFFER_LENGTH];
         pos = 0;
         try
@@ -86,8 +87,12 @@ public class RemoteInputFileStream extends InputStream implements Serializable {
                         Socket socket = serverSocket.accept();
                         OutputStream socketOutputStream = socket.getOutputStream();
                         FileInputStream is = new FileInputStream(pathName);
+                        byte[] b =new byte[BUFFER_LENGTH];
                         while (is.available() > 0)
-                            socketOutputStream.write(is.read());
+                        {
+                            is.read(b);
+                            socketOutputStream.write(b);
+                        }
                         is.close();
                         if (deleteAfter)
                         {
@@ -119,11 +124,17 @@ public class RemoteInputFileStream extends InputStream implements Serializable {
             public void run() {
                 try
                 {
-                    Thread.sleep(500);
+
+                    while ((Math.floor(total/BUFFER_LENGTH) <= fragment ||
+                            input.available() < BUFFER_LENGTH) &&
+                            (Math.floor(total/BUFFER_LENGTH) > fragment ||
+                                    (input.available() < total % BUFFER_LENGTH)))
+                    {
+
+                        Thread.sleep(200);
+                    }
                     input.read(nextBuf);
                     sem.release();
-                    //  System.out.println(new String(nextBuf, "UTF-8"));
-                    //             System.out.println("Read buffer");
                 }
                 catch (Exception e)
                 {
@@ -158,10 +169,7 @@ public class RemoteInputFileStream extends InputStream implements Serializable {
             {
                 System.out.println(exc);
             }
-            for (int i=0; i< BUFFER_LENGTH; i++)
-                buf[i] = nextBuf[i];
-
-            // System.out.println("New Buffer");
+            buf = nextBuf.clone();
 
             getBuff(fragment);
             fragment++;
