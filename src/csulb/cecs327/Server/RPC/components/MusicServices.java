@@ -5,40 +5,73 @@ import com.google.gson.reflect.TypeToken;
 import csulb.cecs327.Client.Models.MusicEntry;
 import csulb.cecs327.Client.Services.SongSerializer;
 import csulb.cecs327.DFS.DFS;
+import csulb.cecs327.DFS.RemoteInputFileStream;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class MusicServices {
     private SongSerializer songSerializer = new SongSerializer();
-    ArrayList<MusicEntry> songs = null;
-    Gson gson = new Gson();
+    private ArrayList<MusicEntry> songs = null;
+    private Gson gson = new Gson();
+    private RemoteInputFileStream inputStream;
+    private DFS dfs;
 
     public MusicServices(DFS dfs) {
-        try (Reader reader = new FileReader("src/csulb/cecs327/Server/Files/music.json")) {
-            songs = gson.fromJson(reader, new TypeToken<ArrayList<MusicEntry>>(){}.getType());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        this.dfs = dfs;
     }
 
-    public String getSongsFromServer(String test) {
+    public String getSongsFromServer(String test) throws Exception {
         ArrayList<MusicEntry> results = new ArrayList<>();
+        inputStream = dfs.read("music.json", 1);
+        inputStream.connect();
+        String json = new BufferedReader(new InputStreamReader(inputStream)).lines().collect(Collectors.joining("\n"));
+        songs = gson.fromJson(json, new TypeToken<ArrayList<MusicEntry>>(){}.getType());
         for (int i = 0; i < 13; i++) {
             results.add(songs.get(i));
         }
         return gson.toJson(results);
     }
 
-    public String searchSongsFromServer(String searchQuery) {
+    public String searchSongsFromServer(String searchQuery) throws Exception {
         Set<MusicEntry> results = new HashSet<>();
+        DFS.FilesJson metadata = dfs.readMetaData();
+        int numberOfThreads = metadata.getFile(0).getNumOfPages();
 
+        for (int i = 1; i <= numberOfThreads; i++) {
+            Thread searcher;
+            Searcher search = new Searcher(searchQuery, songs);
+            inputStream = dfs.read("music.json", i);
+            inputStream.connect();
+            System.out.println("Searching Page " + i);
+            String json = new BufferedReader(new InputStreamReader(inputStream)).lines().collect(Collectors.joining("\n"));
+            songs = gson.fromJson(json, new TypeToken<ArrayList<MusicEntry>>(){}.getType());
+            searcher = new Thread(search);
+            searcher.start();
+            results.addAll(search.getSearchResults());
+        }
+
+        return gson.toJson(results);
+    }
+
+}
+
+class Searcher implements Runnable {
+    private String searchQuery;
+    private ArrayList<MusicEntry> songs;
+    private Set<MusicEntry> results = new HashSet<>();
+
+
+    public Searcher(String searchQuery, ArrayList<MusicEntry> songs){
+        this.searchQuery = searchQuery;
+        this.songs = songs;
+    }
+
+    public void run() {
         for (MusicEntry entry : songs) {
-
             if (results.size() > 13)
                 break;
             // Check if song was found
@@ -54,10 +87,9 @@ public class MusicServices {
             if (entry.getArtist().getTerms().toLowerCase().contains(searchQuery.toLowerCase()))
                 results.add(entry);
         }
-
-
-
-        return gson.toJson(results);
     }
 
+    public Set<MusicEntry> getSearchResults() {
+        return this.results;
+    }
 }
