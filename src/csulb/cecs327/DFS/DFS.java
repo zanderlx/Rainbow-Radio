@@ -531,7 +531,7 @@ public class DFS {
                         String timeOfRead = LocalDateTime.now().toString();
                         pageToRead.setReadTimeStamp(timeOfRead);
                         md.getFile(i).setReadTimeStamp(timeOfRead);
-                        Long pageGUID = md5(fileName + pageToRead.getCreateTimeStamp());
+                        Long pageGUID = pageToRead.guid;
                         ChordMessageInterface peer = chord.locateSuccessor(pageGUID);
                         InputStream = peer.get(pageGUID);
                     }

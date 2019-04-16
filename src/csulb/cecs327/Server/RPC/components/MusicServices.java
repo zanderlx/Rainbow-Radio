@@ -11,11 +11,12 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.Collectors;
 
 public class MusicServices {
     private SongSerializer songSerializer = new SongSerializer();
-    private ArrayList<MusicEntry> songs = null;
+//    private  = null;
     private Gson gson = new Gson();
     private RemoteInputFileStream inputStream;
     private DFS dfs;
@@ -29,7 +30,7 @@ public class MusicServices {
         inputStream = dfs.read("music.json", 1);
         inputStream.connect();
         String json = new BufferedReader(new InputStreamReader(inputStream)).lines().collect(Collectors.joining("\n"));
-        songs = gson.fromJson(json, new TypeToken<ArrayList<MusicEntry>>(){}.getType());
+        ArrayList<MusicEntry> songs = gson.fromJson(json, new TypeToken<ArrayList<MusicEntry>>(){}.getType());
         for (int i = 0; i < 13; i++) {
             results.add(songs.get(i));
         }
@@ -37,21 +38,22 @@ public class MusicServices {
     }
 
     public String searchSongsFromServer(String searchQuery) throws Exception {
-        Set<MusicEntry> results = new HashSet<>();
+//        Set<MusicEntry> results = new HashSet<>();
+        ConcurrentLinkedQueue<MusicEntry> results = new ConcurrentLinkedQueue<>();
         DFS.FilesJson metadata = dfs.readMetaData();
-        int numberOfThreads = metadata.getFile(0).getNumOfPages();
+//        int numberOfThreads = metadata.getFile(0).getNumOfPages();
 
-        for (int i = 1; i <= numberOfThreads; i++) {
+        for (int i = 1; i <= 10; i++) {
             Thread searcher;
-            Searcher search = new Searcher(searchQuery, songs);
             inputStream = dfs.read("music.json", i);
             inputStream.connect();
             System.out.println("Searching Page " + i);
             String json = new BufferedReader(new InputStreamReader(inputStream)).lines().collect(Collectors.joining("\n"));
-            songs = gson.fromJson(json, new TypeToken<ArrayList<MusicEntry>>(){}.getType());
+            ArrayList<MusicEntry> songs = gson.fromJson(json, new TypeToken<ArrayList<MusicEntry>>(){}.getType());
+    
+            Searcher search = new Searcher(searchQuery, songs, results);
             searcher = new Thread(search);
             searcher.start();
-            results.addAll(search.getSearchResults());
         }
 
         return gson.toJson(results);
@@ -62,12 +64,13 @@ public class MusicServices {
 class Searcher implements Runnable {
     private String searchQuery;
     private ArrayList<MusicEntry> songs;
-    private Set<MusicEntry> results = new HashSet<>();
+    private ConcurrentLinkedQueue<MusicEntry> results;
 
 
-    public Searcher(String searchQuery, ArrayList<MusicEntry> songs){
+    public Searcher(String searchQuery, ArrayList<MusicEntry> songs, ConcurrentLinkedQueue<MusicEntry> results){
         this.searchQuery = searchQuery;
         this.songs = songs;
+        this.results = results;
     }
 
     public void run() {
@@ -89,7 +92,4 @@ class Searcher implements Runnable {
         }
     }
 
-    public Set<MusicEntry> getSearchResults() {
-        return this.results;
-    }
 }
