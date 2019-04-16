@@ -14,6 +14,9 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.Collectors;
 
+/**
+ * This class allows the player to search for songs from the DFS
+ */
 public class MusicServices {
     private SongSerializer songSerializer = new SongSerializer();
 //    private  = null;
@@ -25,6 +28,12 @@ public class MusicServices {
         this.dfs = dfs;
     }
 
+    /**
+     * Gets songs from the server
+     * @param test used for testing purposes
+     * @return json as results
+     * @throws Exception
+     */
     public String getSongsFromServer(String test) throws Exception {
         ArrayList<MusicEntry> results = new ArrayList<>();
         inputStream = dfs.read("music.json", 1);
@@ -37,6 +46,12 @@ public class MusicServices {
         return gson.toJson(results);
     }
 
+    /**
+     * Makes an object of class type searcher
+     * @param searchQuery what is being searched for
+     * @return json of search results
+     * @throws Exception threads
+     */
     public String searchSongsFromServer(String searchQuery) throws Exception {
 //        Set<MusicEntry> results = new HashSet<>();
         ConcurrentLinkedQueue<MusicEntry> results = new ConcurrentLinkedQueue<>();
@@ -61,6 +76,10 @@ public class MusicServices {
 
 }
 
+/**
+ * This class allows for multiple threads to be ran so search efficiency is increased
+ * Parallel searching
+ */
 class Searcher implements Runnable {
     private String searchQuery;
     private ArrayList<MusicEntry> songs;
@@ -73,6 +92,9 @@ class Searcher implements Runnable {
         this.results = results;
     }
 
+    /**
+     * Runs a instance of the thread
+     */
     public void run() {
         for (MusicEntry entry : songs) {
             if (results.size() > 13)
