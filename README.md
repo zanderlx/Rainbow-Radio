@@ -1,6 +1,6 @@
 # Java Music Player
 
-> This application will allow users to play music with the songs provided. Note that this application is still in progress so many of the features are not implemented yet.
+> This application will allow users to play music with the songs provided. Note that this application is still in progress so many of the features are not implemented yet. This application can currently be only ran using the JAR file as this is an ongoing project.
 
 ## Installation / Contribution
 
