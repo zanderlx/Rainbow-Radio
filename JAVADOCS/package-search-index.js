@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"csulb.cecs327.Client"},{"l":"csulb.cecs327.Client.Models"},{"l":"csulb.cecs327.Client.Services"},{"l":"csulb.cecs327.Client.Views"},{"l":"csulb.cecs327.DFS"},{"l":"csulb.cecs327.Server"},{"l":"csulb.cecs327.Server.RPC"},{"l":"csulb.cecs327.Server.RPC.components"},{"l":"csulb.cecs327.Services.DFS"}]

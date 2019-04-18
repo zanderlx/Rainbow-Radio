@@ -1,6 +1,6 @@
 # Java Music Player
 
-> This application will allow users to play music with the songs provided. Note that this application is still in progress so many of the features are not implemented yet.
+> This application will allow users to play music with the songs provided. Note that this application is still in progress so many of the features are not implemented yet. This application can currently be only ran using the JAR file as this is an ongoing project.
 
 ## Installation / Contribution
 
@@ -43,6 +43,10 @@ As of right now, we do not have JAR builds and thus must test the program by cli
 The project is still incomplete so the program will most likely freeze. To exit the applicaton, click the *STOP* button on IntelliJ.
 
 ## Release History
+* 1.1.0
+  * Added Distributed File System
+  * Added ability to search the DFS
+  * Added ability to play songs obtained from the DFS
 * 1.0.0
   * Version 1 released
 * 0.1.5
