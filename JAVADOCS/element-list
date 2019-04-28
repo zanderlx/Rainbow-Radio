@@ -1,0 +1,9 @@
+csulb.cecs327.Client
+csulb.cecs327.Client.Models
+csulb.cecs327.Client.Services
+csulb.cecs327.Client.Views
+csulb.cecs327.DFS
+csulb.cecs327.Server
+csulb.cecs327.Server.RPC
+csulb.cecs327.Server.RPC.components
+csulb.cecs327.Services.DFS

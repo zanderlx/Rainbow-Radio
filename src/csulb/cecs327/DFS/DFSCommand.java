@@ -73,26 +73,26 @@ public class DFSCommand {
 
     /**
      * Main function to handle commands and pass in arguments
-     * @param arg
+     * @param args
      * @throws Exception
      */
-    static public void main(String arg[]) throws Exception {
-        System.out.println("Enter port number you wish to connect to: ");
-        Scanner input = new Scanner(System.in);
-        String userPort = input.nextLine();
-        String[] args = new String[1];
-        args[0] = userPort;
-
-        System.out.println("UI Commands Below");
-        System.out.println("print");
-        System.out.println("delete");
-        System.out.println("leave");
-        System.out.println("ls");
-        System.out.println("touch");
-        System.out.println("mv");
-        System.out.println("append");
-        System.out.println("read");
-        System.out.println("head\n\n");
+    static public void main(String args[]) throws Exception {
+//        System.out.println("Enter port number you wish to connect to: ");
+//        Scanner input = new Scanner(System.in);
+//        String userPort = input.nextLine();
+//        String[] args = new String[1];
+//        args[0] = userPort;
+//
+//        System.out.println("UI Commands Below");
+//        System.out.println("print");
+//        System.out.println("delete");
+//        System.out.println("leave");
+//        System.out.println("ls");
+//        System.out.println("touch");
+//        System.out.println("mv");
+//        System.out.println("append");
+//        System.out.println("read");
+//        System.out.println("head\n\n");
 
 
         if (args.length < 1) {
