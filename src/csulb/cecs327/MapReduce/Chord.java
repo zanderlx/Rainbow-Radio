@@ -1,4 +1,4 @@
-package csulb.cecs327.DFS;
+package csulb.cecs327.MapReduce;
 
 /**
 * Chord implements Chord P2P
@@ -8,19 +8,27 @@ package csulb.cecs327.DFS;
 * @since   03-3-2019
 */
 
-import java.rmi.*;
-import java.rmi.registry.*;
-import java.rmi.server.*;
-import java.net.*;
-import java.util.*;
-import java.io.*;
+import csulb.cecs327.DFS.ChordMessageInterface;
+import csulb.cecs327.DFS.RemoteInputFileStream;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Chord extends from UnicastRemoteObject to support RMI.
  * It implements the ChordMessageInterface
  *
  */
-public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordMessageInterface
+public class Chord extends UnicastRemoteObject implements ChordMessageInterface
 {
     // Numbers of fingers
     public static final int M = 2;
@@ -550,5 +558,26 @@ public void print()
         catch(RemoteException e){
 	       System.out.println("Cannot retrive id of successor or predecessor");
         }
+    }
+    //TODO All these methods
+    /**
+     * Remote methods for Map Reduce
+     */
+    public void onChordSize(long source,int n ){
+
+    }
+    public void OnPageCompleted(String file){
+
+    }
+    public void mapContext(DFS.PagesJson page, MapReduceInterface mapper, DFS coordinator, String file){
+
+    }
+    public void reduceContext(DFS.PagesJson page, MapReduceInterface reducer, DFS coordinator, String file){
+    }
+    public void addKeyValue(String key, String ){
+    }
+    public void emit(key,value,file){
+    }
+    public bulk(page){
     }
 }
