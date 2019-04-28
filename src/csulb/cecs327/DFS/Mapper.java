@@ -1,26 +1,50 @@
 package csulb.cecs327.DFS;
 
-import java.io.*;
-
 import com.google.gson.JsonObject;
 
-public class Mapper implements MapReduceInterface {
+import java.io.IOException;
+import java.io.Serializable;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
-
+public abstract class Mapper implements MapReduceInterface, Serializable {
+    //TODO These 2 methods
+    /**
+     * Distribute the words throughout the file system, putting the word according to its guid between 2 processes
+     * @param key
+     * @param value
+     * @param context
+     * @throws IOException
+     */
     public void map(String key, JsonObject value, DFS context, String file) throws IOException {
-        //let newKey be the song title in value
-        //let newValue be a subset of value
 
-        // The new values can have the items of interest
-        // Song title, year of release, duration, artist and album
-
-        Object newKey;
-        Object newValue;
-        context.emit(newKey, newValue, file);
     }
 
-    public void reduce(String key, JsonObject values, DFS context, String file) throws IOException {
-        sort(values);
-        context.emit(key, values, file);
+    public void reduce(Integer key, JsonObject values, DFS context, String file) throws IOException{
+
+    }
+
+    /**
+     * Converting a string into GUID - Phuc: DId it just in case, not 1 of the methods
+     * @param objectName
+     * @return
+     */
+    private long md5(String objectName)
+    {
+        try
+        {
+            MessageDigest m = MessageDigest.getInstance("MD5");
+            m.reset();
+            m.update(objectName.getBytes());
+            BigInteger bigInt = new BigInteger(1,m.digest());
+            return Math.abs(bigInt.longValue());
+        }
+        catch(NoSuchAlgorithmException e)
+        {
+            e.printStackTrace();
+
+        }
+        return 0;
     }
 }
