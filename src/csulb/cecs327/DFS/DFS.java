@@ -1,12 +1,17 @@
 package csulb.cecs327.DFS;
 
-import java.time.*;
-import java.util.*;
-import java.nio.file.*;
-import java.math.*;
-import java.security.*;
-
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
+
+import java.math.BigInteger;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
+import java.util.*;
 
 /* JSON Format
 
@@ -105,6 +110,23 @@ public class DFS {
         public void setPageNumber(int pageNum) {
             this.pageNum = this.pageNum;
         }
+        /**
+         * Adds a key value pair to the tree
+         * @param key
+         * @param value
+         */
+        public void addKeyValue(String key, String value) {
+            if(!tree.containsKey(key)) {
+                JsonObject newJsonObject = new JsonObject();
+                tree.put(key, newJsonObject);
+            }
+            else {
+                JsonParser parser = new JsonParser();
+                JsonObject valueAsJson = parser.parse(value).getAsJsonObject();
+                tree.put(key, valueAsJson );
+            }
+        }
+
     }
 
     ;
@@ -286,6 +308,17 @@ public class DFS {
     int port;
     Chord chord;
     FilesJson MetaData;
+    public TreeMap<String, JsonObject> tree;
+    HashMap<String, Integer> counter;
+
+    public void setTree(TreeMap<String, JsonObject> tree) {
+        this.tree = tree;
+    }
+
+    public TreeMap<String, JsonObject> getTree() {
+        return tree;
+    }
+
 
     /**
      * This class is for making guid's and hashes
@@ -313,6 +346,7 @@ public class DFS {
      * @throws Exception
      */
     public DFS(int port) throws Exception {
+        tree = new TreeMap<String, JsonObject>();
         this.port = port;
         long guid = md5("" + port);
         this.MetaData = new FilesJson();
@@ -639,6 +673,12 @@ public class DFS {
 
     /**MAP REDUCE FUNCTIONS START HERE*/
 
+    public void emit(String key, String value, FileJson file) {
+        for (int i = 0; i < file.getPages().size(); i++) {
+            file.getPages().get(i).addKeyValue(key, value);
+        }
+    }
+
     private void createFile(String fileOutput, int interval, int size) throws Exception{ // Helper function
         int lower = 0;
         create(fileOutput);
@@ -647,101 +687,69 @@ public class DFS {
             double lowerBoundInterval = (Math.floor(lower / 38)) + (lower % 38);
 
             //TODO appendEmptyPage needs to be created
-            appendEmptyPage(fileOutput, page, lowerBoundInterval);
+            //appendEmptyPage(fileOutput, page, lowerBoundInterval);
             lower += interval;
         }
     }
 
-    int fileCounter = 0;
-    public void runMapReduce(String fileInput, String fileOutput) throws Exception{
-        int size = 0; // If the remote methods are in Chord, then size is a
-        // variable of Chord
-        FilesJson md= readMetaData();
+    public void runMapReduce(String fileInput, String fileOutput) throws Exception {
+        long currGuid = chord.guid;
+        int size=0;
+        int networkSize = 0;
+        //int networkSize = chord.successor.onNetworkSize();
 
-        //need to complete onChordSize so we can determine what guid parameter
-
-        chord.successor.onChordSize(guid, 1); // Obtain the number of nodes
-        //while loop for size of network
-        while (md.getSize() > 0) {
-            Thread.sleep(10);
-            int interval = 1936 / size; // Assuming 38 characters A-Z, 0-9, _, +.
-            //1936 = 38*38
-            createFile(fileOutput + ".map", interval, size);
-            // mapreducer is an instance of the class that implements MapReduceInterface for each page in fileInput
-            for (int i = 0; i < md.getSize(); i++) {
-                if (md.getFile(i).getName().equalsIgnoreCase(fileInput)) {
-                    ArrayList<PagesJson> inputList = md.getFile(i).getPages();
-
-                    //iterate through pages of fileinput
-                    for (int j = 0; j < inputList.size(); j++) {
-
-                        PagesJson page = inputList.get(j);
-
-                        fileCounter++;
-                        ChordMessageInterface peer = chord.locateSuccessor(page.guid);
-
-                        //TODO mapcontext and mapreducer
-                        peer.mapContext(page.guid, mapreducer, this, fileOutput + ".map");
-                    }
-
-
-                }
-                // Obtained from onNetworkSize after a full cycle
+        Mapper mapper = new Mapper();
+        Mapper reducer = new Mapper();
+        if(networkSize >0) {
+            double interval = 1936/size;
+            //createFile();
+            List<PagesJson> pagesInFile = new Gson().fromJson(fileInput, new TypeToken<List<PagesJson>>(){}.getType());
+            for(int i=0;i<pagesInFile.size();i++) {
+                //pages[fileInput] = ++;
+                ChordMessageInterface peer = chord.locateSuccessor(pagesInFile.get(i).getGUID());
+                //peer.mapContext(pagesInFile.get(i), mapper, this, fileOutput + ".map");
             }
+            bulkTree(fileOutput + ".map", this);
+            //createFile(fileOutput, interval, size);
 
-
-            //while page ==0 set timer/ sleep thread.sleep for 10 milliseconds
-            //while counter ==0 then sleep
-            while (fileCounter == 0) {
-                Thread.sleep(10);
-
-
-                bulkTree(fileOutput + ".map");
-                createFile(fileOutput, interval, size);
-                //    for each page in fileOutput + ".map"{
-                for (int i = 0; i < md.getSize(); i++) {
-                    if (md.getFile(i).getName().equalsIgnoreCase(fileOutput + ".map")) {
-                        ArrayList<PagesJson> pages = md.getFile(i).getPages();
-                        for (int b = 0; b < pages.size(); b++) {
-                            PagesJson page = pages.get(b);
-                            fileCounter++;
-                            ChordMessageInterface peer = chord.locateSuccessor(page.guid);
-                            //need to complete reduceContext function to figure out what mapreducer parameter is
-                            peer.reduceContext(page.guid, mapreducer, this, fileOutput);
-                        }
-                    }
-                }
+            List<PagesJson> pagesFromOutputFile = new Gson().fromJson(fileOutput, new TypeToken<List<PagesJson>>(){}.getType());
+            for(int j=0; j<pagesFromOutputFile.size(); j++) {
+                //pages[fileOutput]++;
+                ChordMessageInterface peer = chord.locateSuccessor(pagesFromOutputFile.get(j).getGUID());
+                //peer.reduceContext(pagesFromOutputFile.get(j), reducer, this, fileOutput);
             }
-        }
-        ;
-        while (fileCounter == 0) {
-            Thread.sleep(10);
-            bulkTree(fileOutput);
+            bulkTree(fileOutput, this);
         }
     }
 
-    private void bulkTree(String fileOutput) throws Exception { // Helper function
+
+
+    public void bulkTree(String file, DFS dfsInstance) throws Exception {
         int size = 0;
-        // only using output file and all the pages of that
-        // read fileoutput and check how many pages in it
+        FilesJson filesJson = readMetaData();
+        for(int i = 0; i < filesJson.getSize(); i++) {
+            if(filesJson.getFile(i).getName().equalsIgnoreCase(file)) {
+                ArrayList<PagesJson> pagesList = filesJson.getFile(i).getPages();
+                PagesJson pagesRead = pagesList.get(i);
+                long pageGuid = pagesRead.getGUID();
+                long page = md5(file + i);
+                ChordMessageInterface peer = chord.locateSuccessor(pageGuid);
+                //TODO bulk????
+                //peer.bulk(page);
 
-        FilesJson md = readMetaData();
-
-        for (int i = 0; i < md.getSize(); i++) {
-            {
-                if (md.getFile(i).getName().equalsIgnoreCase(fileOutput)) {
-                    ArrayList<PagesJson> pagesList = md.getFile(i).getPages();
-                    // iterate through pages of fileOutput and bulk
-                    for (int j = 0; j < pagesList.size(); j++) {
-                        long pageGuid = pagesList.get(j).getGUID();
-                        long page = md5(fileOutput + i);
-                        ChordMessageInterface peer = chord.locateSuccessor(pageGuid);
-                        //TODO implement bulk
-                        peer.bulk(page);
-                    }
-                }
             }
+            PagesJson page = new PagesJson(null, null, null, null, null, 0);
+            dfsInstance.chord.locateSuccessor(page.guid);
         }
     }
+
+
+    public void onPageCompleted(String file)
+    {
+        int value = counter.get(file);
+        value--;
+        counter.put(file, value);
+    }
+
 
 }
