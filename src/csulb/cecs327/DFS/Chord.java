@@ -576,14 +576,4 @@ public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordM
     {
         System.out.println(page + " : " + tree.values().toString());
     }
-
-    //TODO someone finish this ish
-    public void reduceContext(DFS.PagesJson page, Mapper reducer, DFS coordinator, DFS.FileJson file) {
-        /*
-         * for each (key, value) in page //Note that values are a set
-         * 		reducer.reduce(key, value, this, file)
-         * coordinator.onPageCompleted(file)
-         */
-    }
-
 }
