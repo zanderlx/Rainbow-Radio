@@ -13,7 +13,7 @@ public interface ChordMessageInterface extends Remote
     public void notify(ChordMessageInterface j) throws RemoteException;
     public boolean isAlive() throws RemoteException;
     public long getId() throws RemoteException;
-    
+    public int onNetworkSize(long source, int n) throws Exception;
     
     public void put(long guidObject, RemoteInputFileStream inputStream) throws IOException, RemoteException;
     public void put(long guidObject, String text) throws IOException, RemoteException;
