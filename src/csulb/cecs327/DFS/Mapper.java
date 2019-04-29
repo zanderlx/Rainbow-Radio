@@ -36,7 +36,7 @@ public class Mapper implements MapReduceInterface, Serializable {
                 newValue = Integer.toString(i);
             }
         }
-        context.emit(newKey, newValue, file);
+//        context.emit(newKey, newValue, file);
     }
 
     public void reduce(String key, JsonObject values, DFS context, String file) throws IOException {
