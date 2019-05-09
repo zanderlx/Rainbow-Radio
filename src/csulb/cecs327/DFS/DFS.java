@@ -673,7 +673,7 @@ public class DFS {
 
     /**MAP REDUCE FUNCTIONS START HERE*/
 
-    public void emit(String key, String value, FileJson file) {
+    public void emit(String key, String value, String file) {
         for (int i = 0; i < file.getPages().size(); i++) {
             file.getPages().get(i).addKeyValue(key, value);
         }
