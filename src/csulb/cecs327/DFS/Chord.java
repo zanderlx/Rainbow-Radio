@@ -46,6 +46,8 @@ public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordM
     long guid;
     // path prefix
     String prefix;
+    //Chord network size
+    int size = 0;
 
 
     /**
@@ -187,7 +189,17 @@ public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordM
         File file = new File(prefix + guidObject);
         file.delete();
     }
-
+    
+    @Override
+    public void getChordSize(long source, int networkSize) throws RemoteException {
+        if (guid != source){
+            successor.getChordSize(source, networkSize++);
+        }
+        else
+            this.size = networkSize;
+            
+    }
+    
     /**
      * returns the id of the peer
      */
@@ -551,26 +563,8 @@ public class Chord extends java.rmi.server.UnicastRemoteObject implements ChordM
     }
 
 
-    public int onNetworkSize(long source, int n) throws Exception
-    {
-        while(guid!=locateSuccessor(guid).getId()) {
+    
 
-        }
-        return n;
-    }
-
-    public void onChordSize(long source, int n) throws Exception
-    {
-        if(source != guid)
-        {
-            successor.onNetworkSize(source, n++);
-
-        }
-        else
-        {
-            int size = n;
-        }
-    }
 
     public void bulk(long page, TreeMap<String, JsonObject> tree)
     {

@@ -673,10 +673,8 @@ public class DFS {
 
     /**MAP REDUCE FUNCTIONS START HERE*/
 
-    public void emit(String key, String value, String file) {
-        for (int i = 0; i < file.getPages().size(); i++) {
-            file.getPages().get(i).addKeyValue(key, value);
-        }
+    public void emit(String key, String value, String file) throws Exception {
+    
     }
 
     private void createFile(String fileOutput, int interval, int size) throws Exception{ // Helper function
@@ -694,15 +692,19 @@ public class DFS {
 
     public void runMapReduce(String fileInput, String fileOutput) throws Exception {
         long currGuid = chord.guid;
-        int size=0;
-        int networkSize = 0;
-        //int networkSize = chord.successor.onNetworkSize();
+        chord.successor.getChordSize(currGuid, 0);
+    
+        while(chord.size == 0 ){
+            Thread.sleep(10);
+        }
+        
+        int networkSize = chord.size;
 
         Mapper mapper = new Mapper();
-        Mapper reducer = new Mapper();
+        
         if(networkSize >0) {
-            double interval = 1936/size;
-            //createFile();
+            int interval = 1444 / networkSize;
+            createFile(fileOutput + ".map", interval, networkSize);
             List<PagesJson> pagesInFile = new Gson().fromJson(fileInput, new TypeToken<List<PagesJson>>(){}.getType());
             for(int i=0;i<pagesInFile.size();i++) {
                 //pages[fileInput] = ++;
